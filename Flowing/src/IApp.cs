@@ -35,6 +35,7 @@ namespace Flowing
 
         private static IntPtr ParenthWnd = new IntPtr(0);
         private static IntPtr et = new IntPtr(0);
+        public static GraphicsMode mode=new GraphicsMode(32, 24, 8,0);
         public IApp()
         {
             
@@ -52,7 +53,7 @@ namespace Flowing
             Console.Title = "Console";
             Print("Press Escape to close Console window");
             Type type = InitClassName();
-            GameWindow _window = new GameWindow(500, 500,new GraphicsMode(32, 24, 8, 8));
+            GameWindow _window = new GameWindow(500, 500,mode);
             IApp app;
             try
             {
@@ -73,7 +74,7 @@ namespace Flowing
             app.window.Run(1/app.FrameRate);
 
         }
-        private void HandleWindowEvents()
+        public void HandleWindowEvents()
         {
             this.window.Load += this.Window_Load;
             this.window.UpdateFrame += this.Window_UpdateFrame;
@@ -109,20 +110,6 @@ namespace Flowing
         }
         private void Window_UpdateFrame(Object sender, EventArgs e)
         {
-            //GL.Clear(ClearBufferMask.ColorBufferBit);
-            //Background(255,0,0);
-            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-            //GL.LineWidth(5.0f);
-            //GL.Begin(PrimitiveType.Triangles);
-
-            //GL.Color3(Color.FromArgb(255, 0, 0, 0));
-            //GL.Vertex3(1.0f, 1.0f, 0.0f);
-            //GL.Vertex3(49.0f, 1.0f, 0.0f);
-            //GL.Vertex3(25.0f, 49.0f, 0.0f);
-
-            //GL.End();
-
-            //this.window.SwapBuffers();
         }
 
 
@@ -153,6 +140,27 @@ namespace Flowing
 
         private void Window_MouseDown(Object sender, MouseButtonEventArgs e)
         {
+            //int textureColorBufferMultiSampled;
+            //GL.GenTextures(1, out textureColorBufferMultiSampled);
+
+            //GL.BindTexture(TextureTarget.Texture2DMultisample, textureColorBufferMultiSampled);
+            //GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, PixelInternalFormat.Rgb, width, height, true);
+            //GL.BindTexture(TextureTarget.Texture2DMultisample, 0);
+            //GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2DMultisample,textureColorBufferMultiSampled,0);
+
+            int rbo;
+            GL.GenRenderbuffers(1, out rbo);
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, rbo);
+            GL.RenderbufferStorageMultisample(RenderbufferTarget.Renderbuffer, 4, RenderbufferStorage.Depth24Stencil8, width, height);
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, 0);
+
+            if (GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer) != FramebufferErrorCode.FramebufferComplete)
+            {
+                throw new Exception("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+            }
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+
+
             this.MouseButton = ((int)e.Button);
             this.MousePressed();
         }

@@ -1010,12 +1010,21 @@ namespace Flowing
             this.shape = ((int)p);
             
         }
+        int getMultiSampleTexture(int samples)
+        {
+            int texture;
+            GL.GenTextures(1, out texture);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, texture);
+            GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, samples, PixelInternalFormat.Rgb, width, height, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, 0); ;
+            return texture;
+        }
         public void EndShape()
         {
             if (smooth)
             {
                 //GL.Enable(EnableCap.Blend);
-                //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.SrcAlpha);
+                //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
                 //GL.Enable(EnableCap.PointSmooth);
                 //GL.Enable(EnableCap.LineSmooth);
                 //GL.Enable(EnableCap.PolygonSmooth);
@@ -1024,6 +1033,43 @@ namespace Flowing
                 //GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
 
             }
+            int FBO, RBO;
+            GL.GenFramebuffers(1, out FBO);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, FBO);
+
+            int textureColorBufferMultiSampled = getMultiSampleTexture(4);           //MSAA 4x抗锯齿
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0,TextureTarget.Texture2DMultisample, textureColorBufferMultiSampled, 0);
+
+            GL.GenRenderbuffers(1, out RBO);
+            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, RBO);
+            GL.RenderbufferStorageMultisample(RenderbufferTarget.Renderbuffer, 4, RenderbufferStorage.Depth24Stencil8, width, height);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer,FramebufferAttachment.DepthStencilAttachment,RenderbufferTarget.Renderbuffer,RBO);
+            if (GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer) != FramebufferErrorCode.FramebufferComplete) ;
+                //cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+
+            int screenFBO;
+            GL.GenFramebuffers(1, out screenFBO);
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, screenFBO);
+            int textureColorBuffer = getAttachmentTexture();
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);
+
+            int textureColorBufferMultiSampled;
+            GL.GenTextures(1, out textureColorBufferMultiSampled);
+
+            GL.BindTexture(TextureTarget.Texture2DMultisample, textureColorBufferMultiSampled);
+            GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, PixelInternalFormat.Rgb, width, height, true);
+            GL.BindTexture(TextureTarget.Texture2DMultisample, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2DMultisample, textureColorBufferMultiSampled, 0);
+
+
+
+
+            if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+                cout << "ERROR::FRAMEBUFFER:: Intermediate framebuffer is not complete!" << endl;
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
             //GL.Enable(EnableCap.Multisample);
             //GL.Enable(EnableCap.DepthTest);
             if (fill)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Flowing;
+using OpenTK.Graphics;
 
 namespace Flowing
 {
@@ -70,11 +71,20 @@ namespace Flowing
 
         public override void MouseWheel()
         {
+            
             Print("check wheel");
         }
         public override void MousePressed()
         {
+            //mode=new GraphicsMode(32, 24, 8, 2);
+            //this.window = new OpenTK.GameWindow(width, height, mode);
+            //this.window.Title = "test";
+            //HandleWindowEvents();
+            //window.Run();
+            
+            Print(mode.Samples);
             Print("check mouse");
+            Print(window);
         }
 
         //public override void KeyPressed()
