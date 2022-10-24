@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Flowing;
+using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace Flowing
 {
@@ -16,32 +19,44 @@ namespace Flowing
            IApp.main();
         }
 
+        CamController cam;
         override
         public void SetUp()
         {
-             Size(1200, 1000);
-             
-             Console.WriteLine("Hello, this is the first example of Flowing! Nice to meet you~");
+            Size(1200, 1000);
+            //cam = new CameraController(this, 200);
+            cam = new CamController(this,200);
+            Console.WriteLine("Hello, this is the first example of Flowing! Nice to meet you~");
         }
         override
         public void Draw()
         {
+
             Background(255, 255, 255);
-            Fill(0,0,255);
-            StrokeWeight(3);
+            //cam.DrawSystem();
+            //CreateCube();
+            //Smooth(2);
+            cam.drawSystem(this, 200);
+
+            Fill(0, 0, 255);
+            StrokeWeight(2);
             Stroke(0, 255, 0);
-            BeginShape();
-            Vertex(200, 50, 0);
-            Vertex(800, 600,0);
-            Vertex(220, 800,0);
-            EndShape();
+            for(int i = 0; i < 500; i++)
+            {
+                BeginShape();
+                Vertex(200, 100, 0);
+                Vertex(100, 200, 0);
+                Vertex(220, 400, 0);
+                EndShape();
+            }
+
 
             //PushMatrix();
             //PushStyle();
             //Fill(100);
             //Stroke(255, 0, 255);
             //StrokeWeight(5);
-            
+
             //BeginShape();
             //Translate(200, 0);
             //Vertex(200, 50, 0);
@@ -71,20 +86,9 @@ namespace Flowing
 
         public override void MouseWheel()
         {
-            
-            Print("check wheel");
         }
         public override void MousePressed()
         {
-            //mode=new GraphicsMode(32, 24, 8, 2);
-            //this.window = new OpenTK.GameWindow(width, height, mode);
-            //this.window.Title = "test";
-            //HandleWindowEvents();
-            //window.Run();
-            
-            Print(mode.Samples);
-            Print("check mouse");
-            Print(window);
         }
 
         //public override void KeyPressed()
@@ -93,7 +97,17 @@ namespace Flowing
         //}
         public override void KeyReleased()
         {
-            Print(key);
+            if (key == OpenTK.Input.Key.T)
+            {
+                cam.Top();
+            }else if (key == OpenTK.Input.Key.P)
+            {
+                cam.Perspective();
+            }
+            else if (key == OpenTK.Input.Key.Z)
+            {
+                cam.CurrentView.SetPerspective(!cam.CurrentView.perspective);
+            }
         }
 
     }

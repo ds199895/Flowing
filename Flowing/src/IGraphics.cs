@@ -119,7 +119,7 @@ namespace Flowing
         private int backgroundAi;
         private int shape;
         private bool autoNormal;
-
+        public int samples;
         //Define styles
         protected static    float DEFAULT_STROKE_WEIGHT = 1.0F;
         protected static    int DEFAULT_STROKE_JOIN = 8;
@@ -603,8 +603,9 @@ namespace Flowing
         {
             this.PushStyle();
             this.PushMatrix();
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.ClearColor(Color.FromArgb(backgroundColor));
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            
             this.PopMatrix();
             this.PopStyle();
         }
@@ -626,6 +627,7 @@ namespace Flowing
         public void Smooth(int level)
         {
             this.smooth = true;
+            samples = 2 * (level / 2);
         }
 
         public void NoSmooth()
@@ -956,6 +958,7 @@ namespace Flowing
             {
                 float[][] temp = new float[this.vertexCount << 1][];
                 Array.Copy(this.vertices, 0, temp, 0, this.vertexCount);
+                Print(this.vertices.Length);
                 this.vertices = temp;
             }
 
@@ -1010,6 +1013,8 @@ namespace Flowing
             this.shape = ((int)p);
             
         }
+
+
         int getMultiSampleTexture(int samples)
         {
             int texture;
@@ -1021,10 +1026,12 @@ namespace Flowing
         }
         public void EndShape()
         {
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             if (smooth)
             {
-                //GL.Enable(EnableCap.Blend);
-                //GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
+                
                 //GL.Enable(EnableCap.PointSmooth);
                 //GL.Enable(EnableCap.LineSmooth);
                 //GL.Enable(EnableCap.PolygonSmooth);
@@ -1033,52 +1040,14 @@ namespace Flowing
                 //GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
 
             }
-            int FBO, RBO;
-            GL.GenFramebuffers(1, out FBO);
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, FBO);
-
-            int textureColorBufferMultiSampled = getMultiSampleTexture(4);           //MSAA 4x抗锯齿
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0,TextureTarget.Texture2DMultisample, textureColorBufferMultiSampled, 0);
-
-            GL.GenRenderbuffers(1, out RBO);
-            GL.BindRenderbuffer(RenderbufferTarget.Renderbuffer, RBO);
-            GL.RenderbufferStorageMultisample(RenderbufferTarget.Renderbuffer, 4, RenderbufferStorage.Depth24Stencil8, width, height);
-            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer,FramebufferAttachment.DepthStencilAttachment,RenderbufferTarget.Renderbuffer,RBO);
-            if (GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer) != FramebufferErrorCode.FramebufferComplete) ;
-                //cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << endl;
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-
-            int screenFBO;
-            GL.GenFramebuffers(1, out screenFBO);
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, screenFBO);
-            int textureColorBuffer = getAttachmentTexture();
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);
-
-            int textureColorBufferMultiSampled;
-            GL.GenTextures(1, out textureColorBufferMultiSampled);
-
-            GL.BindTexture(TextureTarget.Texture2DMultisample, textureColorBufferMultiSampled);
-            GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, PixelInternalFormat.Rgb, width, height, true);
-            GL.BindTexture(TextureTarget.Texture2DMultisample, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2DMultisample, textureColorBufferMultiSampled, 0);
-
-
-
-
-            if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-                cout << "ERROR::FRAMEBUFFER:: Intermediate framebuffer is not complete!" << endl;
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-
-            //GL.Enable(EnableCap.Multisample);
-            //GL.Enable(EnableCap.DepthTest);
             if (fill)
             {
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
                 
                 GL.Begin((PrimitiveType)this.shape);
-                GL.Color3(Color.FromArgb(fillColor));
-                for (int i = LastIndex; i < this.vertexCount; i++)
+                GL.Color4(Color.FromArgb(fillColor));
+
+                for (int i =0; i < this.vertexCount; i++)
                 { 
                     GL.Vertex3(vertices[i][0], vertices[i][1], vertices[i][2]);
                 }
@@ -1089,18 +1058,108 @@ namespace Flowing
             if (stroke)
             {
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-                GL.Color3(Color.FromArgb(strokeColor));
+                GL.Color4(Color.FromArgb(strokeColor));
                 GL.LineWidth(strokeWeight);
                 GL.Begin((PrimitiveType)this.shape);
-                for (int i = LastIndex; i < this.vertexCount; i++)
+                for (int i = 0; i < this.vertexCount; i++)
                 {
                     GL.Vertex3(vertices[i][0], vertices[i][1], vertices[i][2]);
                 }
                 GL.End();
             }
-            LastIndex = this.vertexCount;
-           
+
+            GL.Disable(EnableCap.Blend);
+            //GL.Viewport(0, 0, window.Width, window.Height);
+
+            //LastIndex = this.vertexCount;
+
+            this.vertices = new float[512][];
+            this.vertexCount = 0;
         }
+
+        protected void CreateCube()
+        {
+            GL.Begin(PrimitiveType.Quads);
+            GL.Color3(1.0, 1.0, 0.0);
+            GL.Vertex3(-10.0, 10.0, 10.0);
+            GL.Vertex3(-10.0, 10.0, -10.0);
+            GL.Vertex3(-10.0, -10.0, -10.0);
+            GL.Vertex3(-10.0, -10.0, 10.0);
+
+            GL.Color3(1.0, 0.0, 1.0);
+            GL.Vertex3(10.0, 10.0, 10.0);
+            GL.Vertex3(10.0, 10.0, -10.0);
+            GL.Vertex3(10.0, -10.0, -10.0);
+            GL.Vertex3(10.0, -10.0, 10.0);
+
+            GL.Color3(0.0, 1.0, 1.0);
+            GL.Vertex3(10.0, -10.0, 10.0);
+            GL.Vertex3(10.0, -10.0, -10.0);
+            GL.Vertex3(-10.0, -10.0, -10.0);
+            GL.Vertex3(-10.0, -10.0, 10.0);
+
+            GL.Color3(1.0, 0.0, 0.0);
+            GL.Vertex3(10.0, 10.0, 10.0);
+            GL.Vertex3(10.0, 10.0, -10.0);
+            GL.Vertex3(-10.0, 10.0, -10.0);
+            GL.Vertex3(-10.0, 10.0, 10.0);
+
+            GL.Color3(0.0, 1.0, 0.0);
+            GL.Vertex3(10.0, 10.0, -10.0);
+            GL.Vertex3(10.0, -10.0, -10.0);
+            GL.Vertex3(-10.0, -10.0, -10.0);
+            GL.Vertex3(-10.0, 10.0, -10.0);
+
+            GL.Color3(0.0, 0.0, 1.0);
+            GL.Vertex3(10.0, 10.0, 10.0);
+            GL.Vertex3(10.0, -10.0, 10.0);
+            GL.Vertex3(-10.0, -10.0, 10.0);
+            GL.Vertex3(-10.0, 10.0, 10.0);
+            GL.End();
+        }
+        protected void Cube(float length,float width,float height)
+        {
+            Vertex(-length/2, width/2, height/2);
+            Vertex(-length / 2, width / 2, -height/2);
+            Vertex(-length / 2, -width / 2, -height/2);
+            Vertex(-length / 2, -width / 2, height/2);
+
+
+            Vertex(length / 2, width / 2, height / 2);
+            Vertex(length / 2, width / 2, -height / 2);
+            Vertex(length / 2, -width / 2, -height / 2);
+            Vertex(length / 2, -width / 2, height / 2);
+
+            Vertex(length / 2, -width / 2, height / 2);
+            Vertex(length / 2, -width / 2, -height / 2);
+            Vertex(-length / 2, -width / 2, -height / 2);
+            Vertex(-length / 2, -width / 2, height / 2);
+
+            Vertex(length / 2, width / 2, height / 2);
+            Vertex(length / 2, width / 2, -height / 2);
+            Vertex(-length / 2, width / 2, -height / 2);
+            Vertex(-length / 2, width / 2, height / 2);
+
+           
+            Vertex(length / 2, width / 2, -height / 2);
+            Vertex(length / 2, -width / 2, -height / 2);
+            Vertex(-length / 2, -width / 2, -height / 2);
+            Vertex(-length / 2, width / 2, -height / 2);
+
+            Vertex(length / 2, width / 2, height / 2);
+            Vertex(length / 2, -width / 2, height / 2);
+            Vertex(-length / 2, -width / 2, height / 2);
+            Vertex(-length / 2, width / 2, height / 2);
+        }
+        public void Line(float x1, float y1, float z1, float x2, float y2, float z2)
+        {
+            this.BeginShape(PrimitiveType.Lines);
+            this.Vertex(x1, y1, z1);
+            this.Vertex(x2, y2, z2);
+            this.EndShape();
+        }
+
+
 
         protected void colorCalc(int rgb)
         {
@@ -1316,8 +1375,75 @@ namespace Flowing
             this.calcAlpha = this.calcAi != 255;
         }
 
+        public void Rotate(float angle)
+        {
+            GL.Rotate(angle, new Vector3d(0, 0, 1));
+        }
+
+        public void RotateX(float angle)
+        {
+            GL.Rotate(angle, new Vector3d(1, 0, 0));
+
+        }
+        public void RotateY(float angle)
+        {
+            GL.Rotate(angle, new Vector3d(0, 1, 0));
+
+        }
+        public void RotateZ(float angle)
+        {
+            GL.Rotate(angle, new Vector3d(0, 0, 1));
+
+        }
+
+        public void Rotate(double angle, float x, float y, float z)
+        {
+            GL.Rotate(angle, new Vector3d(x, y, z));
+
+        }
+
+        public void scale(float s)
+        {
+            GL.Scale(new Vector3d(s, s, s));
+
+        }
+        public void scale(float x, float y)
+        {
+            GL.Scale(new Vector3d(x, y, 1));
+        }
+
+        public void scale(float x, float y, float z)
+        {
+            GL.Scale(new Vector3d(x, y, z));
+        }
 
 
+        //public void ResetMatrix()
+        //{
+        //    GL.LoadMatrix();
+        //}
 
+        public void GetMatrix()
+        {
+            float[] matrix = new float[6];
+            GL.GetFloat(GetPName.ProjectionMatrix,matrix);
+
+        }
+       public void Perspective()
+        {
+            
+        }
+        public void Ortho(float left, float right, float bottom, float top, float near, float far)
+        {
+            GL.Ortho(left, right, bottom, top, near, far);
+        }
+
+        public void Frustum(float left, float right, float bottom, float top, float near, float far)
+        {
+            GL.Frustum(left, right, bottom, top, near, far);
+        }
     }
+
+
+
 }
