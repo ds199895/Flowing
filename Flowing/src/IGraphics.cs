@@ -314,7 +314,7 @@ namespace Flowing
             return temp;
         }
 
-        public void PushStyle()
+        public void PushStyle(bool Continue = true)
         {
             if (this.styleStackDepth == this.styleStack.Length)
             {
@@ -328,6 +328,11 @@ namespace Flowing
 
             IStyle s = this.styleStack[this.styleStackDepth++];
             this.getStyle(s);
+            if (!Continue)
+            {
+                this.NoFill();
+                this.NoStroke();
+            }
         }
 
         public void PopStyle()
@@ -1117,12 +1122,14 @@ namespace Flowing
             GL.Vertex3(-10.0, 10.0, 10.0);
             GL.End();
         }
-        protected void Cube(float length,float width,float height)
+        protected void Cube(float length, float width, float height)
         {
-            Vertex(-length/2, width/2, height/2);
-            Vertex(-length / 2, width / 2, -height/2);
-            Vertex(-length / 2, -width / 2, -height/2);
-            Vertex(-length / 2, -width / 2, height/2);
+            BeginShape(PrimitiveType.Quads);
+
+            Vertex(-length / 2, width / 2, height / 2);
+            Vertex(-length / 2, width / 2, -height / 2);
+            Vertex(-length / 2, -width / 2, -height / 2);
+            Vertex(-length / 2, -width / 2, height / 2);
 
 
             Vertex(length / 2, width / 2, height / 2);
@@ -1140,7 +1147,7 @@ namespace Flowing
             Vertex(-length / 2, width / 2, -height / 2);
             Vertex(-length / 2, width / 2, height / 2);
 
-           
+
             Vertex(length / 2, width / 2, -height / 2);
             Vertex(length / 2, -width / 2, -height / 2);
             Vertex(-length / 2, -width / 2, -height / 2);
@@ -1150,9 +1157,11 @@ namespace Flowing
             Vertex(length / 2, -width / 2, height / 2);
             Vertex(-length / 2, -width / 2, height / 2);
             Vertex(-length / 2, width / 2, height / 2);
+            EndShape();
         }
         public void Line(float x1, float y1, float z1, float x2, float y2, float z2)
         {
+            this.NoFill();
             this.BeginShape(PrimitiveType.Lines);
             this.Vertex(x1, y1, z1);
             this.Vertex(x2, y2, z2);

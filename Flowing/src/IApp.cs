@@ -112,6 +112,8 @@ namespace Flowing
         {
             //cam = new Camera(this.width, this.height, new Vector3(0, 0, 200), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
             this.SetUp();
+            GL.Enable(EnableCap.DepthTest);
+            GL.DepthFunc(DepthFunction.Less);
         }
         private void Window_UpdateFrame(Object sender, EventArgs e)
         {

@@ -23,9 +23,9 @@ namespace Flowing
         override
         public void SetUp()
         {
-            Size(1200, 1000);
+            Size(600, 600);
             //cam = new CameraController(this, 200);
-            cam = new CamController(this,200);
+            cam = new CamController(this);
             Console.WriteLine("Hello, this is the first example of Flowing! Nice to meet you~");
         }
         override
@@ -37,18 +37,21 @@ namespace Flowing
             //CreateCube();
             //Smooth(2);
             cam.drawSystem(this, 200);
+            PushStyle();
+            Fill(0, 0, 0);
 
-            Fill(0, 0, 255);
+            Cube(20, 20, 20);
+            PopStyle();
+
+            Fill(255, 0, 255);
             StrokeWeight(2);
             Stroke(0, 255, 0);
-            for(int i = 0; i < 500; i++)
-            {
-                BeginShape();
-                Vertex(200, 100, 0);
-                Vertex(100, 200, 0);
-                Vertex(220, 400, 0);
-                EndShape();
-            }
+            BeginShape();
+            Vertex(200, 100, 0);
+            Vertex(100, 200, 0);
+            Vertex(220, 400, 0);
+            EndShape();
+
 
 
             //PushMatrix();

@@ -14,32 +14,78 @@ namespace Flowing
     {
         IApp app;
         public GameWindow window;
+        public int w;
+        public int h;
+
         private Camera camPerspective;
         private Camera camTop;
+        private Camera camFront;
+        private Camera camBack;
+        private Camera camLeft;
+        private Camera camRight;
+        private Camera camOrtho;
+        public List<Camera> cams = new List<Camera>();
         public Camera CurrentView;
 
-        public double RotateDeltaFactor = 0.004d;
-        public const double panDeltaFactor = 0.001D;
-        public double zoomDeltaFactor = 0.2D;
+        public double RotateDeltaFactor =0.005D;
+        //public double RotateDeltaFactor = 1.8D;
+        public const double panDeltaFactor = 0.003D;
+        public double zoomDeltaFactor = 0.1D;
         private Vector2 mouseLastPosition;
-        public CamController(IApp app,float dis)
+        public CamController(IApp app,float dis=1000)
         {
 
             this.app = app;
-            this.window = app.window;
-            camPerspective = new Camera(this.window.Width, this.window.Height, new Vector3(-dis, -dis,dis),new Vector3(0,0,0));
-            camTop = new Camera(this.window.Width, this.window.Height, new Vector3(0, 0, dis),new Vector3(0,0,0));
-            camTop.perspective = false;
-            CurrentView = camPerspective;
-            this.window.Title = "Grid";
-            this.window.Load += Window_Load;
-            this.window.RenderFrame += Window_RenderFrame;
-            this.window.UpdateFrame += Window_UpdateFrame;
-            this.window.MouseMove += new EventHandler<OpenTK.Input.MouseMoveEventArgs>(Mouse_Move);
-            this.window.MouseWheel += new EventHandler<OpenTK.Input.MouseWheelEventArgs>(Mouse_Wheel);
-            this.window.Resize += new EventHandler<EventArgs>(Window_Resize);
+            this.window = this.app.window;
+            ResetCameras(dis);
+            HandleWindow();
+        }
+        protected void HandleWindow()
+        {
+            this.app.window.Load += Window_Load;
+            this.app.window.RenderFrame += Window_RenderFrame;
+            this.app.window.UpdateFrame += Window_UpdateFrame;
+            this.app.window.MouseMove += new EventHandler<OpenTK.Input.MouseMoveEventArgs>(Mouse_Move);
+            this.app.window.MouseWheel += new EventHandler<OpenTK.Input.MouseWheelEventArgs>(Mouse_Wheel);
+            this.app.window.Resize += new EventHandler<EventArgs>(Window_Resize);
+            this.app.window.MouseDown += Mouse_Down;
+        }
+        public void ResetCameras(float dis=1000)
+        {
+            Console.WriteLine("current width: " + this.window.Width);
+            int length = Math.Max(this.window.Width, this.window.Height);
+            //this.w = length;
+            //this.h = length;
+            this.w = this.window.Width;
+            this.h = this.window.Height;
+            this.camPerspective = new Camera(w, h, new Vector3(-dis, -dis, dis), new Vector3(0.0F, 0.0F, 0.0F));
+            this.camTop = new Camera(w, h, new Vector3(0.0F, 0.0F, dis), new Vector3(0.0F, 0.0F, 0.0F));
+            this.camTop.Set2DProperties();
+            this.camFront = new Camera(w, h, new Vector3(0.0F, -dis, 0.0F), new Vector3(0.0F, 0.0F, 0.0F));
+            this.camTop.Set2DProperties();
+            this.camBack = new Camera(w, h, new Vector3(0.0F, dis, 0.0F), new Vector3(0.0F, 0.0F, 0.0F));
+            this.camBack.Set2DProperties();
+            this.camLeft = new Camera(w, h, new Vector3(-dis, 0.0F, 0.0F), new Vector3(0.0F, 0.0F, 0.0F));
+            this.camLeft.Set2DProperties();
+            this.camRight = new Camera(w, h, new Vector3(dis, 0.0F, 0.0F), new Vector3(0.0F, 0.0F, 0.0F));
+            this.camRight.Set2DProperties();
+            this.camOrtho = new Camera(w, h, new Vector3(-dis, -dis, dis), new Vector3(0.0F, 0.0F, 0.0F));
+            this.camOrtho.Set3DProperties(false);
+            this.cams.Add(camPerspective);
+            this.cams.Add(camTop);
+            this.cams.Add(camFront);
+            this.cams.Add(camBack);
+            this.cams.Add(camLeft);
+            this.cams.Add(camRight);
+            this.cams.Add(camOrtho);
+
+            //this.Perspective();
+            //this.CurrentView.SetPerspective(false);
+            this.Top();
+            //this.Ortho();
         }
 
+      
         protected void Window_Load(Object sender, EventArgs e)
         {
 
@@ -55,100 +101,101 @@ namespace Flowing
 
         private void Mouse_Move(object sender, OpenTK.Input.MouseMoveEventArgs e)
         {
-            bool noRotation = true;
-            if (this.CurrentView == camPerspective)
-            {
-                noRotation = false;
-            }
 
-            var dX = e.XDelta;
-            var dY = e.YDelta;
-            if (e.Mouse.LeftButton == OpenTK.Input.ButtonState.Pressed)
+
+  
+            if (e.Mouse.MiddleButton == OpenTK.Input.ButtonState.Pressed)
             {
-                if (!noRotation && this.CurrentView.target != null)
+                bool noRotation = true;
+                if (this.CurrentView == this.camPerspective)
                 {
-                    Vector2 newMousePosition = new Vector2(e.Mouse.X, e.Mouse.Y);
-
-                    if (mouseLastPosition.X != newMousePosition.X)
-                    {
-                        HorizontalTransform(mouseLastPosition.X < newMousePosition.X, this.RotateDeltaFactor);
-                    }
-
-                    if (mouseLastPosition.Y != newMousePosition.Y)// change position in the horizontal direction
-                    {
-
-                        VerticalTransform(mouseLastPosition.Y > newMousePosition.Y, this.RotateDeltaFactor);
-                    }
-                    mouseLastPosition = newMousePosition;
-                    //Rotate(dX, dY);
+                    noRotation = false;
                 }
+
+                float dX = e.X - mouseLastPosition.X;
+                float dY = e.Y - mouseLastPosition.Y;
+
+                //if (!noRotation && this.CurrentView.target != null)
+                //{
+
+                //    if (mouseLastPosition.X != e.X)
+                //    {
+                //        this.CurrentView.HorizontalTransform(mouseLastPosition.X < e.X, this.RotateDeltaFactor);
+                //    }
+
+                //    if (mouseLastPosition.Y != e.Y)// change position in the horizontal direction
+                //    {
+
+                //        this.CurrentView.VerticalTransform(mouseLastPosition.Y > e.Y, this.RotateDeltaFactor);
+                //    }
+
+                //    //Rotate(dX, dY);
+                //}
+
+                this.CurrentView.RotateAroundLookAt(dX, dY, RotateDeltaFactor);
+                //this.CurrentView.Yaw += dX * (float)RotateDeltaFactor;
+                //this.CurrentView.Pitch -= dY * (float)RotateDeltaFactor;
+                mouseLastPosition = new Vector2(e.X, e.Y);
+
 
             }
             else if (e.Mouse.RightButton == OpenTK.Input.ButtonState.Pressed)
             {
-                Pan(dX,dY, false);
+                var dX = e.XDelta;
+                var dY = e.YDelta;
+                this.CurrentView.Pan(dX,dY, false,panDeltaFactor);
             }
 
         }
         private void Mouse_Down(object sender, OpenTK.Input.MouseButtonEventArgs e)
         {
-            mouseLastPosition = new Vector2(e.Position.X, e.Position.Y);
+            mouseLastPosition = new Vector2(e.X, e.Y);
 
         }
         private void Mouse_Wheel(object sender, OpenTK.Input.MouseWheelEventArgs e)
         {
             //camera.position += camera.objZ * e.DeltaPrecise*5;
-            Console.WriteLine(e.ValuePrecise);
-            //CurrentView.Position += CurrentView.Front * e.DeltaPrecise * 5;
-            Zoom(-e.Value);
-        }
 
+            //CurrentView.Position += CurrentView.Front * e.DeltaPrecise * 5;
+            Zoom(-e.ValuePrecise);
+        }
         public void Top()
         {
-            CurrentView = camTop;
+            this.CurrentView = this.cams[1];
+            
         }
         public void Perspective()
         {
-            CurrentView = camPerspective;
+            CurrentView = this.cams[0];
+            Resize();
+   
         }
+        public void Ortho()
+        {
+            CurrentView = this.cams[6];
+        }
+        
         protected void Window_Resize(object sender, EventArgs e)
         {
-            
-            GL.Viewport(0, 0, this.window.Width, this.window.Height);
-            CurrentView.AspectRatio = this.window.Width / (float)this.window.Height;
-        }
-        private void VerticalTransform(bool upDown, double angleDeltaFactor)
-        {
-            Vector3 position = CurrentView.Position;
-            Vector3 rotateAxis =Vector3.Cross(position,CurrentView.Up);
-
-
-            Matrix3 ro = Matrix3.CreateFromAxisAngle(rotateAxis, (float)angleDeltaFactor * (upDown ? -1 : 1));
-            Vector3 newPosition = Vector3.Transform(ro, position);
-
-            CurrentView.Position = newPosition;
-
-            CurrentView.Front = Vector3.Transform(ro, CurrentView.Front);
-
-            //update the up direction
-            Vector3 newUpDirection = Vector3.Cross(CurrentView.Front, rotateAxis);
-            newUpDirection.Normalize();
-            CurrentView.Up = newUpDirection;
+            GL.Viewport(0, 0, this.app.window.Width, this.app.window.Height);
+            foreach (Camera cam in cams)
+            {
+                cam.IniUpdate(this.app);
+            }
+            Resize();
+  
+            this.app.window.SwapBuffers();
         }
 
-        private void HorizontalTransform(bool leftRight, double angleDeltaFactor)
+        private void Resize()
         {
-            Vector3 postion = CurrentView.Position;
-            Vector3 rotateAxis = CurrentView.Up;
+            this.CurrentView.w = this.window.Width;
+            this.CurrentView.h = this.window.Height;
 
-
-            Matrix3 ro=Matrix3.CreateFromAxisAngle(rotateAxis, (float)angleDeltaFactor * (leftRight ? -1 : 1));
-            Vector3 newPosition=Vector3.Transform(ro, postion);
-        
-            CurrentView.Position = newPosition;
-
-            CurrentView.Front = Vector3.Transform(ro, CurrentView.Front);
-
+            this.CurrentView.AspectRatio = this.window.Width / (float)this.window.Height;
+            this.CurrentView.UpdateViewMatrix();
+            this.CurrentView.UpdateProjectionMatrix();
+            this.CurrentView.Update(this.app);
         }
 
 
@@ -173,9 +220,11 @@ namespace Flowing
                 if (this.CurrentView.target!= null)
                 {
                     dist = (this.CurrentView.target-this.CurrentView.Position).Length;
+
                 }
 
                 this.CurrentView.MoveIn(signum * dist * this.zoomDeltaFactor);
+                
             }
 
             this.lastZoomData = data;
@@ -186,33 +235,7 @@ namespace Flowing
             CurrentView.Yaw += (float)(dX * RotateDeltaFactor);
             CurrentView.Pitch -= (float)(dY * RotateDeltaFactor);
         }
-        private void Pan(double dx, double dy, bool onXZ)
-        {
-            double DistToOrign = CurrentView.Position.Length;
-            if (onXZ)
-            {
 
-                dx *= -panDeltaFactor * DistToOrign;
-                dy *= panDeltaFactor * DistToOrign;
-                CurrentView.Position = new Vector3(CurrentView.Position.X + (float)dx, CurrentView.Position.Y + (float)dy, CurrentView.Position.Z);
-
-            }
-            else
-            {
-
-                dx *= -panDeltaFactor * DistToOrign;
-                dy *= panDeltaFactor * DistToOrign;
-
-                Vector3 movex = (float)dx * CurrentView.Right;
-                Vector3 movey = (float)dy * CurrentView.Up;
-
-                Vector3 move = movex + movey;
-                //move.Z = 0.0F;
-                CurrentView.Position += move;
-                CurrentView.target += move;
-            }
-
-        }
 
         protected void Window_UpdateFrame(object sender, FrameEventArgs e)
         {
@@ -225,8 +248,8 @@ namespace Flowing
 
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadIdentity();
+            //GL.MatrixMode(MatrixMode.Modelview);
+            //GL.LoadIdentity();
 
             CurrentView.Update(this.app);
             
