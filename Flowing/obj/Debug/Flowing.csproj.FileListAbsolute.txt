@@ -15,3 +15,20 @@ C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\D
 C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\Debug\Flowing.dll
 C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\Debug\Flowing.pdb
 C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\Flowing.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\Flowing.pdb
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\Lucene.Net.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.GLControl.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\Lucene.Net.pdb
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\Lucene.Net.xml
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.pdb
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.xml
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.GLControl.pdb
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.GLControl.xml
+E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache
+E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.csproj.CoreCompileInputs.cache
+E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.csproj.CopyComplete
+E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.pdb
