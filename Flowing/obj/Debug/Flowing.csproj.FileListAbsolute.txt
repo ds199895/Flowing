@@ -1,0 +1,17 @@
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\Flowing.dll
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\Flowing.pdb
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\Lucene.Net.dll
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\OpenTK.dll
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\OpenTK.GLControl.dll
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\Lucene.Net.pdb
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\Lucene.Net.xml
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\OpenTK.pdb
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\OpenTK.xml
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\OpenTK.GLControl.pdb
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\bin\Debug\OpenTK.GLControl.xml
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\Debug\Flowing.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\Debug\Flowing.csproj.CopyComplete
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\Debug\Flowing.dll
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\Debug\Flowing.pdb
+C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache
