@@ -33,14 +33,22 @@ namespace Flowing
         override
         public void Draw()
         {
+            //Rhino:157, 163, 170
 
-            Background(255, 255, 255);
+            Background(255);
             //Smooth(4);
             cam.DrawSystem(this, 200);
             PushStyle();
             Fill(0, 0, 0);
 
             Cube(20, 20, 20);
+            //PushMatrix();
+            //Translate(0, 20, 0);
+
+            //Cube(30, 30, 30);
+            //PopMatrix();
+
+                
             PopStyle();
 
             Fill(255, 0, 255);

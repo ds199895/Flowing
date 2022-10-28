@@ -236,7 +236,10 @@ namespace Flowing
         {
             this.getFrustumPerspective();
             this.projectionMatrix= Matrix4.CreatePerspectiveFieldOfView((float)fovy, AspectRatio, 0.01f, 100000f);
+
             //this.projectionMatrix=Matrix4.CreatePerspectiveOffCenter(this.frustumLeft, this.frustumRight, this.frustumBottom, this.frustumTop, this.frustumNear, this.frustumFar);
+            //this.projectionMatrix = Matrix4.CreatePerspectiveOffCenter(this.frustumLeft*2, this.frustumRight-this.frustumLeft, this.frustumBottom*2, this.frustumTop-this.frustumBottom, this.frustumNear, this.frustumFar);
+
         }
 
         public void UpdateViewMatrix()
@@ -507,13 +510,13 @@ namespace Flowing
             if (this.perspective)
             {
 
-                GL.LoadMatrix(ref this.projectionMatrix);
-                //GL.Frustum((float)this.frustumLeft, this.frustumRight, this.frustumBottom,this.frustumTop, (float)this.frustumNear, (float)this.frustumFar);
+                //GL.LoadMatrix(ref this.projectionMatrix);
+                GL.Frustum((float)this.frustumLeft, this.frustumRight-this.frustumLeft, this.frustumBottom, this.frustumTop-this.frustumBottom, (float)this.frustumNear, (float)this.frustumFar);
             }
             else
             {
                 //GL.Ortho(frustumLeft, frustumRight, frustumBottom, frustumTop, -frustumFar, frustumFar);
-                Matrix4 ortho = Matrix4.CreateOrthographic(frustumRight-frustumLeft, frustumTop-frustumBottom, (float)-this.frustumFar, (float)this.frustumFar);
+                Matrix4 ortho = Matrix4.CreateOrthographic((frustumRight-frustumLeft)*2.0f, (frustumTop-frustumBottom)*2.0f, (float)-this.frustumFar, (float)this.frustumFar);
                 GL.LoadMatrix(ref ortho);
             }
 
@@ -521,7 +524,16 @@ namespace Flowing
             //GL.LoadIdentity();
         }
 
-
+        //private Matrix4 FromFrustum(double near,double far,double left,double right,double bottom,double top,bool parallel)
+        //{
+        //    Matrix4 newMatrix=new Matrix4();
+        //    if (parallel)
+        //    {
+        //        newMatrix.M11 = (float)(2.0 / (right - left));
+        //        newMatrix.M12 = (float)(2.0 / (top - bottom));
+        //        newMatrix.M13
+        //    }
+        //}
 
     }
 }

@@ -179,19 +179,6 @@ namespace Flowing
             this.CurrentView.Pitch -= -(float)(dY * RotateDeltaFactor);
         }
 
-        public void DrawSystem(IApp app, float len)
-        {
-            app.PushStyle();
-            this.DrawGrid(app, len, 20.0F);
-            app.StrokeWeight(2.0F);
-            app.Stroke(-65536);
-            app.Line(0.0F, 0.0F, 0.0F, len, 0.0F, 0.0F);
-            app.Stroke(-16711936);
-            app.Line(0.0F, 0.0F, 0.0F, 0.0F, len, 0.0F);
-            app.Stroke(-16776961);
-            app.Line(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, len);
-            app.PopStyle();
-        }
 
         //Shift cameras
         public void Top()
@@ -221,11 +208,24 @@ namespace Flowing
         }
 
         //Draw Grid and System
+        public void DrawSystem(IApp app, float len)
+        {
+            app.PushStyle();
+            this.DrawGrid(app, len, 20.0F);
+            app.StrokeWeight(2.5F);
+            app.Stroke(180, 50, 50);
+            app.Line(0.0F, 0.0F, 0.0F, len, 0.0F, 0.0F);
+            app.Stroke(50, 180, 50);
+            app.Line(0.0F, 0.0F, 0.0F, 0.0F, len, 0.0F);
+            app.Stroke(50, 50, 180);
+            app.Line(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, len);
+            app.PopStyle();
+        }
 
         private void DrawGrid(IApp app, float len, float num)
         {
             
-            float weight =0.5F;
+            float weight =1F;
             int gray = 100;
             len *= 2.0F;
             float step = len / num;
@@ -235,7 +235,7 @@ namespace Flowing
             for (int i = 0; (float)i <= num; ++i)
             {
                 app.PushStyle(false);
-                app.Stroke(gray);
+                app.Stroke(129,134,140);
                 app.StrokeWeight(weight);
                 app.Line(start, (float)i * step + start, 0.0F, len + start, (float)i * step + start, 0.0F);
                 app.Line((float)i * step + start, start, 0.0F, (float)i * step + start, len + start, 0.0F);
@@ -243,7 +243,7 @@ namespace Flowing
                 app.PopStyle();
 
                 app.PushStyle(false);
-                app.Stroke(gray+100);
+                app.Stroke(147,153,160);
                 float step2 = step / 5.0F;
                 app.StrokeWeight(weight/4);
                 if (i != num)

@@ -1082,46 +1082,6 @@ namespace Flowing
             this.vertexCount = 0;
         }
 
-        protected void CreateCube()
-        {
-            GL.Begin(PrimitiveType.Quads);
-            GL.Color3(1.0, 1.0, 0.0);
-            GL.Vertex3(-10.0, 10.0, 10.0);
-            GL.Vertex3(-10.0, 10.0, -10.0);
-            GL.Vertex3(-10.0, -10.0, -10.0);
-            GL.Vertex3(-10.0, -10.0, 10.0);
-
-            GL.Color3(1.0, 0.0, 1.0);
-            GL.Vertex3(10.0, 10.0, 10.0);
-            GL.Vertex3(10.0, 10.0, -10.0);
-            GL.Vertex3(10.0, -10.0, -10.0);
-            GL.Vertex3(10.0, -10.0, 10.0);
-
-            GL.Color3(0.0, 1.0, 1.0);
-            GL.Vertex3(10.0, -10.0, 10.0);
-            GL.Vertex3(10.0, -10.0, -10.0);
-            GL.Vertex3(-10.0, -10.0, -10.0);
-            GL.Vertex3(-10.0, -10.0, 10.0);
-
-            GL.Color3(1.0, 0.0, 0.0);
-            GL.Vertex3(10.0, 10.0, 10.0);
-            GL.Vertex3(10.0, 10.0, -10.0);
-            GL.Vertex3(-10.0, 10.0, -10.0);
-            GL.Vertex3(-10.0, 10.0, 10.0);
-
-            GL.Color3(0.0, 1.0, 0.0);
-            GL.Vertex3(10.0, 10.0, -10.0);
-            GL.Vertex3(10.0, -10.0, -10.0);
-            GL.Vertex3(-10.0, -10.0, -10.0);
-            GL.Vertex3(-10.0, 10.0, -10.0);
-
-            GL.Color3(0.0, 0.0, 1.0);
-            GL.Vertex3(10.0, 10.0, 10.0);
-            GL.Vertex3(10.0, -10.0, 10.0);
-            GL.Vertex3(-10.0, -10.0, 10.0);
-            GL.Vertex3(-10.0, 10.0, 10.0);
-            GL.End();
-        }
         protected void Cube(float length, float width, float height)
         {
             BeginShape(PrimitiveType.Quads);
