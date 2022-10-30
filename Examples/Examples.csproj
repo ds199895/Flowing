@@ -52,8 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app1.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="CamController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

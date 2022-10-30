@@ -26,8 +26,8 @@ namespace Flowing
             Size(800, 600);
             //cam = new CameraController(this, 200);
             //Smooth(4);
-            cam = new CamController(this);
-            cam.FixZaxisRotation= true;
+            //cam = new CamController(this);
+            //cam.FixZaxisRotation= true;
             Print("Hello, this is the first example of Flowing! Nice to meet you~");
         }
         override
@@ -37,7 +37,7 @@ namespace Flowing
 
             Background(255);
             //Smooth(4);
-            cam.DrawSystem(this, 200);
+            //cam.DrawSystem(this, 200);
             PushStyle();
             Fill(0, 0, 0);
 

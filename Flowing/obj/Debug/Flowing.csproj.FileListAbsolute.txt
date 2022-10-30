@@ -27,7 +27,6 @@ E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.pdb
 E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.xml
 E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.GLControl.pdb
 E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\OpenTK.GLControl.xml
-E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache
 E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.csproj.CoreCompileInputs.cache
 E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.csproj.CopyComplete
 E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.dll

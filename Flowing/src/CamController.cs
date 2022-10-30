@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Flowing
 {
-    class CamController
+    public class CamController
     {
         IApp app;
         public GameWindow window;
@@ -63,7 +63,7 @@ namespace Flowing
             this.camTop = new Camera(w, h, new Vector3(0.0F, 0.0F, dis), new Vector3(0.0F, 0.0F, 0.0F));
             this.camTop.Set2DProperties();
             this.camFront = new Camera(w, h, new Vector3(0.0F, -dis, 0.0F), new Vector3(0.0F, 0.0F, 0.0F));
-            this.camTop.Set2DProperties();
+            this.camFront.Set2DProperties();
             this.camBack = new Camera(w, h, new Vector3(0.0F, dis, 0.0F), new Vector3(0.0F, 0.0F, 0.0F));
             this.camBack.Set2DProperties();
             this.camLeft = new Camera(w, h, new Vector3(-dis, 0.0F, 0.0F), new Vector3(0.0F, 0.0F, 0.0F));
