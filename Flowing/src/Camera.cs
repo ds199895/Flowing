@@ -366,16 +366,22 @@ namespace Flowing
 
         }
 
-        public void Pan(double dx, double dy, bool onXZ,double panDeltaFactor)
+        public void Pan(double dx, double dy,double panDeltaFactor)
         {
+            //iniCoordinateSystem(this.Position, this.target);
+            bool onXZ = false;
+            if (this._front.X == 0 && this._front.Y == 0)
+            {
+                onXZ = true;
+            }
             double DistToOrign = (this.target-this.Position).Length;
             if (onXZ)
             {
 
                 dx *= -panDeltaFactor * DistToOrign;
                 dy *= panDeltaFactor * DistToOrign;
-                this.Position = new Vector3(this.Position.X + (float)dx, this.Position.Y + (float)dy, this.Position.Z);
-
+                this.Position+= new Vector3((float)dx, (float)dy, 0);
+                this.target += new Vector3((float)dx, (float)dy, 0);
             }
             else
             {
@@ -384,10 +390,10 @@ namespace Flowing
                 dy *= panDeltaFactor * DistToOrign;
 
                 Vector3 movex = (float)dx * this.Right;
+                //movex.Z = 0.0F;
                 Vector3 movey = (float)dy * this.Up;
-
+                //movey.Z = 0.0F;
                 Vector3 move = movex + movey;
-                //move.Z = 0.0F;
                 this.Position += move;
                 this.target += move;
             }
@@ -407,15 +413,18 @@ namespace Flowing
             {
                 dir = this.leftHandSystem ? 1 : -1;
 
-                double ang1 = (double)(dir * dx) * rotateDeltaFactor;
-                double ang2 = (double)dy * rotateDeltaFactor;
+
                 if (!FixZaxisRotation)
                 {
+                    double ang1 = (double)(dir * dx) * rotateDeltaFactor;
+                    double ang2 = (double)dy * rotateDeltaFactor;
                     HorizontalTransform(ang1);
                     VerticalTransform(ang2);
                 }
                 else
                 {
+                    double ang1 = (double)(dir * dx) * rotateDeltaFactor;
+                    double ang2 = (double)dy * rotateDeltaFactor;
                     RotateLookAtHorizontal(ang1);
                     RotateLookAtVertical(-ang2);
                 }
@@ -437,34 +446,42 @@ namespace Flowing
                 this.Rotate(this.target, new Vector3(this._right.X,this._right.Y, this._right.Z), angle);
             }
         }
-
+        
+        public void UpdateSystem()
+        {
+            
+        }
         public void VerticalTransform(double angle)
         {
+            float length = (this.target - this.Position).Length;
             Vector3 rotateAxis = Vector3.Cross(this.Position, this._up);
 
             this.Position = RotateVector(this.Position, rotateAxis, angle);
             this._front = RotateVector(this._front, rotateAxis, angle);
 
-
-            //update the up direction
-            Vector3 newUpDirection = Vector3.Cross(this.Front, rotateAxis);
-            newUpDirection.Normalize();
-            this.Up = newUpDirection;
-
+            //this.target = this.Position + this._front*length;
+            ////update the up direction
+            //Vector3 newUpDirection = Vector3.Cross(this.Front, rotateAxis);
+            //newUpDirection.Normalize();
+            //this.Up = newUpDirection;
+            //this._right = Vector3.Cross(this._front, this._up).Normalized();
             this.UpdateViewMatrix();
         }
 
         public void HorizontalTransform( double angle)
         {
             Vector3 rotateAxis = this.Up;
-
+            float length = (this.target - this.Position).Length;
             this.Position = RotateVector(this.Position, rotateAxis, angle);
             this._front = RotateVector(this._front, rotateAxis, angle);
+            this.target = this.Position + this._front * length;
             this._right = Vector3.Cross(this._front, rotateAxis).Normalized();
             this._up = Vector3.Cross(this._right, this._front).Normalized();
 
             this.UpdateViewMatrix();
         }
+
+
         public void Rotate(Vector3 center, Vector3 axis, double angle)
         {
             this.Position = RotateVector(this.Position, center, axis, angle);

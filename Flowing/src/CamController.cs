@@ -1,6 +1,7 @@
 ﻿using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -35,7 +36,7 @@ namespace Flowing
 
         private float lastZoomData = 0;
 
-        public bool FixZaxisRotation { get; set; } = false;
+        public bool FixZaxisRotation { get; set; } = true;
 
         public CamController(IApp app,float dis=1000)
         {
@@ -54,6 +55,9 @@ namespace Flowing
             this.app.window.MouseWheel += new EventHandler<OpenTK.Input.MouseWheelEventArgs>(Mouse_Wheel);
             this.app.window.Resize += new EventHandler<EventArgs>(Window_Resize);
             this.app.window.MouseDown += Mouse_Down;
+            this.app.window.KeyDown += Key_Down;
+            this.app.window.KeyUp += Key_Up;
+
         }
         public void ResetCameras(float dis=1000)
         {
@@ -120,17 +124,25 @@ namespace Flowing
                 cam.Resize(this.window.Width, this.window.Height);
             }
         }
+        private void Key_Down(Object sender, KeyboardKeyEventArgs e)
+        {
+            if (this.app.key == OpenTK.Input.Key.LShift || this.app.key == OpenTK.Input.Key.RShift)
+            {
+                this.FixZaxisRotation = false;
+            }
+        }
+        private void Key_Up(Object sender, KeyboardKeyEventArgs e)
+        {
+            if (this.app.key == OpenTK.Input.Key.LShift || this.app.key == OpenTK.Input.Key.RShift)
+            {
+                this.FixZaxisRotation = true;
+            }
+        }
 
         private void Mouse_Move(object sender, OpenTK.Input.MouseMoveEventArgs e)
         {
             if (e.Mouse.MiddleButton == OpenTK.Input.ButtonState.Pressed)
             {
-                bool noRotation = true;
-                if (this.CurrentView == this.camPerspective)
-                {
-                    noRotation = false;
-                }
-
                 float dX = e.X - mouseLastPosition.X;
                 float dY = e.Y - mouseLastPosition.Y;
 
@@ -143,16 +155,29 @@ namespace Flowing
             {
                 var dX = e.XDelta;
                 var dY = e.YDelta;
-                this.CurrentView.Pan(dX,dY, false,panDeltaFactor);
+                this.CurrentView.Pan(dX,dY,panDeltaFactor);
                 mouseLastPosition = new Vector2(e.X, e.Y);
             }
 
         }
+
+
         private void Mouse_Down(object sender, OpenTK.Input.MouseButtonEventArgs e)
         {
 
-
+            
             mouseLastPosition = new Vector2(e.X, e.Y);
+
+
+        }
+
+        private void Mouse_Up(object sender, OpenTK.Input.MouseButtonEventArgs e)
+        {
+            Console.WriteLine("Up! " + this.app.key);
+            if (this.app.key == OpenTK.Input.Key.LShift || this.app.key == OpenTK.Input.Key.RShift)
+            {
+                this.FixZaxisRotation = true;
+            }
 
         }
         private void Mouse_Wheel(object sender, OpenTK.Input.MouseWheelEventArgs e)
