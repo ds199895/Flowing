@@ -16,18 +16,22 @@ namespace Flowing
 
         public static void Main(string[] args)
         {
-           IApp.main();
+            IApp.main();
+            
         }
 
         CamController cam;
+        double x = 10;
+        bool stop = false;
         override
         public void SetUp()
         {
             Size(800, 600);
-    
+
             //Smooth(4);
+            Background(255, 0, 0);
             cam = new CamController(this);
-            cam.FixZaxisRotation= true;
+            cam.FixZaxisRotation = true;
             Print("Hello, this is the first example of Flowing! Nice to meet you~");
         }
         override
@@ -36,23 +40,28 @@ namespace Flowing
             //Rhino:157, 163, 170
 
             Background(255);
-            //Smooth(4);
+            Smooth(8);
             cam.DrawSystem(this, 200);
             PushStyle();
             Fill(0, 0, 0);
 
-            Cube(20, 20, 20);
+            Cube((float)(20 + x), (float)(20 + x), (float)(20 + x));
+            if (!stop)
+            {
+                x++;
+            }
+
             //PushMatrix();
             //Translate(0, 20, 0);
 
             //Cube(30, 30, 30);
             //PopMatrix();
 
-                
+
             PopStyle();
 
             Fill(255, 0, 255);
-            StrokeWeight(2);
+            StrokeWeight(5);
             Stroke(0, 255, 0);
             BeginShape();
             Vertex(200, 100, 0);
@@ -121,6 +130,10 @@ namespace Flowing
             }else if (key == OpenTK.Input.Key.A)
             {
                 cam.FixZaxisRotation = !cam.FixZaxisRotation;
+            }
+            else if (key == OpenTK.Input.Key.S)
+            {
+                stop = !stop;
             }
         }
 

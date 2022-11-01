@@ -57,7 +57,6 @@ namespace Flowing
             this.app.window.MouseDown += Mouse_Down;
             this.app.window.KeyDown += Key_Down;
             this.app.window.KeyUp += Key_Up;
-
         }
         public void ResetCameras(float dis=1000)
         {

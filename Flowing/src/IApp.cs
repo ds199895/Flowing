@@ -76,8 +76,6 @@ namespace Flowing
             app.HandleConsole();
             app.samples = mode.Samples;
             app.window.Run(1/app.FrameRate);
-
-
         }
         public void HandleWindowEvents()
         {
@@ -166,6 +164,13 @@ namespace Flowing
                 GL.Ortho(0.0f, this.window.Width, 0.0f, this.window.Height, -1.0f, 1.0f);
                 GL.MatrixMode(MatrixMode.Modelview);
             }
+            this.PushStyle();
+            this.PushMatrix();
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.ClearColor(Color.FromArgb(this.backgroundColor));
+
+            this.PopMatrix();
+            this.PopStyle();
         }
 
         private void Window_MouseWheel(Object sender, MouseWheelEventArgs e)
