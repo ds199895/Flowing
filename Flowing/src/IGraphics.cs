@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using Flowing.Triangulation;
+using OpenTK.Graphics;
 
 namespace Flowing
 { 
@@ -17,6 +18,10 @@ namespace Flowing
             Close = 1,
             Open = 2
         }
+        TextRenderer renderer;
+        Font serif = new Font(FontFamily.GenericSerif, 24);
+        Font sans = new Font(FontFamily.GenericSansSerif, 24);
+        //Font defaultFont;
         public GameWindow window;
         public int pixelCount;
         public bool smooth;
@@ -137,7 +142,7 @@ namespace Flowing
         public int ellipseMode;
         public int shapeMode;
         public int imageMode = 0;
-        //public PFont textFont;
+        public Font textFont;
         public int textAlign = 37;
         public int textAlignY = 0;
         public int textMode = 4;
@@ -231,12 +236,12 @@ namespace Flowing
                     this.NoSmooth();
                 }
 
-                //if (this.textFont != null)
-                //{
-                //    float saveLeading = this.textLeading;
-                //    this.textFont(this.textFont, this.textSize);
-                //    this.textLeading(saveLeading);
-                //}
+                if (this.textFont != null)
+                {
+                    float saveLeading = this.textLeading;
+                    this.TextFont(this.textFont, this.textSize);
+                    this.TextLeading(saveLeading);
+                }
 
                 this.TextMode(this.textMode);
                 this.TextAlign(this.textAlign, this.textAlignY);
@@ -280,8 +285,10 @@ namespace Flowing
             this.RectMode(0);
             this.EllipseMode(3);
             this.autoNormal = true;
-            //this.textFont = null;
+            
+
             this.textSize = 12.0F;
+            this.textFont = createDefaultFont(textSize);
             this.textLeading = 14.0F;
             this.textAlign = 37;
             this.textMode = 4;
@@ -319,7 +326,51 @@ namespace Flowing
             System.Array.Copy(list, 0, temp, 0, Math.Min(newSize, list.Length));
             return temp;
         }
+        public void TextFont(Font which)
+        {
+            if (which != null)
+            {
+                this.textFont = which;
+                this.TextSize((float)which.Size);
+            }
+            else
+            {
+                throw new Exception("A null Font was passed to textFont()");
+            }
+        }
 
+        public void TextFont(Font which, float size)
+        {
+            this.TextFont(which);
+            this.TextSize(size);
+        }
+        public void TextSize(float size)
+        {
+            if (this.textFont == null)
+            {
+                this.defaultFontOrDeath("textSize", size);
+            }
+
+            this.textSize = size;
+            //this.textLeading = (this.textAscent() + this.textDescent()) * 1.275F;
+        }
+        protected void defaultFontOrDeath(String method, float size)
+        {
+                this.textFont = this.createDefaultFont(size);
+        }
+        protected Font createDefaultFont(float size)
+        {
+            return this.createFont("Lucida Sans", size);
+        }
+
+        public Font createFont(String name, float size)
+        {
+            return new Font(name, size);
+        }
+        public void TextLeading(float leading)
+        {
+            this.textLeading = leading;
+        }
         public void PushStyle(bool Continue = true)
         {
             if (this.styleStackDepth == this.styleStack.Length)
@@ -1026,17 +1077,11 @@ namespace Flowing
         }
 
 
-        int getMultiSampleTexture(int samples)
-        {
-            int texture;
-            GL.GenTextures(1, out texture);
-            GL.BindTexture(TextureTarget.Texture2DMultisample, texture);
-            GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, samples, PixelInternalFormat.Rgb, width, height, true);
-            GL.BindTexture(TextureTarget.Texture2DMultisample, 0); ;
-            return texture;
-        }
         public void EndShape(EndMode endMode = EndMode.Close)
         {
+            GL.Enable(EnableCap.PolygonOffsetFill);
+            GL.PolygonOffset(1.0f, 1.0f);
+
             if (endMode == EndMode.Close)
             {
                 vertices[vertexCount++] = vertices[0];
@@ -1095,6 +1140,9 @@ namespace Flowing
 
             if (stroke)
             {
+                GL.Enable(EnableCap.PolygonOffsetLine);
+                GL.PolygonOffset(-1.0f, -1.0f);
+
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
                 GL.Color4(Color.FromArgb(strokeColor));
                 GL.LineWidth(strokeWeight);
@@ -1317,7 +1365,50 @@ namespace Flowing
             this.EndShape();
         }
 
+        protected void processText(String s, Font f, Color co)
+        {
+            renderer = new TextRenderer(s, f);
+            PointF position = PointF.Empty;
+            Color4 c = new Color4(1.0f, 1.0f, 1.0f,0.01f);
 
+            renderer.Clear(Color.FromArgb(c.ToArgb()));
+            renderer.DrawString(new SolidBrush(co), position);
+            //renderer.DrawString(Brushes.Red, position);
+        }
+
+        public void Text(string str, float x, float y, float z)
+        {
+            
+            processText(str, this.textFont, Color.FromArgb(this.fillColor));
+            GL.Enable(EnableCap.PolygonOffsetFill);
+            GL.PolygonOffset(-1.0f, -1.0f);
+            GL.Enable(EnableCap.AlphaTest);
+            GL.AlphaFunc(AlphaFunction.Greater, 0.01f);
+
+            GL.Enable(EnableCap.Texture2D);
+            GL.PushMatrix();
+            GL.BindTexture(TextureTarget.Texture2D, renderer.Texture);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            GL.Begin(BeginMode.Quads);
+
+
+            GL.Color4(1.0f, 1.0f, 1.0f, 0.1f);
+            //GL.Translate(x, y, z);
+            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(x, y, z);
+            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(x + renderer.width, y, z);
+            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(x + renderer.width, y + renderer.height, z);
+            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(x, y + renderer.height, z);
+            //GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(0, 0, 0);
+            //GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(0, renderer.height, 0);
+            //GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(renderer.width,renderer.height, 0);
+            //GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(renderer.width, 0, 0);
+
+
+            GL.End();
+            GL.PopMatrix();
+            GL.Disable(EnableCap.Texture2D);
+
+        }
 
         protected void colorCalc(int rgb)
         {

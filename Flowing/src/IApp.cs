@@ -30,7 +30,7 @@ namespace Flowing
         public bool is2D = true;
         public int FrameRate=30;
         public Key key;
-       
+        private bool smoothReseted = false;
         public int keyCode;
         public MouseButton MouseButton;
         private bool consoleShow = true;
@@ -39,6 +39,9 @@ namespace Flowing
         private static IntPtr et = new IntPtr(0);
         public static GraphicsMode mode=new GraphicsMode(32, 24, 8,2);
         public HashMap<int, GameWindow> wins = new HashMap<int, GameWindow>();
+        int bakeWidth;
+        int bakeHeight;
+
         public IApp()
         {
             
@@ -108,27 +111,42 @@ namespace Flowing
         }
         private void Window_Load(Object sender, EventArgs e)
         {
-            this.SetUp();
-            GL.Enable(EnableCap.DepthTest);
-            GL.DepthMask(true);
-            GL.DepthFunc(DepthFunction.Less);
-            this.Draw();
-        }
+            //if (!setup)
+            //{
+                this.SetUp();
+                GL.Enable(EnableCap.DepthTest);
+                GL.DepthMask(true);
+                GL.DepthFunc(DepthFunction.Less);
+
+                this.Draw();
+                //setup = true;
+        //}
+    }
         private void Window_UpdateFrame(Object sender, EventArgs e)
         {
-            
+
+
+     
         }
 
         public void ResetSmooth()
         {
             if (mode.Samples != samples)
             {
+                smoothReseted = true;
+            }
+                if (smoothReseted)
+            {
                 Print("Reset Smooth!");
 
                 Point p = window.Location;
                 GameWindow old = this.window;
                 mode = new GraphicsMode(32, 24, 8, samples);
-                this.window = new GameWindow(old.Width, old.Height, mode);
+                Print("w : " + this.window.Width);
+                bakeWidth = old.Width;
+                bakeHeight = old.Height;
+
+                this.window = new GameWindow(this.window.Width, this.window.Height, mode);
 
                 this.window.Location = p;
                 this.window.Title =old.Title;
@@ -139,13 +157,20 @@ namespace Flowing
 
                 Print("mode: " + mode.Samples);
                 old.Close();
-                this.window.Visible = false;
+                smoothReseted =false;
                 this.window.Run(1 / FrameRate);
+
+                
             }
         }
         private void Window_RenderFrame(Object sender, EventArgs e)
         {
             ResetSmooth();
+            if (smoothReseted)
+            {
+                this.window.Width = bakeWidth;
+                this.window.Height = bakeHeight;
+            }
 
             this.Draw();
             if (this.window.Exists)
@@ -260,6 +285,7 @@ namespace Flowing
         {
 
         }
+
 
 
         public static int constrain(int amt, int low, int high)

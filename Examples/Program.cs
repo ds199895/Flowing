@@ -25,6 +25,7 @@ namespace Flowing
         double x = 10;
         bool stop = false;
         HS_Vector[] vertices = new HS_Vector[9];
+        Font font;
         override
         public void SetUp()
         {
@@ -34,6 +35,8 @@ namespace Flowing
             Background(255, 0, 0);
             cam = new CamController(this);
             cam.FixZaxisRotation = true;
+            font = createFont("微软雅黑", 24);
+            TextFont(font);
             Print("Hello, this is the first example of Flowing! Nice to meet you~");
             this.vertices[0] = new HS_Vector(-400, 600);
             this.vertices[1] = new HS_Vector(0, 200);
@@ -51,7 +54,8 @@ namespace Flowing
             //Rhino:157, 163, 170
 
             Background(255);
-            //Smooth(8);
+
+            //Smooth(4);
             cam.DrawSystem(this, 200);
             PushStyle();
             Fill(255, 0, 0);
@@ -72,7 +76,7 @@ namespace Flowing
             PopStyle();
             Fill(255, 0, 255);
             //NoFill();
-            StrokeWeight(5);
+            StrokeWeight(2);
             Stroke(0, 255, 0);
             //NoStroke();
 
@@ -104,7 +108,13 @@ namespace Flowing
 
             EndShape();
 
+            PushStyle();
+            Fill(255, 0, 0);
 
+            Text("这是第一行文字！", 200, 200, 0);
+            Fill(0, 0, 255);
+            Text("This is The First Line of Text!", 200, 150, 0);
+            PopStyle();
 
             //PushMatrix();
             //PushStyle();
