@@ -51,6 +51,7 @@ namespace Flowing
 
             return type;
         }
+
         public static void main()
         {
             Console.Title = "Console";

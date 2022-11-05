@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Flowing;
+using Hsy.Geo;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -23,6 +24,7 @@ namespace Flowing
         CamController cam;
         double x = 10;
         bool stop = false;
+        HS_Vector[] vertices = new HS_Vector[9];
         override
         public void SetUp()
         {
@@ -33,6 +35,15 @@ namespace Flowing
             cam = new CamController(this);
             cam.FixZaxisRotation = true;
             Print("Hello, this is the first example of Flowing! Nice to meet you~");
+            this.vertices[0] = new HS_Vector(-400, 600);
+            this.vertices[1] = new HS_Vector(0, 200);
+            this.vertices[2] = new HS_Vector(200, 500);
+            this.vertices[3] = new HS_Vector(700, 0);
+            this.vertices[4] = new HS_Vector(500, -600);
+            this.vertices[5] = new HS_Vector(300, 300);
+            this.vertices[6] = new HS_Vector(0, -500);
+            this.vertices[7] = new HS_Vector(-600, 0);
+            this.vertices[8] = new HS_Vector(-200, 100);
         }
         override
         public void Draw()
@@ -40,16 +51,16 @@ namespace Flowing
             //Rhino:157, 163, 170
 
             Background(255);
-            Smooth(8);
+            //Smooth(8);
             cam.DrawSystem(this, 200);
             PushStyle();
-            Fill(0, 0, 0);
+            Fill(255, 0, 0);
 
             Cube((float)(20 + x), (float)(20 + x), (float)(20 + x));
-            if (!stop)
-            {
-                x++;
-            }
+            //if (!stop)
+            //{
+            //    x++;
+            //}
 
             //PushMatrix();
             //Translate(0, 20, 0);
@@ -59,14 +70,38 @@ namespace Flowing
 
 
             PopStyle();
-
             Fill(255, 0, 255);
+            //NoFill();
             StrokeWeight(5);
             Stroke(0, 255, 0);
+            //NoStroke();
+
             BeginShape();
-            Vertex(200, 100, 0);
-            Vertex(100, 200, 0);
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                Vertex(vertices[i].xf, vertices[i].yf);
+            }
+            Vertex(vertices[0].xf, vertices[0].yf);
+
+            //Vertex(200, 100, 0);
+            //Vertex(100, 200, 0);
+            //Vertex(220, 400, 0);
+            //Vertex(200, 100, 0);
+
+            //Vertex(50, 0, 0);
+            //Vertex(-50, 50, 0);
+            //Vertex(100, 250, 0);
+            //Vertex(50, 0, 0);
             Vertex(220, 400, 0);
+            Vertex(100, 200, 0);
+            Vertex(200, 100, 0);
+            Vertex(220, 400, 0);
+
+            Vertex(100, 250, 0);
+            Vertex(-50, 50, 0);
+            Vertex(50, 0, 0);
+            Vertex(100, 250, 0);
+
             EndShape();
 
 

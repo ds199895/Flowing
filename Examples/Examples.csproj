@@ -36,6 +36,9 @@
     <StartupObject>Flowing.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GyresMesh">
+      <HintPath>..\..\..\GyresMesh\src\GyresMesh\bin\Debug\GyresMesh.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\OpenTK.3.3.3\lib\net20\OpenTK.dll</HintPath>
