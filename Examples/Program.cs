@@ -32,12 +32,13 @@ namespace Flowing
             Size(800, 600);
 
             //Smooth(4);
-            Background(255, 0, 0);
+            //Background(255, 0, 0);
+            Print("Hello, this is the first example of Flowing! Nice to meet you~");
             cam = new CamController(this);
             cam.FixZaxisRotation = true;
             font = createFont("微软雅黑", 24);
             TextFont(font);
-            Print("Hello, this is the first example of Flowing! Nice to meet you~");
+            
             this.vertices[0] = new HS_Vector(-400, 600);
             this.vertices[1] = new HS_Vector(0, 200);
             this.vertices[2] = new HS_Vector(200, 500);
@@ -61,17 +62,6 @@ namespace Flowing
             Fill(255, 0, 0);
 
             Cube((float)(20 + x), (float)(20 + x), (float)(20 + x));
-            //if (!stop)
-            //{
-            //    x++;
-            //}
-
-            //PushMatrix();
-            //Translate(0, 20, 0);
-
-            //Cube(30, 30, 30);
-            //PopMatrix();
-
 
             PopStyle();
             Fill(255, 0, 255);
@@ -96,6 +86,7 @@ namespace Flowing
             //Vertex(-50, 50, 0);
             //Vertex(100, 250, 0);
             //Vertex(50, 0, 0);
+
             Vertex(220, 400, 0);
             Vertex(100, 200, 0);
             Vertex(200, 100, 0);
@@ -115,38 +106,6 @@ namespace Flowing
             Fill(0, 0, 255);
             Text("This is The First Line of Text!", 200, 150, 0);
             PopStyle();
-
-            //PushMatrix();
-            //PushStyle();
-            //Fill(100);
-            //Stroke(255, 0, 255);
-            //StrokeWeight(5);
-
-            //BeginShape();
-            //Translate(200, 0);
-            //Vertex(200, 50, 0);
-            //Vertex(400, 100, 0);
-            //Vertex(320, 300, 0);
-            //EndShape();
-            //PopStyle();
-            //PopMatrix();
-
-            //PushMatrix();
-            //PushStyle();
-            //Fill(100);
-            //Stroke(255, 0, 255);
-            //StrokeWeight(5);
-
-            //BeginShape();
-            //NoStroke();
-            //Translate(500, 500);
-            //Vertex(200, 50, 0);
-            //Vertex(400, 100, 0);
-            //Vertex(320, 300, 0);
-            //EndShape();
-            //PopStyle();
-            //PopMatrix();
-            //Console.WriteLine("draw!");
         }
 
         public override void MouseWheel()
