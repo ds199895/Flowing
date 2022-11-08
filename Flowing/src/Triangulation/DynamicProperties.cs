@@ -1,7 +1,8 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Flowing.Triangulation
 {
@@ -17,12 +18,7 @@ namespace Flowing.Triangulation
 
         internal void AddProperty(PropertyConstants key, object value)
         {
-            if (_properties.ContainsKey(key))
-                _properties[key] = value;
-            else
-            {
-                _properties.Add(key, value);
-            }
+            _properties.Add(key, value);
         }
 
         internal bool ExistsKey(PropertyConstants key)

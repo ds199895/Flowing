@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.SolverFoundation.Common;
 
 namespace Flowing.Triangulation
 {
-    public class Vector3m : ICloneable, IEquatable<Vector3m>
+    public class Vector3m : ICloneable
     {
         internal DynamicProperties DynamicProperties = new DynamicProperties();
 
-        public Vector3m(double x, double y, double z)
+        public Vector3m(Rational x, Rational y, Rational z)
         {
             X = x;
             Y = y;
@@ -24,25 +26,20 @@ namespace Flowing.Triangulation
             Z = v.Z;
         }
 
-        public Vector3m Inverse()
-        {
-            return this * -1;
-        }
-
         public static Vector3m Zero()
         {
             return new Vector3m(0, 0, 0);
         }
 
-        public double X { get; set; }
+        public Rational X { get; set; }
 
         public Vector3m Absolute()
         {
-             return new Vector3m(Math.Abs(X), Math.Abs(Y), Math.Abs(Z));
+            return new Vector3m(X.AbsoluteValue, Y.AbsoluteValue, Z.AbsoluteValue);
         }
 
-        public double Y { get; set; }
-        public double Z { get; set; }
+        public Rational Y { get; set; }
+        public Rational Z { get; set; }
 
         public object Clone()
         {
@@ -69,32 +66,32 @@ namespace Flowing.Triangulation
             return new Vector3m(this.X - a.X, this.Y - a.Y, this.Z - a.Z);
         }
 
-        public Vector3m Times(double a)
+        public Vector3m Times(Rational a)
         {
             return new Vector3m(this.X * a, this.Y * a, this.Z * a);
         }
 
-        public Vector3m DividedBy(double a)
+        public Vector3m DividedBy(Rational a)
         {
             return new Vector3m(this.X / a, this.Y / a, this.Z / a);
         }
 
-        public double Dot(Vector3m a)
+        public Rational Dot(Vector3m a)
         {
             return this.X * a.X + this.Y * a.Y + this.Z * a.Z;
         }
 
-        public Vector3m Lerp(Vector3m a, double t)
+        public Vector3m Lerp(Vector3m a, Rational t)
         {
             return this.Plus(a.Minus(this).Times(t));
         }
 
         public double Length()
         {
-            return System.Math.Sqrt(Dot(this));
+            return System.Math.Sqrt(Dot(this).ToDouble());
         }
 
-        public double LengthSquared()
+        public Rational LengthSquared()
         {
             return Dot(this);
         }
@@ -104,7 +101,7 @@ namespace Flowing.Triangulation
             if (this.LengthSquared() == 0)
                 return new Vector3m(0, 0, 0);
             var absNormal = Absolute();
-            double largestValue = 0;
+            Rational largestValue = 0;
             if (absNormal.X >= absNormal.Y && absNormal.X >= absNormal.Z)
                 largestValue = absNormal.X;
             else if (absNormal.Y >= absNormal.X && absNormal.Y >= absNormal.Z)
@@ -140,7 +137,7 @@ namespace Flowing.Triangulation
                 return false;
             }
 
-            return Double.Equals(X, other.X) && Double.Equals(Y, other.Y) && Double.Equals(Z, other.Z);
+            return X == other.X && Y == other.Y && Z == other.Z;
         }
 
         public override int GetHashCode()
@@ -153,34 +150,24 @@ namespace Flowing.Triangulation
             return a.Plus(b);
         }
 
-        public static Vector3m operator +(Vector3m a, float b)
-        {
-            return new Vector3m(a.X + b, a.Y + b, a.Z + b);
-        }
-
         public static Vector3m operator -(Vector3m a, Vector3m b)
         {
             return a.Minus(b);
         }
 
-        public static Vector3m operator -(Vector3m a, float b)
-        {
-            return new Vector3m(a.X - b, a.Y - b, a.Z - b);
-        }
-
-        public static Vector3m operator *(Vector3m a, double d)
+        public static Vector3m operator *(Vector3m a, Rational d)
         {
             return new Vector3m(a.X * d, a.Y * d, a.Z * d);
         }
 
-        public static Vector3m operator /(Vector3m a, double d)
+        public static Vector3m operator /(Vector3m a, Rational d)
         {
             return a.DividedBy(d);
         }
 
         public override string ToString()
         {
-            return "Vector:" + " " + X + " " + Y + " " + Z + " ";
+            return "Vector:" + " " + X.ToDouble() + " " + Y.ToDouble() + " " + Z.ToDouble() + " ";
         }
 
         public static Vector3m PlaneNormal(Vector3m v0, Vector3m v1, Vector3m v2)
@@ -193,40 +180,7 @@ namespace Flowing.Triangulation
         public bool SameDirection(Vector3m he)
         {
             var res = this.Cross(he);
-            return Double.Equals(res.X, 0) && Double.Equals(res.Y, 0) && Double.Equals(res.Z, 0);
-        }
-
-        public Vector3m Normalized()
-        {
-            return new Vector3m(this.X, this.Y, this.Z) / this.Length();
-        }
-
-        public double[] Data()
-        {
-            return new double[] { X, Y, Z };
-        }
-
-        internal bool IsMostlyZero()
-        {
-            return X <= 0.01 && Y <= 0.01 && Z <= 0.01;
-        }
-
-        public bool Equals(Vector3m other)
-        {
-            if (other == null)
-                return false;
-            return Double.Equals(this.X, other.X) && Double.Equals(this.Y, other.Y) && Double.Equals(this.Z, other.Z);
-        }
-
-        public double Angle(Vector3m other)
-        {
-            return Math.Acos((this.Dot(other)) / (this.Length() * other.Length()));
-        }
-        
-
-        public bool IsParallel(Vector3m other)
-        {
-            return Math.Abs(Angle(other)) <= 0.001;
+            return res.X == 0 && res.Y == 0 && res.Z == 0;
         }
     }
 }

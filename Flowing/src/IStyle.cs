@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,8 +38,8 @@ namespace Flowing
     public float emissiveG;
     public float emissiveB;
     public float shininess;
-    //public PFont textFont;
-    public int textAlign;
+    public Font textFont;
+        public int textAlign;
     public int textAlignY;
     public int textMode;
     public float textSize;

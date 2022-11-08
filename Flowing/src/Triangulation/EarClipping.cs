@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.SolverFoundation.Common;
 
 namespace Flowing.Triangulation
 {
@@ -41,7 +43,7 @@ namespace Flowing.Triangulation
                 }
             }
             Result = new List<Vector3m>();
-        }
+    }
 
         // calculating normal using Newell's method
         private void CalcNormal(List<Vector3m> points)
@@ -79,7 +81,9 @@ namespace Flowing.Triangulation
                     pointCount++;
                 }
                 ConnectionEdge current = new ConnectionEdge(p0, polygon);
+
                 first = (i == 0) ? current : first; // remember first
+
                 if (prev != null)
                 {
                     prev.Next = current;
@@ -170,7 +174,6 @@ namespace Flowing.Triangulation
         {
             for (int h = 0; h < _holes.Count; h++)
             {
-                //Misc.GetOrientation()
                 List<Polygon> polygons = new List<Polygon>();
                 polygons.Add(_mainPointList);
                 polygons.AddRange(_holes);
@@ -284,7 +287,7 @@ namespace Flowing.Triangulation
 
         private ConnectionEdge FindMinimumAngle(List<ConnectionEdge> candidates, Vector3m M, Vector3m direction)
         {
-            double angle = -double.MaxValue;
+            Rational angle = -double.MaxValue;
             ConnectionEdge result = null;
             foreach (var R in candidates)
             {
@@ -311,7 +314,7 @@ namespace Flowing.Triangulation
                     continue;
                 foreach (var connectionEdge in polygons[i].GetPolygonCirculator())
                 {
-                    double rayDistanceSquared;
+                    Rational rayDistanceSquared;
                     Vector3m intersectionPoint;
 
                     if (RaySegmentIntersection(out intersectionPoint, out rayDistanceSquared, M.Origin, direction, connectionEdge.Origin,
@@ -343,7 +346,7 @@ namespace Flowing.Triangulation
 
         private ConnectionEdge FindLargest(Polygon testHole)
         {
-            double maximum = 0;
+            Rational maximum = 0;
             ConnectionEdge maxEdge = null;
             Vector3m v0 = testHole.Start.Origin;
             Vector3m v1 = testHole.Start.Next.Origin;
@@ -389,7 +392,7 @@ namespace Flowing.Triangulation
             return resultList;
         }
 
-        public bool RaySegmentIntersection(out Vector3m intersection, out double distanceSquared, Vector3m linePoint1, Vector3m lineVec1, Vector3m linePoint3, Vector3m linePoint4, Vector3m direction)
+        public bool RaySegmentIntersection(out Vector3m intersection, out Rational distanceSquared, Vector3m linePoint1, Vector3m lineVec1, Vector3m linePoint3, Vector3m linePoint4, Vector3m direction)
         {
             var lineVec2 = linePoint4 - linePoint3;
             Vector3m lineVec3 = linePoint3 - linePoint1;
@@ -433,7 +436,7 @@ namespace Flowing.Triangulation
 
     internal class Candidate
     {
-        internal double currentDistance = double.MaxValue;
+        internal Rational currentDistance = double.MaxValue;
         internal Vector3m I;
         internal ConnectionEdge Origin;
         internal int PolyIndex;
@@ -484,6 +487,8 @@ namespace Flowing.Triangulation
             var list = (List<ConnectionEdge>)Origin.DynamicProperties.GetValue(PropertyConstants.IncidentEdges);
             list.Add(next);
         }
+
+
     }
 
     internal class Polygon

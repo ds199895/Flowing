@@ -173,6 +173,7 @@ namespace Flowing
             }
 
             this.Draw();
+            this.textFont.Dispose();
             if (this.window.Exists)
             {
                 this.window.SwapBuffers();

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.SolverFoundation.Common;
 
 namespace Flowing.Triangulation
 {
@@ -10,12 +12,10 @@ namespace Flowing.Triangulation
     {
         public static int GetOrientation(Vector3m v0, Vector3m v1, Vector3m v2, Vector3m normal)
         {
-           
             var res = (v0 - v1).Cross(v2 - v1);
             if (res.LengthSquared() == 0)
                 return 0;
-           
-            if (Math.Sign(res.X) != Math.Sign(normal.X) || Math.Sign(res.Y) != Math.Sign(normal.Y) || Math.Sign(res.Z) != Math.Sign(normal.Z))
+            if (res.X.Sign != normal.X.Sign || res.Y.Sign != normal.Y.Sign || res.Z.Sign != normal.Z.Sign)
                 return 1;
             return -1;
         }
@@ -40,7 +40,7 @@ namespace Flowing.Triangulation
                 {
                     var t = a - Origin;
                     var t2 = testPoint - Origin;
-                    if (Math.Sign(t.X) != Math.Sign(t2.X) || Math.Sign(t.Y) != Math.Sign(t2.Y))
+                    if (t.X.Sign != t2.X.Sign || t.Y.Sign != t2.Y.Sign)
                         return -1;
                     return 0;
                 }
@@ -48,7 +48,7 @@ namespace Flowing.Triangulation
                 {
                     var t = b - Origin;
                     var t2 = testPoint - Origin;
-                    if (Math.Sign(t.X) != Math.Sign(t2.X) || Math.Sign(t.Y) != Math.Sign(t2.Y))
+                    if (t.X.Sign != t2.X.Sign || t.Y.Sign != t2.Y.Sign)
                         return -1;
                     return 0;
                 }
@@ -62,7 +62,7 @@ namespace Flowing.Triangulation
                 {
                     var t = a - Origin;
                     var t2 = testPoint - Origin;
-                    if (Math.Sign(t.X) != Math.Sign(t2.X) || Math.Sign(t.Y) != Math.Sign(t2.Y))
+                    if (t.X.Sign != t2.X.Sign || t.Y.Sign != t2.Y.Sign)
                         return 1;
                     return 0;
                 }
@@ -70,7 +70,7 @@ namespace Flowing.Triangulation
                 {
                     var t = b - Origin;
                     var t2 = testPoint - Origin;
-                    if (Math.Sign(t.X) != Math.Sign(t2.X) || Math.Sign(t.Y) != Math.Sign(t2.Y))
+                    if (t.X.Sign != t2.X.Sign || t.Y.Sign != t2.Y.Sign)
                         return 1;
                     return 0;
                 }
@@ -95,7 +95,7 @@ namespace Flowing.Triangulation
             return res0 != 1 && res1 != 1 && res2 != 1;
         }
 
-        public static double PointLineDistance(Vector3m p1, Vector3m p2, Vector3m p3)
+        public static Rational PointLineDistance(Vector3m p1, Vector3m p2, Vector3m p3)
         {
             return (p2 - p1).Cross(p3 - p1).LengthSquared();
         }

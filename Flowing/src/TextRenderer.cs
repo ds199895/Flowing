@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PixelFormat = OpenTK.Graphics.OpenGL.PixelFormat;
 
 namespace Flowing
 {
@@ -33,23 +34,21 @@ namespace Flowing
         {
             this.text = s;
             this.font = font;
-            this.width = 0; this.height = 0;
-
 
             bmp = new Bitmap(1000, 1000, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             gfx = Graphics.FromImage(bmp);
 
             SizeF textBound = gfx.MeasureString(s, font);
-            this.width = (int)textBound.Width + 5;
-            this.height = (int)textBound.Height + 5;
+            this.width = (int)textBound.Width;
+            this.height = (int)textBound.Height;
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width");
             if (height <= 0)
                 throw new ArgumentOutOfRangeException("height ");
             if (GraphicsContext.CurrentContext == null)
                 throw new InvalidOperationException("No GraphicsContext is current on the calling thread.");
-            bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            gfx = Graphics.FromImage(bmp);
+            this.bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            gfx = Graphics.FromImage(this.bmp);
 
             gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
@@ -119,54 +118,54 @@ namespace Flowing
         void UploadBitmap()
         {
 
-            //if (dirty_region != RectangleF.Empty)
-            //{
-            //    System.Drawing.Imaging.BitmapData data = bmp.LockBits(dirty_region,
-            //        System.Drawing.Imaging.ImageLockMode.ReadOnly,
-            //        System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            if (dirty_region != RectangleF.Empty)
+            {
+                System.Drawing.Imaging.BitmapData data = bmp.LockBits(dirty_region,
+                    System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                    System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            //    GL.BindTexture(TextureTarget.Texture2D, texture);
-            //    GL.TexSubImage2D(TextureTarget.Texture2D, 0,
-            //        dirty_region.X, dirty_region.Y, dirty_region.Width, dirty_region.Height,
-            //        PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+                GL.BindTexture(TextureTarget.Texture2D, texture);
+                GL.TexSubImage2D(TextureTarget.Texture2D, 0,
+                    dirty_region.X, dirty_region.Y, dirty_region.Width, dirty_region.Height,
+                    PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
 
-            //    bmp.UnlockBits(data);
+                bmp.UnlockBits(data);
 
-            //    dirty_region = Rectangle.Empty;
-            //}
+                dirty_region = Rectangle.Empty;
+            }
             //RemoveWhiteEdge();
-            BitmapData bitmapData = bmp.LockBits(
-                               new Rectangle(0, 0, bmp.Width, bmp.Height),
-                               ImageLockMode.ReadWrite,
-                               System.Drawing.Imaging.PixelFormat.Format32bppArgb
-                               );
+            //BitmapData bitmapData = bmp.LockBits(
+            //                   new Rectangle(0, 0, bmp.Width, bmp.Height),
+            //                   ImageLockMode.ReadWrite,
+            //                   System.Drawing.Imaging.PixelFormat.Format32bppArgb
+            //                   );
 
-            IntPtr ptr = bitmapData.Scan0;
-            int bytesLength = bitmapData.Stride * bitmapData.Height;
-            byte[] rgbValues = new byte[bytesLength];
+            //IntPtr ptr = bitmapData.Scan0;
+            //int bytesLength = bitmapData.Stride * bitmapData.Height;
+            //byte[] rgbValues = new byte[bytesLength];
 
 
-            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 4);
-            GL.GenTextures(1, out texture);
-            GL.BindTexture(TextureTarget.Texture2D, texture);
+            //GL.PixelStore(PixelStoreParameter.UnpackAlignment, 4);
+            //GL.GenTextures(1, out texture);
+            //GL.BindTexture(TextureTarget.Texture2D, texture);
 
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
-            GL.TexImage2D(
-                    TextureTarget.Texture2D,
-                    0,
-                    PixelInternalFormat.Rgba,
-                    bitmapData.Width,
-                    bitmapData.Height,
-                    0,
-                    OpenTK.Graphics.OpenGL.PixelFormat.Bgra,
-                    PixelType.UnsignedByte,
-                    bitmapData.Scan0
-                );
+            //GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            //GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            //GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Repeat);
+            //GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
+            //GL.TexImage2D(
+            //        TextureTarget.Texture2D,
+            //        0,
+            //        PixelInternalFormat.Rgba,
+            //        bitmapData.Width,
+            //        bitmapData.Height,
+            //        0,
+            //        OpenTK.Graphics.OpenGL.PixelFormat.Bgra,
+            //        PixelType.UnsignedByte,
+            //        bitmapData.Scan0
+            //    );
 
-            bmp.UnlockBits(bitmapData);
+            //bmp.UnlockBits(bitmapData);
 
 
         }

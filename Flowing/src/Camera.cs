@@ -499,13 +499,10 @@ namespace Flowing
         }
         private Vector3 RotateVector(Vector3 based, Vector3 axis, double angle)
         {
-
             Matrix4 ro = Matrix4.CreateFromAxisAngle(axis, (float)angle);
             Vector3 newV = Vector4.Transform(new Vector4(based, 0.0f), ro).Xyz;
             return newV;
         }
-
-       
 
         public void Update(IApp app)
         {
@@ -539,17 +536,6 @@ namespace Flowing
             GL.MatrixMode(MatrixMode.Modelview);
             //GL.LoadIdentity();
         }
-
-        //private Matrix4 FromFrustum(double near,double far,double left,double right,double bottom,double top,bool parallel)
-        //{
-        //    Matrix4 newMatrix=new Matrix4();
-        //    if (parallel)
-        //    {
-        //        newMatrix.M11 = (float)(2.0 / (right - left));
-        //        newMatrix.M12 = (float)(2.0 / (top - bottom));
-        //        newMatrix.M13
-        //    }
-        //}
 
     }
 }

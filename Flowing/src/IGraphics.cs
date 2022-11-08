@@ -10,7 +10,7 @@ using Flowing.Triangulation;
 using OpenTK.Graphics;
 
 namespace Flowing
-{ 
+{
     public class IGraphics
     {
         public enum EndMode
@@ -18,64 +18,63 @@ namespace Flowing
             Close = 1,
             Open = 2
         }
-        TextRenderer renderer;
-        Font serif = new Font(FontFamily.GenericSerif, 24);
-        Font sans = new Font(FontFamily.GenericSansSerif, 24);
-        //Font defaultFont;
+        
+
         public GameWindow window;
+        TextRenderer TextRenderer;
         public int pixelCount;
         public bool smooth;
         public int quality;
-        protected bool settingsInited=false;
-        protected bool reapplySettings=false;
+        protected bool settingsInited = false;
+        protected bool reapplySettings = false;
         protected IGraphics raw;
         protected String path;
         protected bool primarySurface;
         protected bool[] hints = new bool[11];
 
-        static  int STYLE_STACK_DEPTH = 64;
+        static int STYLE_STACK_DEPTH = 64;
         IStyle[] styleStack = new IStyle[64];
         int styleStackDepth;
-        protected int vertexCount=0;
+        protected int vertexCount = 0;
 
         private float[][] vertices = new float[512][];
-        private static    int R = 3;
-        private static    int G = 4;
-        private static    int B = 5;
-        private static    int A = 6;
-        private static    int U = 7;
-        private static    int V = 8;
-        private static    int NX = 9;
-        private static    int NY = 10;
-        private static    int NZ = 11;
-        private static    int EDGE = 12;
-        private static    int SR = 13;
-        private static    int SG = 14;
-        private static    int SB = 15;
-        private static    int SA = 16;
-        private static    int SW = 17;
-        private static    int TX = 18;
-        private static    int TY = 19;
-        private static    int TZ = 20;
-        private static    int VX = 21;
-        private static    int VY = 22;
-        private static    int VZ = 23;
-        private static    int VW = 24;
-        private static    int AR = 25;
+        private static int R = 3;
+        private static int G = 4;
+        private static int B = 5;
+        private static int A = 6;
+        private static int U = 7;
+        private static int V = 8;
+        private static int NX = 9;
+        private static int NY = 10;
+        private static int NZ = 11;
+        private static int EDGE = 12;
+        private static int SR = 13;
+        private static int SG = 14;
+        private static int SB = 15;
+        private static int SA = 16;
+        private static int SW = 17;
+        private static int TX = 18;
+        private static int TY = 19;
+        private static int TZ = 20;
+        private static int VX = 21;
+        private static int VY = 22;
+        private static int VZ = 23;
+        private static int VW = 24;
+        private static int AR = 25;
         private static int AG = 26;
-        private static  int AB = 27;
-        private static  int DR = 3;
-        private static  int DG = 4;
-        private static  int DB = 5;
-        private static  int DA = 6;
+        private static int AB = 27;
+        private static int DR = 3;
+        private static int DG = 4;
+        private static int DB = 5;
+        private static int DA = 6;
         private static int SPR = 28;
-        private static  int SPG = 29;
-        private static  int SPB = 30;
-        private static  int SHINE = 31;
-        private static  int ER = 32;
-        private static  int EG = 33;
-        private static  int EB = 34;
-        private static  int BEEN_LIT = 35;
+        private static int SPG = 29;
+        private static int SPB = 30;
+        private static int SHINE = 31;
+        private static int ER = 32;
+        private static int EG = 33;
+        private static int EB = 34;
+        private static int BEEN_LIT = 35;
         private static int HAS_NORMAL = 36;
         private static int VERTEX_FIELD_COUNT = 37;
         public int colorMode;
@@ -132,9 +131,9 @@ namespace Flowing
         private bool autoNormal;
         public int samples;
         //Define styles
-        protected static    float DEFAULT_STROKE_WEIGHT = 1.0F;
-        protected static    int DEFAULT_STROKE_JOIN = 8;
-        protected static    int DEFAULT_STROKE_CAP = 2;
+        protected static float DEFAULT_STROKE_WEIGHT = 1.0F;
+        protected static int DEFAULT_STROKE_JOIN = 8;
+        protected static int DEFAULT_STROKE_CAP = 2;
         public float strokeWeight = 1.0F;
         public int strokeJoin = 8;
         public int strokeCap = 2;
@@ -178,6 +177,8 @@ namespace Flowing
         private int format;
         public int width;
         public int height;
+
+        public bool wireFrame = false;
         public void InitialStyleSettings()
         {
             this.allocate();
@@ -285,7 +286,7 @@ namespace Flowing
             this.RectMode(0);
             this.EllipseMode(3);
             this.autoNormal = true;
-            
+
 
             this.textSize = 12.0F;
             this.textFont = createDefaultFont(textSize);
@@ -302,14 +303,14 @@ namespace Flowing
         }
         public static Object expand(Object array)
         {
-            Object[]ob=array as Object[];
+            Object[] ob = array as Object[];
             return expand(array, ob.Length << 1);
         }
 
         public static Object expand(Object list, int newSize)
         {
             Object[] ob = list as Object[];
-            Type type= ob[0].GetType();
+            Type type = ob[0].GetType();
             Object[] temp = (object[])Array.CreateInstance(type, newSize);
             Array.Copy(ob, 0, temp, 0, Math.Min(ob.Length, newSize));
             return temp;
@@ -352,11 +353,15 @@ namespace Flowing
             }
 
             this.textSize = size;
+
+            this.textFont = new Font(this.textFont.Name, this.textSize);
+            
+            
             //this.textLeading = (this.textAscent() + this.textDescent()) * 1.275F;
         }
         protected void defaultFontOrDeath(String method, float size)
         {
-                this.textFont = this.createDefaultFont(size);
+            this.textFont = this.createDefaultFont(size);
         }
         protected Font createDefaultFont(float size)
         {
@@ -448,11 +453,11 @@ namespace Flowing
             this.specular(s.specularR, s.specularG, s.specularB);
             this.Shininess(s.shininess);
             this.ColorMode(s.colorMode, s.colorModeX, s.colorModeY, s.colorModeZ, s.colorModeA);
-            //if (s.textFont != null)
-            //{
-            //    this.textFont(s.textFont, s.textSize);
-            //    this.textLeading(s.textLeading);
-            //}
+            if (s.textFont != null)
+            {
+                this.TextFont(s.textFont, s.textSize);
+                this.TextLeading(s.textLeading);
+            }
 
             this.TextAlign(s.textAlign, s.textAlignY);
             this.TextMode(s.textMode);
@@ -499,7 +504,7 @@ namespace Flowing
             s.emissiveG = this.emissiveG;
             s.emissiveB = this.emissiveB;
             s.shininess = this.shininess;
-            //s.textFont = this.textFont;
+            s.textFont = this.textFont;
             s.textAlign = this.textAlign;
             s.textAlignY = this.textAlignY;
             s.textMode = this.textMode;
@@ -553,7 +558,7 @@ namespace Flowing
                     }
                     else
                     {
-                        String modeStr =mode.ToString();
+                        String modeStr = mode.ToString();
                         switch (mode)
                         {
                             case 4:
@@ -564,7 +569,7 @@ namespace Flowing
                                 break;
                         }
 
-                        Print("textMode(" + modeStr + ") is not supported by this renderer.");
+                        Print("textMode(" + modeStr + ") is not supported by this TextRenderer.");
                     }
 
                 }
@@ -572,7 +577,7 @@ namespace Flowing
             else
             {
                 Print("Since Processing 1.0 beta, textMode() is now textAlign().");
-                
+
             }
         }
         protected bool textModeCheck(int mode)
@@ -584,7 +589,7 @@ namespace Flowing
         {
             if (this.blendMode != 1)
             {
-                Print("blendMode (), or this particular variation of it, is not available with this renderer.");
+                Print("blendMode (), or this particular variation of it, is not available with this TextRenderer.");
             }
 
         }
@@ -599,7 +604,7 @@ namespace Flowing
         }
         public void Background(int rgb)
         {
-            
+
             this.colorCalc(rgb);
             this.backgroundFromCalc();
         }
@@ -667,7 +672,7 @@ namespace Flowing
             this.PushMatrix();
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.ClearColor(Color.FromArgb(backgroundColor));
-            
+
             this.PopMatrix();
             this.PopStyle();
         }
@@ -1010,7 +1015,7 @@ namespace Flowing
                 }
                 else
                 {
-                    GL.Translate(p[0], p[1],p[2]);
+                    GL.Translate(p[0], p[1], p[2]);
                 }
             }
         }
@@ -1026,24 +1031,25 @@ namespace Flowing
 
         }
 
-        public void Vertex(params float[]p)
+        public void Vertex(params float[] p)
         {
             this.vertexCheck();
             if (p.Length < 2 || p.Length > 3)
             {
                 throw new Exception("the nums of parameters should larger than 1 and smaller than 4");
-            }else
+            }
+            else
             {
                 float[] vertex = vertices[this.vertexCount] = new float[37];
                 if (p.Length == 2)
                 {
-                   
+
                     vertex[0] = p[0];
                     vertex[1] = p[1];
                     vertex[2] = 0.0f;
                 }
                 else
-                { 
+                {
                     vertex[0] = p[0];
                     vertex[1] = p[1];
                     vertex[2] = p[2];
@@ -1064,144 +1070,152 @@ namespace Flowing
         //    }
         //}
 
-        public void BeginShape()
+        //public void BeginShape()
+        //{
+        //    BeginShape(PrimitiveType.Polygon);
+        //}
+        public bool hole = false;
+        private int cutIndex = 0;
+        private List<int> cutIndices = new List<int>();
+        public void BeginShape(bool hole = false)
         {
-            BeginShape(PrimitiveType.Triangles);
+
+            this.hole = hole;
+            if (!hole)
+            {
+
+                BeginShape(PrimitiveType.Polygon);
+                //cutIndices.Add(0);
+            }
+            else
+            {
+                //Vertex(vertices[0][0],vertices[0][1],vertices[0][2]);
+                //Vertex(vertices[cutIndex][0], vertices[cutIndex][1], vertices[cutIndex][2]);
+                cutIndex = this.vertexCount;
+                cutIndices.Add(cutIndex);
+            }
         }
         private int LastIndex = 0;
 
         public void BeginShape(PrimitiveType p)
         {
             this.shape = ((int)p);
-            
+
         }
 
 
         public void EndShape(EndMode endMode = EndMode.Close)
         {
-            GL.Enable(EnableCap.PolygonOffsetFill);
-            GL.PolygonOffset(1.0f, 1.0f);
-
-            if (endMode == EndMode.Close)
+            if (this.vertexCount > 0)
             {
-                vertices[vertexCount++] = vertices[0];
+                if (hole)
+                {
+                    Vertex(vertices[cutIndex][0], vertices[cutIndex][1], vertices[cutIndex][2]);
+
+                    hole = false;
+                }
+                else
+                {
+
+
+                    cutIndices.Add(this.vertexCount);
+                    GL.Enable(EnableCap.Blend);
+                    GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
+                    if (smooth)
+                    {
+                        //GL.Enable(EnableCap.PointSmooth);
+                        //GL.Enable(EnableCap.LineSmooth);
+                        //GL.Enable(EnableCap.PolygonSmooth);
+
+                        //GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
+                        //GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
+
+                    }
+
+                    if (fill)
+                    {
+                        GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+                        GL.Color4(Color.FromArgb(fillColor));
+                        DrawPolygonTrianglesFill(vertices, cutIndices);
+                    }
+
+
+                    if (stroke)
+                    {
+                        GL.Enable(EnableCap.PolygonOffsetLine);
+                        GL.PolygonOffset(-1.0f, -1.0f);
+
+                        GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+                        GL.Color4(Color.FromArgb(strokeColor));
+                        GL.LineWidth(strokeWeight);
+                        DrawPolygonTrianglesStroke(vertices, cutIndices);
+                    }
+
+                    GL.Disable(EnableCap.Blend);
+
+                    this.vertices = new float[512][];
+                    this.vertexCount = 0;
+                    this.cutIndex = 0;
+                    this.cutIndices.Clear();
+                }
             }
-            GL.Enable(EnableCap.Blend);
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+        }
+        private void DrawPolygonTrianglesFill(float[][] vecs, List<int> indices)
+        {
+            Vector3[][] triangles;
+            Triangulate(vecs, this.vertexCount, out triangles);
 
-            if (smooth)
+            if (!wireFrame)
             {
-
-
-                //GL.Enable(EnableCap.PointSmooth);
-                //GL.Enable(EnableCap.LineSmooth);
-                //GL.Enable(EnableCap.PolygonSmooth);
-
-                //GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
-                //GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
-
-            }
-            bool cut = cutHoles(vertices, out List<int> indices);
-
-            if (fill)
-            {
-
-
-                //GL.Enable(EnableCap.StencilTest);
-
-
-                //GL.ColorMask(true, true, true, true);
-
-                //GL.StencilFunc(StencilFunction.Equal, 0, 0);
-                //GL.StencilOp(StencilOp.Keep, StencilOp.Keep, StencilOp.Keep);
-                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-                GL.Color4(Color.FromArgb(fillColor));
-                DrawPolygonTrianglesFill(vertices, indices);
-                //GL.Begin((PrimitiveType)this.shape);
-                //for (int i = 0; i < this.vertexCount; i++)
-                //{
-                //    GL.Vertex3(vertices[i][0], vertices[i][1], vertices[i][2]);
-
-                //}
-                //GL.End();
-                //GL.Disable(EnableCap.StencilTest);
-
-
-                //GL.Begin((PrimitiveType)this.shape);
-                //GL.Color4(Color.FromArgb(fillColor));
-                //Tessellation.Triangulate(vertices, this.vertexCount);
-                //for (int i = 0; i < this.vertexCount; i++)
-                //{
-                //    GL.Vertex3(vertices[i][0], vertices[i][1], vertices[i][2]);
-                //}
-                //GL.End();
-            }
-
-
-            if (stroke)
-            {
+                GL.Enable(EnableCap.PolygonOffsetFill);
+                GL.PolygonOffset(1.0f, 1.0f);
+                for (int i = 0; i < triangles.Length; i++)
+                {
+                    GL.Begin(PrimitiveType.Triangles);
+                    GL.Vertex3(triangles[i][0].X, triangles[i][0].Y, triangles[i][0].Z);
+                    GL.Vertex3(triangles[i][1].X, triangles[i][1].Y, triangles[i][1].Z);
+                    GL.Vertex3(triangles[i][2].X, triangles[i][2].Y, triangles[i][2].Z);
+                    GL.End();
+                }
+                GL.Disable(EnableCap.PolygonOffsetFill);
+            }else{
+                //绘制内部网格线
                 GL.Enable(EnableCap.PolygonOffsetLine);
-                GL.PolygonOffset(-1.0f, -1.0f);
-
+                GL.PolygonOffset(-2.0f, -2.0f);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
                 GL.Color4(Color.FromArgb(strokeColor));
                 GL.LineWidth(strokeWeight);
-                //GL.Begin(PrimitiveType.Lines);
-                //for (int i = 0; i < this.vertexCount; i++)
-                //{
-                //    int nxt = (i + 1) % this.vertexCount;
-                //    GL.Vertex3(vertices[i][0], vertices[i][1], vertices[i][2]);
-                //    GL.Vertex3(vertices[nxt][0], vertices[nxt][1], vertices[nxt][2]);
-                //}
+                for (int i = 0; i < triangles.Length; i++)
+                {
 
-
-                //GL.End();
-                DrawPolygonTrianglesStroke(vertices, indices);
+                    GL.Begin(PrimitiveType.Triangles);
+                    GL.Vertex3(triangles[i][0].X, triangles[i][0].Y, triangles[i][0].Z);
+                    GL.Vertex3(triangles[i][1].X, triangles[i][1].Y, triangles[i][1].Z);
+                    GL.Vertex3(triangles[i][2].X, triangles[i][2].Y, triangles[i][2].Z);
+                    GL.End();
+                }
+                GL.Disable(EnableCap.PolygonOffsetLine);
             }
+            
 
-            GL.Disable(EnableCap.Blend);
-            //GL.Viewport(0, 0, window.Width, window.Height);
+            //depreciated 耳切法
+            //List<Vector3> triangles;
+            //Triangulation(vecs, indices, this.vertexCount, out triangles);
 
-            //LastIndex = this.vertexCount;
-
-            this.vertices = new float[512][];
-            this.vertexCount = 0;
-        }
-
-        private void DrawPolygonTrianglesFill(float[][] vecs, List<int> indices)
-        {
-            //Vector3[][] triangles;
-            //Triangulate(vecs, this.vertexCount, out triangles);
-
-            //for (int i = 0; i < triangles.Length; i++)
+            //for (int i = 0; i < triangles.Count; i += 3)
             //{
             //    //Print(va);
             //    //Print(vb);
             //    GL.Begin(PrimitiveType.Triangles);
-            //    GL.Vertex3(triangles[i][0].X, triangles[i][0].Y, triangles[i][0].Z);
-            //    GL.Vertex3(triangles[i][1].X, triangles[i][1].Y, triangles[i][1].Z);
-            //    GL.Vertex3(triangles[i][2].X, triangles[i][2].Y, triangles[i][2].Z);
+            //    GL.Vertex3(triangles[i].X, triangles[i].Y, triangles[i].Z);
+            //    GL.Vertex3(triangles[i + 1].X, triangles[i + 1].Y, triangles[i + 1].Z);
+            //    GL.Vertex3(triangles[i + 2].X, triangles[i + 2].Y, triangles[i + 2].Z);
             //    //Line(va.xf, va.yf, va.zf, vb.xf, vb.yf, vb.zf);
             //    //Line(vb.xf, vb.yf, vb.zf, vc.xf, vc.yf, vc.zf);
             //    //Line(vc.xf, vc.yf, vc.zf, va.xf, va.yf, va.zf);
             //    GL.End();
             //}
-            List<Vector3> triangles;
-            Triangulation(vecs, indices, this.vertexCount, out triangles);
-
-            for (int i = 0; i < triangles.Count; i += 3)
-            {
-                //Print(va);
-                //Print(vb);
-                GL.Begin(PrimitiveType.Triangles);
-                GL.Vertex3(triangles[i].X, triangles[i].Y, triangles[i].Z);
-                GL.Vertex3(triangles[i + 1].X, triangles[i + 1].Y, triangles[i + 1].Z);
-                GL.Vertex3(triangles[i + 2].X, triangles[i + 2].Y, triangles[i + 2].Z);
-                //Line(va.xf, va.yf, va.zf, vb.xf, vb.yf, vb.zf);
-                //Line(vb.xf, vb.yf, vb.zf, vc.xf, vc.yf, vc.zf);
-                //Line(vc.xf, vc.yf, vc.zf, va.xf, va.yf, va.zf);
-                GL.End();
-            }
         }
         private void DrawPolygonTrianglesStroke(float[][] vecs, List<int> indices)
         {
@@ -1210,11 +1224,7 @@ namespace Flowing
                 int prevIndex = 0;
                 for (int i = 0; i < indices.Count; i++)
                 {
-                    //Print("cut index: " + indices[i]);
-                }
-                for (int i = 0; i < indices.Count; i++)
-                {
-                    GL.Begin(PrimitiveType.Polygon);
+                    GL.Begin((PrimitiveType)this.shape);
 
                     for (int j = prevIndex; j < indices[i]; j++)
                     {
@@ -1283,8 +1293,10 @@ namespace Flowing
                     List<Vector3m> points = new List<Vector3m>();
                     for (int j = prevIndex; j < indices[i]; j++)
                     {
+                        Vector3m p;
 
-                        Vector3m p = new Vector3m(vecs[j][0], vecs[j][1], vecs[j][2]);
+                        p = new Vector3m(vecs[j][0], vecs[j][1], vecs[j][2]);
+
                         points.Add(p);
                     }
                     if (prevIndex != 0)
@@ -1304,15 +1316,225 @@ namespace Flowing
                 EarClipping earClipping = new EarClipping();
                 earClipping.SetPoints(shell, holes);
                 earClipping.Triangulate();
+                //var res = earClipping.ResultIndex;
+
+                //foreach (int v in res)
+                //{
+                //    vertices.Add(new Vector3((float)vecs[v][0], (float)vecs[v][1], (float)vecs[v][2]));
+                //}
                 var res = earClipping.Result;
 
                 foreach (Vector3m v in res)
                 {
-                    vertices.Add(new Vector3((float)v.X, (float)v.Y, (float)v.Z));
+                    vertices.Add(new Vector3((float)v.X.ToDouble(), (float)v.Y.ToDouble(), (float)v.Z.ToDouble()));
                 }
             }
 
 
+        }
+        private static object VertexCombine(LibTessDotNet.Vec3 position, object[] data, float[] weights)
+        {
+            // Fetch the vertex data.
+            var colors = new Color[] { (Color)data[0], (Color)data[1], (Color)data[2], (Color)data[3] };
+            // Interpolate with the 4 weights.
+            var rgba = new float[] {
+                (float)colors[0].R * weights[0] + (float)colors[1].R * weights[1] + (float)colors[2].R * weights[2] + (float)colors[3].R * weights[3],
+                (float)colors[0].G * weights[0] + (float)colors[1].G * weights[1] + (float)colors[2].G * weights[2] + (float)colors[3].G * weights[3],
+                (float)colors[0].B * weights[0] + (float)colors[1].B * weights[1] + (float)colors[2].B * weights[2] + (float)colors[3].B * weights[3],
+                (float)colors[0].A * weights[0] + (float)colors[1].A * weights[1] + (float)colors[2].A * weights[2] + (float)colors[3].A * weights[3]
+            };
+            // Return interpolated data for the new vertex.
+            return Color.FromArgb((int)rgba[3], (int)rgba[0], (int)rgba[1], (int)rgba[2]);
+        }
+        private void Triangulate(float[][] vecs, int vertexCount, out Vector3[][] vertices)
+        {
+
+            List<List<Vector3>> holes = new List<List<Vector3>>();
+            List<Vector3> shell = new List<Vector3>();
+            List<Vector3> sortedVertices = new List<Vector3>();
+
+            if (cutIndices.Count > 0)
+            {
+                int prevIndex = 0;
+                for (int i = 0; i < cutIndices.Count; i++)
+                {
+                    List<Vector3> points = new List<Vector3>();
+                    for (int j = prevIndex; j < cutIndices[i]; j++)
+                    {
+                        Vector3 p;
+
+                        p = new Vector3(vecs[j][0], vecs[j][1], vecs[j][2]);
+
+                        points.Add(p);
+                    }
+                    points.Add(points[0]);
+                    if (prevIndex != 0)
+                    {
+                        holes.Add(points);
+
+                    }
+                    else
+                    {
+                        shell = points;
+
+                        sortedVertices.AddRange(shell);
+                    }
+
+                    prevIndex = cutIndices[i];
+                }
+            }
+            if (holes.Count > 0)
+            {
+                Vector3 start = holes[0][0];
+                int Id = -1;
+
+                double MinDis = double.MaxValue;
+                List<Vector3> candidates = new List<Vector3>();
+
+
+                List<Vector3> holePts = new List<Vector3>();
+                for (int i = 0; i < holes.Count; i++)
+                {
+                    for (int j = 0; j < holes[i].Count; j++)
+                    {
+                        holePts.Add(holes[i][j]);
+                    }
+
+                }
+                //find the first shell points which has no intersection with others
+                for (int i = 0; i < shell.Count; i++)
+                {
+                    int count = 0;
+                    for (int j = 0; j < shell.Count; j++)
+                    {
+                        int nxt = (j + 1) % holePts.Count;
+                        bool intersect = getIntersection2D(start, shell[i], shell[j], shell[nxt], out Vector3 inter);
+                        if (intersect)
+                        {
+                            //Print("shell "+i+ " intersect "+j+" "+nxt);
+                            count++;
+                        }
+                    }
+
+                    for (int j = 0; j < holePts.Count; j++)
+                    {
+                        int nxt = (j + 1) % holePts.Count;
+                        bool intersect = getIntersection2D(start, shell[i], holePts[j], holePts[nxt], out Vector3 inter);
+                        if (intersect)
+                        {
+                            count++;
+                        }
+                    }
+                    if (count == 0)
+                    {
+                        Id = i;
+                        break;
+                    }
+                }
+                //Print("Id: "+Id);
+                //sort the shell points according to the Id founded;
+                for (int i = 0; i < shell.Count; i++)
+                {
+                    int index = (i - Id + shell.Count) % shell.Count;
+                    sortedVertices.RemoveAt(index);
+                    sortedVertices.Insert(index, shell[i]);
+                }
+                //circulate the shell points
+                sortedVertices.Add(sortedVertices[0]);
+
+                for (int i = 0; i < holes.Count; i++)
+                {
+                    sortedVertices.AddRange(holes[i]);
+                }
+
+                //circulate the hole points
+                sortedVertices.Add(holes[0][0]);
+
+            }
+
+
+
+            // Create an instance of the tessellator. Can be reused.
+            var tess = new LibTessDotNet.Tess();
+
+            // Construct the contour from inputData.
+            // A polygon can be composed of multiple contours which are all tessellated at the same time.
+            //int numPoints = inputData.Length/2;
+
+            int numPoints = sortedVertices.Count;
+            var contour = new LibTessDotNet.ContourVertex[numPoints];
+            for (int i = 0; i < numPoints; i++)
+            {
+                // NOTE : Z is here for convenience if you want to keep a 3D vertex position throughout the tessellation process but only X and Y are important.
+                //contour[i].Position = new LibTessDotNet.Vec3(inputData[i * 2], inputData[i * 2 + 1], 0);
+                contour[i].Position = new LibTessDotNet.Vec3(sortedVertices[i].X, sortedVertices[i].Y, sortedVertices[i].Z);
+                // Data can contain any per-vertex data, here a constant color.
+                contour[i].Data = Color.Azure;
+            }
+            // Add the contour with a specific orientation, use "Original" if you want to keep the input orientation.
+            tess.AddContour(contour, LibTessDotNet.ContourOrientation.Clockwise);
+
+            // Tessellate!
+            // The winding rule determines how the different contours are combined together.
+            // See http://www.glprogramming.com/red/chapter11.html (section "Winding Numbers and Winding Rules") for more information.
+            // If you want triangles as output, you need to use "Polygons" type as output and 3 vertices per polygon.
+            tess.Tessellate(LibTessDotNet.WindingRule.EvenOdd, LibTessDotNet.ElementType.Polygons, 3, VertexCombine);
+
+            // Same call but the last callback is optional. Data will be null because no interpolated data would have been generated.
+            //tess.Tessellate(LibTessDotNet.WindingRule.EvenOdd, LibTessDotNet.ElementType.Polygons, 3); // Some vertices will have null Data in this case.
+
+            //Console.WriteLine("Output triangles:");
+            int numTriangles = tess.ElementCount;
+            vertices = new Vector3[numTriangles][];
+            for (int i = 0; i < numTriangles; i++)
+            {
+                var v0 = tess.Vertices[tess.Elements[i * 3]].Position;
+                var v1 = tess.Vertices[tess.Elements[i * 3 + 1]].Position;
+                var v2 = tess.Vertices[tess.Elements[i * 3 + 2]].Position;
+
+                vertices[i] = new Vector3[3];
+                vertices[i][0] = new Vector3(v0.X, v0.Y, v0.Z);
+                vertices[i][1] = new Vector3(v1.X, v1.Y, v1.Z);
+                vertices[i][2] = new Vector3(v2.X, v2.Y, v2.Z);
+
+                //Console.WriteLine(tess.Elements[i * 3] + " " + tess.Elements[i * 3 + 1] + " " + tess.Elements[i * 3 + 2]);
+
+                //Console.WriteLine("#{0} ({1:F1},{2:F1}) ({3:F1},{4:F1}) ({5:F1},{6:F1})", i, v0.X, v0.Y,  v0.Z,v1.X, v1.Y,v1.Z, v2.X, v2.Y, v2.Z);
+            }
+
+
+        }
+
+        public static bool getIntersection2D(Vector3 s1, Vector3 e1, Vector3 s2, Vector3 e2, out Vector3 i)
+        {
+            i = new Vector3();
+            double a1 = twiceSignedTriArea2D(s1, e1, e2);
+            double a2 = twiceSignedTriArea2D(s1, e1, s2);
+            if (a1 != 0 && a2 != 0 && a1 * a2 < 0.0D)
+            {
+                double a3 = twiceSignedTriArea2D(s2, e2, s1);
+                double a4 = a3 + a2 - a1;
+                if (a3 * a4 < 0.0D)
+                {
+                    double t1 = a3 / (a3 - a4);
+                    double t2 = a1 / (a1 - a2);
+
+                    Vector3 dir = (e1 - s1).Normalized();
+                    Vector3 result = dir * (float)clamp(t1, 0.0d, 1.0d) * (e1 - s1).Length;
+                    result += s1;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public static double clamp(double v, double min, double max)
+        {
+            return v < min ? min : (v > max ? max : v);
+        }
+        public static double twiceSignedTriArea2D(Vector3 p1, Vector3 p2, Vector3 p3)
+        {
+            return (p1.X - p3.X) * (p2.Y - p3.Y) - (p1.Y - p3.Y) * (p2.X - p3.X);
         }
 
         protected void Cube(float length, float width, float height)
@@ -1367,18 +1589,21 @@ namespace Flowing
 
         protected void processText(String s, Font f, Color co)
         {
-            renderer = new TextRenderer(s, f);
+            TextRenderer = new TextRenderer(s, f);
             PointF position = PointF.Empty;
-            Color4 c = new Color4(1.0f, 1.0f, 1.0f,0.01f);
+            Color4 c = new Color4(1.0f, 1.0f, 1.0f, 0.01f);
 
-            renderer.Clear(Color.FromArgb(c.ToArgb()));
-            renderer.DrawString(new SolidBrush(co), position);
-            //renderer.DrawString(Brushes.Red, position);
+            TextRenderer.Clear(Color.FromArgb(c.ToArgb()));
+            TextRenderer.DrawString(new SolidBrush(co), position);
+        }
+
+        public void Text(string str, Vector3 vec)
+        {
+            this.Text(str, vec.X, vec.Y, vec.Z);
         }
 
         public void Text(string str, float x, float y, float z)
         {
-            
             processText(str, this.textFont, Color.FromArgb(this.fillColor));
             GL.Enable(EnableCap.PolygonOffsetFill);
             GL.PolygonOffset(-1.0f, -1.0f);
@@ -1387,27 +1612,24 @@ namespace Flowing
 
             GL.Enable(EnableCap.Texture2D);
             GL.PushMatrix();
-            GL.BindTexture(TextureTarget.Texture2D, renderer.Texture);
+            GL.BindTexture(TextureTarget.Texture2D, TextRenderer.Texture);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
             GL.Begin(BeginMode.Quads);
 
 
             GL.Color4(1.0f, 1.0f, 1.0f, 0.1f);
-            //GL.Translate(x, y, z);
-            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(x, y, z);
-            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(x + renderer.width, y, z);
-            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(x + renderer.width, y + renderer.height, z);
-            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(x, y + renderer.height, z);
-            //GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(0, 0, 0);
-            //GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(0, renderer.height, 0);
-            //GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(renderer.width,renderer.height, 0);
-            //GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(renderer.width, 0, 0);
 
+            GL.TexCoord2(0.0f, 1.0f); GL.Vertex3(x, y, z);
+            GL.TexCoord2(1.0f, 1.0f); GL.Vertex3(x + TextRenderer.width, y, z);
+            GL.TexCoord2(1.0f, 0.0f); GL.Vertex3(x + TextRenderer.width, y + TextRenderer.height, z);
+            GL.TexCoord2(0.0f, 0.0f); GL.Vertex3(x, y + TextRenderer.height, z);
 
             GL.End();
             GL.PopMatrix();
             GL.Disable(EnableCap.Texture2D);
-
+            GL.Disable(EnableCap.PolygonOffsetFill);
+            //important 释放内存！
+            this.TextRenderer.Dispose();
         }
 
         protected void colorCalc(int rgb)
@@ -1675,12 +1897,12 @@ namespace Flowing
         public void GetMatrix()
         {
             float[] matrix = new float[6];
-            GL.GetFloat(GetPName.ProjectionMatrix,matrix);
+            GL.GetFloat(GetPName.ProjectionMatrix, matrix);
 
         }
-       public void Perspective()
+        public void Perspective()
         {
-            
+
         }
         public void Ortho(float left, float right, float bottom, float top, float near, float far)
         {
