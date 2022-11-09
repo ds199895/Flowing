@@ -19,13 +19,13 @@ namespace Flowing
         public static void Main(string[] args)
         {
             IApp.main();
-            
+
         }
 
         CamController cam;
         double x = 10;
         bool stop = false;
-      Vector3[] vertices = new Vector3[9];
+        Vector3[] vertices = new Vector3[9];
         Font font;
         List<Vector3m> points;
         EarClipping earClipping;
@@ -46,9 +46,9 @@ namespace Flowing
 
             this.vertices[0] = new Vector3(500, -600, 0);
             this.vertices[1] = new Vector3(300, 300, 0);
-            this.vertices[2] = new Vector3(0, -500,0);
+            this.vertices[2] = new Vector3(0, -500, 0);
             this.vertices[3] = new Vector3(-600, 0, 0);
-            this.vertices[4] = new Vector3(-200, 100,0);
+            this.vertices[4] = new Vector3(-200, 100, 0);
             this.vertices[5] = new Vector3(-400, 600, 100);
             this.vertices[6] = new Vector3(0, 200, 0);
             this.vertices[7] = new Vector3(200, 500, 0);
@@ -112,26 +112,26 @@ namespace Flowing
 
             //测试带洞多边形
 
-            //for (int i = 0; i < vertices.Length; i++)
-            //{
-            //    Vertex(vertices[i].X, vertices[i].Y, vertices[i].Z);
-            //    PushStyle();
-            //    TextSize(15);
-            //    Fill(255, 0, 0);
-            //    Text(i.ToString(), vertices[i].X, vertices[i].Y, vertices[i].Z);
-            //    PopStyle();
-            //}
-            //BeginShape(hole = true);
-            //Vertex(100, 250, 0);
-            //Vertex(50, 0, 0);
-            //Vertex(-50, 50, 10);
-            //EndShape();
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                Vertex(vertices[i].X, vertices[i].Y, vertices[i].Z);
+                PushStyle();
+                TextSize(15);
+                Fill(255, 0, 0);
+                Text(i.ToString(), vertices[i].X, vertices[i].Y, vertices[i].Z);
+                PopStyle();
+            }
+            BeginShape(hole = true);
+            Vertex(100, 250, 0);
+            Vertex(50, 0, 0);
+            Vertex(-50, 50, 10);
+            EndShape();
 
-            //BeginShape(hole = true);
-            //Vertex(100, 200, 0);
-            //Vertex(220, 400, 0);
-            //Vertex(200, 100, 0);
-            //EndShape();
+            BeginShape(hole = true);
+            Vertex(100, 200, 0);
+            Vertex(220, 400, 0);
+            Vertex(200, 100, 0);
+            EndShape();
 
             EndShape();
 
@@ -157,16 +157,14 @@ namespace Flowing
             if (key == OpenTK.Input.Key.T)
             {
                 cam.Top();
-            }else if (key == OpenTK.Input.Key.P)
+            }
+            else if (key == OpenTK.Input.Key.P)
             {
                 cam.Perspective();
             }
             else if (key == OpenTK.Input.Key.Z)
             {
                 cam.CurrentView.SetPerspective(!cam.CurrentView.perspective);
-            }else if (key == OpenTK.Input.Key.A)
-            {
-                cam.FixZaxisRotation = !cam.FixZaxisRotation;
             }
             else if (key == OpenTK.Input.Key.S)
             {
