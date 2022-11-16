@@ -66,3 +66,7 @@ E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GyresMesh.dll
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GyresMesh.pdb
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GyresMesh.dll.config
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\LibTessDotNet.dll
+E:\10-study\C#\Flowing\Examples\bin\Debug\Microsoft.Solver.Foundation.dll
+E:\10-study\C#\Flowing\Examples\bin\Debug\LibTessDotNet.dll
+E:\10-study\C#\Flowing\Examples\bin\Debug\GyresMesh.pdb
+E:\10-study\C#\Flowing\Examples\bin\Debug\GyresMesh.dll.config
