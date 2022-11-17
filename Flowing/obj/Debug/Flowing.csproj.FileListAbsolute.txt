@@ -67,7 +67,6 @@ E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.pdb
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\LibTessDotNet.dll
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\LibTessDotNet.Double.dll
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\Microsoft.Solver.Foundation.dll
-E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache
 E:\10-study\C#\Flowing\Flowing\bin\Debug\LibTessDotNet.dll
 E:\10-study\C#\Flowing\Flowing\bin\Debug\LibTessDotNet.Double.dll
 E:\10-study\C#\Flowing\Flowing\bin\Debug\Microsoft.Solver.Foundation.dll

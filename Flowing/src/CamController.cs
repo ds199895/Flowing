@@ -114,6 +114,10 @@ namespace Flowing
             CurrentView.Update(this.app);
         }
 
+        public Camera GetCamera()
+        {
+            return this.CurrentView;
+        }
         protected void Window_Resize(object sender, EventArgs e)
         {
             GL.Viewport(0, 0, this.window.Width, this.window.Height);

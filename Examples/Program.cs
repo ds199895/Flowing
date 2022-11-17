@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Flowing;
 using Flowing.Triangulation;
-using Hsy.Geo;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -73,75 +72,83 @@ namespace Flowing
 
             //Smooth(4);
             cam.DrawSystem(this, 200);
-            PushStyle();
-            Fill(0, 0, 0);
+            //PushStyle();
+            //Fill(0, 0, 0);
 
-            Cube((float)(20 + x), (float)(20 + x), (float)(20 + x));
+            //Cube((float)(20 + x), (float)(20 + x), (float)(20 + x));
 
-            PopStyle();
-            Fill(200, 200, 200);
-            //NoFill();
-            StrokeWeight(1.5f);
-            Stroke(255, 0, 0);
+            //PopStyle();
+            //Fill(200, 200, 200);
+            ////NoFill();
+            //StrokeWeight(1.5f);
+            //Stroke(255, 0, 0);
 
-            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+            ////GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
 
-            //GL.Begin(PrimitiveType.Polygon);
-            //GL.Color3(1.0f, 0.0f, 0.0f);
-            //GL.Vertex3(200, 350, 350);
-            //GL.Color3(0.0f, 1.0f, 0.0f);
-            //GL.Vertex3(150, 350, 350);
-            //GL.Color3(0.0f, 0.0f, 1.0f);
-            //GL.Vertex3(200, 500, 400);
-            //GL.End();
+            ////GL.Begin(PrimitiveType.Polygon);
+            ////GL.Color3(1.0f, 0.0f, 0.0f);
+            ////GL.Vertex3(200, 350, 350);
+            ////GL.Color3(0.0f, 1.0f, 0.0f);
+            ////GL.Vertex3(150, 350, 350);
+            ////GL.Color3(0.0f, 0.0f, 1.0f);
+            ////GL.Vertex3(200, 500, 400);
+            ////GL.End();
 
-            BeginShape();
+            //BeginShape();
 
-            //测试任意图形
-            //Vertex(200, 350, 350);
-            //Vertex(150, 350, 350);
-            //Vertex(200, 500, 400);
-            //Vertex(200, 500, 500);
-            //Vertex(400, 350, 350);
+            ////测试任意图形
+            ////Vertex(200, 350, 350);
+            ////Vertex(150, 350, 350);
+            ////Vertex(200, 500, 400);
+            ////Vertex(200, 500, 500);
+            ////Vertex(400, 350, 350);
 
-            //测试自相交图形
-            //Vertex(200, 100, 0);
-            //Vertex(50, 200, 0);
-            //Vertex(0, 0, 0);
+            ////测试自相交图形
+            ////Vertex(200, 100, 0);
+            ////Vertex(50, 200, 0);
+            ////Vertex(0, 0, 0);
+            ////Vertex(220, 400, 0);
+
+            ////测试带洞多边形
+
+            //for (int i = 0; i < vertices.Length; i++)
+            //{
+            //    Vertex(vertices[i].X, vertices[i].Y, vertices[i].Z);
+            //    PushStyle();
+            //    TextSize(15);
+            //    Fill(255, 0, 0);
+            //    sphere(50);
+            //    Text(i.ToString(), vertices[i].X, vertices[i].Y, vertices[i].Z);
+            //    PopStyle();
+            //}
+            //BeginShape(hole = true);
+            //Vertex(100, 250, 0);
+            //Vertex(50, 0, 0);
+            //Vertex(-50, 50, 10);
+            //EndShape();
+
+            //BeginShape(hole = true);
+            //Vertex(100, 200, 0);
             //Vertex(220, 400, 0);
+            //Vertex(200, 100, 0);
+            //EndShape();
 
-            //测试带洞多边形
+            //EndShape();
 
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                Vertex(vertices[i].X, vertices[i].Y, vertices[i].Z);
-                PushStyle();
-                TextSize(15);
-                Fill(255, 0, 0);
-                Text(i.ToString(), vertices[i].X, vertices[i].Y, vertices[i].Z);
-                PopStyle();
-            }
-            BeginShape(hole = true);
-            Vertex(100, 250, 0);
-            Vertex(50, 0, 0);
-            Vertex(-50, 50, 10);
-            EndShape();
+            //PushStyle();
+            //Fill(255, 0, 0);
 
-            BeginShape(hole = true);
-            Vertex(100, 200, 0);
-            Vertex(220, 400, 0);
-            Vertex(200, 100, 0);
-            EndShape();
+            //Text("这是第一行文字！", 200, 200, 0);
+            //Fill(0, 0, 255);
+            //Text("This is The First Line of Text!", 200, 150, 0);
 
-            EndShape();
 
-            PushStyle();
-            Fill(255, 0, 0);
+            //PopStyle();
+            Fill(0);
+            Stroke(255, 0, 0);
+            sphere(50);
+            //Cube(50,50,50);
 
-            Text("这是第一行文字！", 200, 200, 0);
-            Fill(0, 0, 255);
-            Text("This is The First Line of Text!", 200, 150, 0);
-            PopStyle();
         }
 
 

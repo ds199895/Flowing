@@ -11,7 +11,7 @@ using OpenTK.Graphics;
 
 namespace Flowing
 {
-    public class IGraphics
+    public class IGraphics:IConstants
     {
         public enum EndMode
         {
@@ -25,17 +25,17 @@ namespace Flowing
         public int pixelCount;
         public bool smooth;
         public int quality;
-        protected bool settingsInited = false;
-        protected bool reapplySettings = false;
-        protected IGraphics raw;
-        protected String path;
-        protected bool primarySurface;
-        protected bool[] hints = new bool[11];
+        public bool settingsInited = false;
+        public bool reapplySettings = false;
+        public IGraphics raw;
+        public String path;
+        public bool primarySurface;
+        public bool[] hints = new bool[11];
 
         static int STYLE_STACK_DEPTH = 64;
         IStyle[] styleStack = new IStyle[64];
         int styleStackDepth;
-        protected int vertexCount = 0;
+        public int vertexCount = 0;
 
         private float[][] vertices = new float[512][];
         private static int R = 3;
@@ -131,9 +131,9 @@ namespace Flowing
         private bool autoNormal;
         public int samples;
         //Define styles
-        protected static float DEFAULT_STROKE_WEIGHT = 1.0F;
-        protected static int DEFAULT_STROKE_JOIN = 8;
-        protected static int DEFAULT_STROKE_CAP = 2;
+        public static float DEFAULT_STROKE_WEIGHT = 1.0F;
+        public static int DEFAULT_STROKE_JOIN = 8;
+        public static int DEFAULT_STROKE_CAP = 2;
         public float strokeWeight = 1.0F;
         public int strokeJoin = 8;
         public int strokeCap = 2;
@@ -164,21 +164,32 @@ namespace Flowing
         public int blendMode;
 
         //Calculate the color of every element
-        protected float calcR;
-        protected float calcG;
-        protected float calcB;
-        protected float calcA;
-        protected int calcRi;
-        protected int calcGi;
-        protected int calcBi;
-        protected int calcAi;
-        protected int calcColor;
-        protected bool calcAlpha;
+        public float calcR;
+        public float calcG;
+        public float calcB;
+        public float calcA;
+        public int calcRi;
+        public int calcGi;
+        public int calcBi;
+        public int calcAi;
+        public int calcColor;
+        public bool calcAlpha;
         private int format;
         public int width;
         public int height;
 
+        protected float[] sphereX;
+        protected float[] sphereY;
+        protected float[] sphereZ;
+
+        public int sphereDetailU = 0;
+        public int sphereDetailV = 0;
+
         public bool wireFrame = false;
+
+        protected static float[] sinLUT = new float[720];
+        protected static float[] cosLUT = new float[720];
+
         public void InitialStyleSettings()
         {
             this.allocate();
@@ -189,11 +200,11 @@ namespace Flowing
             this.allocate();
             this.ReapplySettings();
         }
-        protected void allocate()
+        public void allocate()
         {
         }
 
-        protected void ReapplySettings()
+        public void ReapplySettings()
         {
             if (this.settingsInited)
             {
@@ -252,7 +263,7 @@ namespace Flowing
             }
         }
 
-        protected void checkSettings()
+        public void checkSettings()
         {
             if (!this.settingsInited)
             {
@@ -264,7 +275,7 @@ namespace Flowing
                 this.ReapplySettings();
             }
         }
-        protected void defaultSettings()
+        public void defaultSettings()
         {
             quality = 1;
             if (this.quality > 0)
@@ -300,6 +311,11 @@ namespace Flowing
 
             this.BlendMode(1);
             this.settingsInited = true;
+            for (int i = 0; i < 720; ++i)
+            {
+                sinLUT[i] = (float)Math.Sin((double)((float)i * 0.017453292F * 0.5F));
+                cosLUT[i] = (float)Math.Cos((double)((float)i * 0.017453292F * 0.5F));
+            }
         }
         public static Object expand(Object array)
         {
@@ -359,11 +375,11 @@ namespace Flowing
             
             //this.textLeading = (this.textAscent() + this.textDescent()) * 1.275F;
         }
-        protected void defaultFontOrDeath(String method, float size)
+        public void defaultFontOrDeath(String method, float size)
         {
             this.textFont = this.createDefaultFont(size);
         }
-        protected Font createDefaultFont(float size)
+        public Font createDefaultFont(float size)
         {
             return this.createFont("Lucida Sans", size);
         }
@@ -580,12 +596,12 @@ namespace Flowing
 
             }
         }
-        protected bool textModeCheck(int mode)
+        public bool textModeCheck(int mode)
         {
             return true;
         }
 
-        protected void blendModeImpl()
+        public void blendModeImpl()
         {
             if (this.blendMode != 1)
             {
@@ -651,7 +667,7 @@ namespace Flowing
             this.colorCalc(v1, v2, v3, alpha);
             this.backgroundFromCalc();
         }
-        protected void backgroundFromCalc()
+        public void backgroundFromCalc()
         {
             this.backgroundR = this.calcR;
             this.backgroundG = this.calcG;
@@ -666,7 +682,7 @@ namespace Flowing
             this.backgroundImpl();
         }
 
-        protected void backgroundImpl()
+        public void backgroundImpl()
         {
             this.PushStyle();
             this.PushMatrix();
@@ -676,12 +692,12 @@ namespace Flowing
             this.PopMatrix();
             this.PopStyle();
         }
-        protected void PushMatrix()
+        public void PushMatrix()
         {
             GL.PushMatrix();
         }
 
-        protected void PopMatrix()
+        public void PopMatrix()
         {
             GL.PopMatrix();
         }
@@ -797,7 +813,7 @@ namespace Flowing
             this.colorCalc(v1, v2, v3, alpha);
             this.fillFromCalc();
         }
-        protected void fillFromCalc()
+        public void fillFromCalc()
         {
             this.fill = true;
             this.fillR = this.calcR;
@@ -811,7 +827,7 @@ namespace Flowing
             this.fillColor = this.calcColor;
             this.fillAlpha = this.calcAlpha;
         }
-        protected void strokeFromCalc()
+        public void strokeFromCalc()
         {
             this.stroke = true;
             this.strokeR = this.calcR;
@@ -865,7 +881,7 @@ namespace Flowing
             this.tintFromCalc();
         }
 
-        protected void tintFromCalc()
+        public void tintFromCalc()
         {
             this.tint = true;
             this.tintR = this.calcR;
@@ -897,7 +913,7 @@ namespace Flowing
             this.ambientFromCalc();
         }
 
-        protected void ambientFromCalc()
+        public void ambientFromCalc()
         {
             this.ambientColor = this.calcColor;
             this.ambientR = this.calcR;
@@ -924,7 +940,7 @@ namespace Flowing
             this.specularFromCalc();
         }
 
-        protected void specularFromCalc()
+        public void specularFromCalc()
         {
             this.specularColor = this.calcColor;
             this.specularR = this.calcR;
@@ -955,7 +971,7 @@ namespace Flowing
             this.emissiveFromCalc();
         }
 
-        protected void emissiveFromCalc()
+        public void emissiveFromCalc()
         {
             this.emissiveColor = this.calcColor;
             this.emissiveR = this.calcR;
@@ -1019,7 +1035,7 @@ namespace Flowing
                 }
             }
         }
-        protected void vertexCheck()
+        public void vertexCheck()
         {
             if (this.vertexCount == this.vertices.Length)
             {
@@ -1137,7 +1153,22 @@ namespace Flowing
                     {
                         GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
                         GL.Color4(Color.FromArgb(fillColor));
-                        DrawPolygonTrianglesFill(vertices, cutIndices);
+                        if (this.shape != (int)PrimitiveType.Polygon)
+                        {
+                            GL.Begin((PrimitiveType)this.shape);
+                            for(int i = 0; i < this.vertexCount; i++)
+                            {
+                                GL.Vertex3(vertices[i][0], vertices[i][1], vertices[i][2]);
+                            }
+                            
+
+                            GL.End();
+                        }
+                        else
+                        {
+                            DrawPolygonTrianglesFill(vertices, cutIndices);
+                        }
+                        
                     }
 
 
@@ -1149,7 +1180,25 @@ namespace Flowing
                         GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
                         GL.Color4(Color.FromArgb(strokeColor));
                         GL.LineWidth(strokeWeight);
-                        DrawPolygonTrianglesStroke(vertices, cutIndices);
+
+                        if (this.shape != (int)PrimitiveType.Polygon)
+                        {
+                            GL.Begin((PrimitiveType)this.shape);
+                            for (int i = 0; i <this.vertexCount; i++)
+                            {
+                                GL.Vertex3(vertices[i][0], vertices[i][1], vertices[i][2]);
+                            }
+
+
+                            GL.End();
+                        }
+                        else
+                        {
+                            DrawPolygonTrianglesStroke(vertices, cutIndices);
+                        }
+
+
+                        
                     }
 
                     GL.Disable(EnableCap.Blend);
@@ -1537,7 +1586,7 @@ namespace Flowing
             return (p1.X - p3.X) * (p2.Y - p3.Y) - (p1.Y - p3.Y) * (p2.X - p3.X);
         }
 
-        protected void Cube(float length, float width, float height)
+        public void Cube(float length, float width, float height)
         {
             BeginShape(PrimitiveType.Quads);
 
@@ -1578,6 +1627,145 @@ namespace Flowing
             Vertex(-length / 2, width / 2, height / 2);
             EndShape();
         }
+        public void sphereDetail(int res)
+        {
+            this.sphereDetail(res, res);
+        }
+        public void sphereDetail(int ures, int vres)
+        {
+            if (ures < 3)
+            {
+                ures = 3;
+            }
+
+            if (vres < 2)
+            {
+                vres = 2;
+            }
+
+            if (ures != this.sphereDetailU || vres != this.sphereDetailV)
+            {
+                float delta = 720.0F / (float)ures;
+                float[] cx = new float[ures];
+                float[] cz = new float[ures];
+
+                int vertCount;
+                for (vertCount = 0; vertCount < ures; ++vertCount)
+                {
+                    cx[vertCount] = cosLUT[(int)((float)vertCount * delta) % 720];
+                    cz[vertCount] = sinLUT[(int)((float)vertCount * delta) % 720];
+                }
+
+                vertCount = ures * (vres - 1) + 2;
+                int currVert = 0;
+                this.sphereX = new float[vertCount];
+                this.sphereY = new float[vertCount];
+                this.sphereZ = new float[vertCount];
+                float angle_step = 360.0F / (float)vres;
+                float angle = angle_step;
+
+                for (int i = 1; i < vres; ++i)
+                {
+                    float curradius = sinLUT[(int)angle % 720];
+                    float currY = cosLUT[(int)angle % 720];
+
+                    for (int j = 0; j < ures; ++j)
+                    {
+                        this.sphereX[currVert] = cx[j] * curradius;
+                        this.sphereY[currVert] = currY;
+                        this.sphereZ[currVert++] = cz[j] * curradius;
+                    }
+
+                    angle += angle_step;
+                }
+
+                this.sphereDetailU = ures;
+                this.sphereDetailV = vres;
+            }
+        }
+
+
+        public void sphere(float r)
+        {
+            if (this.sphereDetailU < 3 || this.sphereDetailV < 2)
+            {
+                this.sphereDetail(30);
+            }
+            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            //GL.Color4(Color.FromArgb(fillColor));
+            this.BeginShape(PrimitiveType.TriangleStrip);
+            //GL.Begin(PrimitiveType.TriangleStrip);
+            int v1;
+            for (v1 = 0; v1 < this.sphereDetailU; ++v1)
+            {
+                //GL.Normal3(0.0F, 1.0F, 0.0F);
+                this.Vertex(0.0F, r, 0.0F);
+
+                //GL.Normal3(this.sphereX[v1], this.sphereY[v1], this.sphereZ[v1]);
+                this.Vertex(r * this.sphereX[v1], r * this.sphereY[v1], r * this.sphereZ[v1]);
+
+            }
+
+
+            //GL.Normal3(0.0F, r, 0.0F);
+            this.Vertex(0.0F,r, 0.0F);
+
+            //GL.Normal3(this.sphereX[0], this.sphereY[0], this.sphereZ[0]);
+            this.Vertex(r * this.sphereX[0], r * this.sphereY[0], r * this.sphereZ[0]);
+            this.EndShape();
+
+            int voff = 0;
+
+            int v2;
+            int i;
+            for (i = 2; i < this.sphereDetailV; ++i)
+            {
+                int v11 = voff;
+                v1 = voff;
+                voff += this.sphereDetailU;
+                v2 = voff;
+                //GL.Begin(PrimitiveType.TriangleStrip);
+                this.BeginShape(PrimitiveType.TriangleStrip);
+                for (int j = 0; j < this.sphereDetailU; ++j)
+                {
+
+                    //GL.Normal3(this.sphereX[v1], this.sphereY[v1], this.sphereZ[v1]);
+                    this.Vertex(r * this.sphereX[v1], r * this.sphereY[v1], r * this.sphereZ[v1++]);
+                    //GL.Normal3(this.sphereX[v2], this.sphereY[v2], this.sphereZ[v2]);
+                    this.Vertex(r * this.sphereX[v2], r * this.sphereY[v2], r * this.sphereZ[v2++]);
+                }
+
+                //GL.Normal3(this.sphereX[v11], this.sphereY[v11], this.sphereZ[v11]);
+                this.Vertex(r * this.sphereX[v11], r * this.sphereY[v11], r * this.sphereZ[v11]);
+                //GL.Normal3(this.sphereX[voff], this.sphereY[voff], this.sphereZ[voff]);
+                this.Vertex(r * this.sphereX[voff], r * this.sphereY[voff], r * this.sphereZ[voff]);
+                //GL.End();
+                this.EndShape();
+            }
+
+            this.BeginShape(PrimitiveType.TriangleStrip);
+            //GL.Begin(PrimitiveType.TriangleStrip);
+            for (i = 0; i < this.sphereDetailU; ++i)
+            {
+                v2 = voff + i;
+                //GL.Normal3(this.sphereX[v2], this.sphereY[v2], this.sphereZ[v2]);
+                this.Vertex(r * this.sphereX[v2], r * this.sphereY[v2], r * this.sphereZ[v2]);
+                //GL.Normal3(0.0F, -1.0F, 0.0F);
+                this.Vertex(0.0F, -r, 0.0F);
+            }
+
+            //GL.Normal3(this.sphereX[voff], this.sphereY[voff], this.sphereZ[voff]);
+            this.Vertex(r * this.sphereX[voff], r * this.sphereY[voff], r * this.sphereZ[voff]);
+            //GL.Normal3(0.0F, 1.0F, 0.0F);
+            this.Vertex(0.0F, -r, 0.0F);
+            this.EndShape();
+            //this.edge(true);
+            //Console.WriteLine("___________");
+
+
+        }
+
+
         public void Line(float x1, float y1, float z1, float x2, float y2, float z2)
         {
             this.NoFill();
@@ -1587,7 +1775,7 @@ namespace Flowing
             this.EndShape();
         }
 
-        protected void processText(String s, Font f, Color co)
+        public void processText(String s, Font f, Color co)
         {
             TextRenderer = new TextRenderer(s, f);
             PointF position = PointF.Empty;
@@ -1632,7 +1820,7 @@ namespace Flowing
             this.TextRenderer.Dispose();
         }
 
-        protected void colorCalc(int rgb)
+        public void colorCalc(int rgb)
         {
             if ((rgb & -16777216) == 0 && (float)rgb <= this.colorModeX)
             {
@@ -1645,7 +1833,7 @@ namespace Flowing
 
         }
 
-        protected void colorCalc(int rgb, float alpha)
+        public void colorCalc(int rgb, float alpha)
         {
             if ((rgb & -16777216) == 0 && (float)rgb <= this.colorModeX)
             {
@@ -1658,11 +1846,11 @@ namespace Flowing
 
         }
 
-        protected void colorCalc(float gray)
+        public void colorCalc(float gray)
         {
             this.colorCalc(gray, this.colorModeA);
         }
-        protected void colorCalc(float gray, float alpha)
+        public void colorCalc(float gray, float alpha)
         {
             if (gray > this.colorModeX)
             {
@@ -1695,12 +1883,12 @@ namespace Flowing
             this.calcColor = this.calcAi << 24 | this.calcRi << 16 | this.calcGi << 8 | this.calcBi;
             this.calcAlpha = this.calcAi != 255;
         }
-        protected void colorCalc(float x, float y, float z)
+        public void colorCalc(float x, float y, float z)
         {
             this.colorCalc(x, y, z, this.colorModeA);
         }
 
-        protected void colorCalc(float x, float y, float z, float a)
+        public void colorCalc(float x, float y, float z, float a)
         {
             if (x > this.colorModeX)
             {
@@ -1823,7 +2011,7 @@ namespace Flowing
             this.calcColor = this.calcAi << 24 | this.calcRi << 16 | this.calcGi << 8 | this.calcBi;
             this.calcAlpha = this.calcAi != 255;
         }
-        protected void colorCalcARGB(int argb, float alpha)
+        public void colorCalcARGB(int argb, float alpha)
         {
             if (alpha == this.colorModeA)
             {

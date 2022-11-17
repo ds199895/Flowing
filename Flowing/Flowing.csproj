@@ -72,6 +72,7 @@
     <Compile Include="src\FlGL\Shaders.cs" />
     <Compile Include="src\FlGL\Texture.cs" />
     <Compile Include="src\IApp.cs" />
+    <Compile Include="src\IConstants.cs" />
     <Compile Include="src\IGraphics.cs" />
     <Compile Include="src\IStyle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
