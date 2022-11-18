@@ -37,7 +37,7 @@ namespace Flowing
             //Smooth(4);
             Background(255, 0, 0);
             Print("Hello, this is the first example of Flowing! Nice to meet you~");
-            cam = new CamController(this);
+            cam = new CamController(this,100);
             cam.FixZaxisRotation = true;
             font = createFont("微软雅黑", 24);
             TextFont(font);
@@ -162,23 +162,23 @@ namespace Flowing
 
         public override void KeyReleased()
         {
-            if (key == OpenTK.Input.Key.T)
+            if (key =="T")
             {
                 cam.Top();
             }
-            else if (key == OpenTK.Input.Key.P)
+            else if (key == "P")
             {
                 cam.Perspective();
             }
-            else if (key == OpenTK.Input.Key.Z)
+            else if (key == "Z")
             {
                 cam.CurrentView.SetPerspective(!cam.CurrentView.perspective);
             }
-            else if (key == OpenTK.Input.Key.S)
+            else if (key == "S")
             {
                 stop = !stop;
             }
-            else if (key == OpenTK.Input.Key.W)
+            else if (key == "W")
             {
                 wireFrame = !wireFrame;
             }

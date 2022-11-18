@@ -129,14 +129,14 @@ namespace Flowing
         }
         private void Key_Down(Object sender, KeyboardKeyEventArgs e)
         {
-            if (this.app.key == OpenTK.Input.Key.LShift || this.app.key == OpenTK.Input.Key.RShift)
+            if (this.app.key == OpenTK.Input.Key.LShift.ToString() || this.app.key == OpenTK.Input.Key.RShift.ToString())
             {
                 this.FixZaxisRotation = false;
             }
         }
         private void Key_Up(Object sender, KeyboardKeyEventArgs e)
         {
-            if (this.app.key == OpenTK.Input.Key.LShift || this.app.key == OpenTK.Input.Key.RShift)
+            if (this.app.key == OpenTK.Input.Key.LShift.ToString() || this.app.key == OpenTK.Input.Key.RShift.ToString())
             {
                 this.FixZaxisRotation = true;
             }
@@ -177,7 +177,7 @@ namespace Flowing
         private void Mouse_Up(object sender, OpenTK.Input.MouseButtonEventArgs e)
         {
             Console.WriteLine("Up! " + this.app.key);
-            if (this.app.key == OpenTK.Input.Key.LShift || this.app.key == OpenTK.Input.Key.RShift)
+            if (this.app.key == OpenTK.Input.Key.LShift.ToString()|| this.app.key == OpenTK.Input.Key.RShift.ToString())
             {
                 this.FixZaxisRotation = true;
             }

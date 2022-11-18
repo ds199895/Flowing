@@ -29,7 +29,7 @@ namespace Flowing
         private static extern bool ShowWindow(IntPtr hWnd, int type);
         public bool is2D = true;
         public int FrameRate=30;
-        public Key key;
+        public string key;
         private bool smoothReseted = false;
         public int keyCode;
         public MouseButton MouseButton;
@@ -42,6 +42,7 @@ namespace Flowing
         int bakeWidth;
         int bakeHeight;
 
+        Random internalRandom;
         public IApp()
         {
             
@@ -219,15 +220,16 @@ namespace Flowing
         }
         private void Window_KeyDown(Object sender, KeyboardKeyEventArgs e)
         {
-            this.key =e.Key;
+            this.key =e.Key.ToString();
             this.keyCode = e.Key.GetHashCode();
             this.KeyPressed();
         }
         private void Window_KeyUp(Object sender, KeyboardKeyEventArgs e)
         {
-            this.key = e.Key;
+            
+            this.key =e.Key.ToString();
             this.keyCode = e.Key.GetHashCode();
-            if (key == Key.Escape)
+            if (key ==Key.Escape.ToString())
             {
                 consoleShow = !consoleShow;
             }
@@ -287,7 +289,79 @@ namespace Flowing
 
         }
 
+        public float Sin(float angle)
+        {
+            return (float)Math.Sin((double)angle);
+        }
+        public float Cos(float angle)
+        {
+            return (float)Math.Cos((double)angle);
+        }
+        public float Tan(float angle)
+        {
+            return (float)Math.Tan((double)angle);
+        }
+        public float Asin(float angle)
+        {
+            return (float)Math.Asin((double)angle);
+        }
 
+        public float Acos(float angle)
+        {
+            return (float)Math.Acos((double)angle);
+        }
+
+        public float Atan(float angle)
+        {
+            return (float)Math.Atan((double)angle);
+        }
+        public float Atan2(float y,float x)
+        {
+            return (float)Math.Atan2((double)y,(double)x);
+        }
+
+        public float degrees(float radians)
+        {
+            return radians * RAD_TO_DEG;
+        }
+        public float radians(float degrees)
+        {
+            return degrees * DEG_TO_RAD;
+        }
+
+        public float random(float low,float high)
+        {
+            if (low >= high)
+            {
+                return low;
+            }
+            else
+            {
+                float diff = high - low;
+                return this.random(diff) + low;
+            }
+        }
+
+        public float random(float high)
+        {
+            if (high != 0.0f && high ==high)
+            {
+                if (this.internalRandom == null)
+                {
+                    this.internalRandom = new Random();
+                }
+                float value = 0.0F;
+                do
+                {
+                    value = (float)(this.internalRandom.NextDouble() * high);
+                } while (value == high);
+                return value;
+            }
+            else
+            {
+                return 0.0F;
+            }
+        }
 
         public static int constrain(int amt, int low, int high)
         {

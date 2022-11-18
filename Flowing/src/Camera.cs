@@ -22,7 +22,7 @@ namespace Flowing
         private double fovy;
         private double far;
         private double near;
-
+        private double aspectRatio;
         private float frustumNear;
         private float frustumFar;
         private float frustumBottom;
@@ -63,7 +63,7 @@ namespace Flowing
             iniCoordinateSystem(position, target);
             this.w = w;
             this.h = h;
-            AspectRatio = this.w/this.h;
+            this.aspectRatio = (double)this.w/(double)this.h;
             this.fovy = 1.0471975511965976D;
             this.far = 1000.0D;
             this.near = 1000.0D;
@@ -118,7 +118,7 @@ namespace Flowing
             {
                 this.h = h;
             }
-            this.AspectRatio = (float)this.w / (float)this.h;
+            this.aspectRatio = (double)this.w / (double)this.h;
         }
 
         public void Set2DProperties()
@@ -148,7 +148,7 @@ namespace Flowing
         public Vector3 Position { get; set; }
 
         // This is simply the aspect ratio of the viewport, used for the projection matrix.
-        public float AspectRatio {get; set; }
+        public double AspectRatio { get { return this.aspectRatio; } set { this.aspectRatio = value; }}
 
         public Vector3 Front {
             get => _front;
@@ -234,7 +234,7 @@ namespace Flowing
         public void GetProjectionMatrix()
         {
             this.getFrustumPerspective();
-            this.projectionMatrix= Matrix4.CreatePerspectiveFieldOfView((float)fovy, AspectRatio, 0.01f, 100000f);
+            this.projectionMatrix= Matrix4.CreatePerspectiveFieldOfView((float)fovy, (float)this.aspectRatio, 0.01f, 100000f);
 
             //this.projectionMatrix=Matrix4.CreatePerspectiveOffCenter(this.frustumLeft, this.frustumRight, this.frustumBottom, this.frustumTop, this.frustumNear, this.frustumFar);
             //this.projectionMatrix = Matrix4.CreatePerspectiveOffCenter(this.frustumLeft*2, this.frustumRight-this.frustumLeft, this.frustumBottom*2, this.frustumTop-this.frustumBottom, this.frustumNear, this.frustumFar);
