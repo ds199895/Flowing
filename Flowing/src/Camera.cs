@@ -80,7 +80,7 @@ namespace Flowing
             this.leftHandSystem = false;
             this.is2D = false;
         }
-        private void iniCoordinateSystem(Vector3 position,Vector3 target)
+        public void iniCoordinateSystem(Vector3 position,Vector3 target)
         {
             Vector3 zz = target - position;
             Vector3 planxz;
@@ -529,7 +529,24 @@ namespace Flowing
             else
             {
                 //GL.Ortho(frustumLeft, frustumRight, frustumBottom, frustumTop, -frustumFar, frustumFar);
-                Matrix4 ortho = Matrix4.CreateOrthographic((frustumRight-frustumLeft)*2.0f, (frustumTop-frustumBottom)*2.0f, (float)-this.frustumFar, (float)this.frustumFar);
+                int ratio = (int)this.aspectRatio;
+                if (ratio==0)
+                {
+                    ratio = 1;
+                }
+                Matrix4 ortho;
+                ortho = Matrix4.CreateOrthographic((frustumRight - frustumLeft) * 2.0f/ratio, (frustumTop - frustumBottom) * 2.0f/ratio, (float)-this.frustumFar, (float)this.frustumFar);
+
+                //if (this.aspectRatio < 2)
+                //{
+                //    ortho = Matrix4.CreateOrthographic((frustumRight - frustumLeft) * 2.0f, (frustumTop - frustumBottom) * 2.0f, (float)-this.frustumFar, (float)this.frustumFar);
+
+                //}
+                //else
+                //{
+                //    ortho = Matrix4.CreateOrthographic((frustumRight - frustumLeft), (frustumTop - frustumBottom), (float)-this.frustumFar, (float)this.frustumFar);
+
+                //}
                 GL.LoadMatrix(ref ortho);
             }
 

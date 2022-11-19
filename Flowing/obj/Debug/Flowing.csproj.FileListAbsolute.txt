@@ -48,10 +48,16 @@ E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.csproj.CopyComplete
 E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.dll
 E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.pdb
 E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache
+E:\10-study\C#\Flowing\Flowing\bin\Debug\LibTessDotNet.dll
+E:\10-study\C#\Flowing\Flowing\bin\Debug\LibTessDotNet.Double.dll
+E:\10-study\C#\Flowing\Flowing\bin\Debug\Microsoft.Solver.Foundation.dll
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\Flowing.dll
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\Flowing.pdb
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\LibTessDotNet.dll
+E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\LibTessDotNet.Double.dll
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\Lucene.Net.dll
+E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\Microsoft.Solver.Foundation.dll
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\OpenTK.dll
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\OpenTK.GLControl.dll
 E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\Lucene.Net.pdb
@@ -64,9 +70,3 @@ E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.csproj.CoreCompileInputs.cac
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.csproj.CopyComplete
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.dll
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.pdb
-E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\LibTessDotNet.dll
-E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\LibTessDotNet.Double.dll
-E:\13-study\C#\fl\Flowing\Flowing\bin\Debug\Microsoft.Solver.Foundation.dll
-E:\10-study\C#\Flowing\Flowing\bin\Debug\LibTessDotNet.dll
-E:\10-study\C#\Flowing\Flowing\bin\Debug\LibTessDotNet.Double.dll
-E:\10-study\C#\Flowing\Flowing\bin\Debug\Microsoft.Solver.Foundation.dll
