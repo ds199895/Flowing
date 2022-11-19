@@ -140,6 +140,21 @@ namespace Flowing
             {
                 this.FixZaxisRotation = true;
             }
+            if (this.app.key == "T")
+            {
+                this.Top();
+            }
+            if (this.app.key == "P")
+            {
+                this.Perspective();
+            }
+            if (this.app.key == "O")
+            {
+                this.CurrentView.SetPerspective(!this.CurrentView.perspective);
+            }
+
+
+
         }
 
         private void Mouse_Move(object sender, OpenTK.Input.MouseMoveEventArgs e)
