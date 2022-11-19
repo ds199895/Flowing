@@ -319,6 +319,90 @@ namespace Flowing
         {
             return (float)Math.Atan2((double)y,(double)x);
         }
+        public double max(double a,double b)
+        {
+            return a > b ? a : b;
+        }
+        public double max(params double[] list)
+        {
+            if (list.Length == 0)
+            {
+                throw new IndexOutOfRangeException("Cannot use min() or max() on an empty array.");
+            }
+            else
+            {
+                double max = list[0];
+                for(int i = 0; i < list.Length; i++)
+                {
+                    if (list[i] > max)
+                    {
+                        max = list[i];
+                    }
+                }
+                return max;
+            }
+        }
+        public int max(params int[] list)
+        {
+            if (list.Length == 0)
+            {
+                throw new IndexOutOfRangeException("Cannot use min() or max() on an empty array.");
+            }
+            else
+            {
+                int max = list[0];
+                for (int i = 0; i < list.Length; i++)
+                {
+                    if (list[i] > max)
+                    {
+                        max = list[i];
+                    }
+                }
+                return max;
+            }
+        }
+        public double min(double a, double b)
+        {
+            return a < b ? a : b;
+        }
+        public double min(params double[] list)
+        {
+            if (list.Length == 0)
+            {
+                throw new IndexOutOfRangeException("Cannot use min() or max() on an empty array.");
+            }
+            else
+            {
+                double min = list[0];
+                for (int i = 0; i < list.Length; i++)
+                {
+                    if (list[i] > min)
+                    {
+                        min = list[i];
+                    }
+                }
+                return min;
+            }
+        }
+        public int min(params int[] list)
+        {
+            if (list.Length == 0)
+            {
+                throw new IndexOutOfRangeException("Cannot use min() or max() on an empty array.");
+            }
+            else
+            {
+                int min = list[0];
+                for (int i = 0; i < list.Length; i++)
+                {
+                    if (list[i] < min)
+                    {
+                        min = list[i];
+                    }
+                }
+                return min;
+            }
+        }
 
         public float degrees(float radians)
         {

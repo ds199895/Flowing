@@ -20,8 +20,8 @@ namespace Flowing
         private IApp lastApp;
         public bool perspective;
         private double fovy;
-        private double far;
-        private double near;
+        public double far;
+        public double near;
         private double aspectRatio;
         private float frustumNear;
         private float frustumFar;

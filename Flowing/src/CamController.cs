@@ -38,12 +38,12 @@ namespace Flowing
 
         public bool FixZaxisRotation { get; set; } = true;
 
-        public CamController(IApp app,float dis=1000)
+        public CamController(IApp app,double dis=1000)
         {
             this.app = app;
             this.window = this.app.window;
             this.app.is2D = false;
-            ResetCameras(dis);
+            ResetCameras((float)dis);
             HandleWindow();
         }
         protected void HandleWindow()
