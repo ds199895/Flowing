@@ -114,11 +114,12 @@ namespace Flowing
         {
             //if (!setup)
             //{
-                this.SetUp();
-                GL.Enable(EnableCap.DepthTest);
-                GL.DepthMask(true);
-                GL.DepthFunc(DepthFunction.Less);
-
+            Print("Load-----------------------");
+            this.SetUp();
+            GL.Enable(EnableCap.DepthTest);
+            GL.DepthMask(true);
+            GL.DepthFunc(DepthFunction.Lequal);
+                
                 this.Draw();
                 //setup = true;
         //}

@@ -99,6 +99,7 @@ namespace Flowing
         {
             this.Position = position;
             this._front = z.Normalized();
+            //this.target = this.Position + this._front * 500.0F;
             this._right = planxz;
             this._up = Vector3.Cross(z, this._right).Normalized();
             this._right = Vector3.Cross(this._front, this._up).Normalized();
@@ -234,10 +235,10 @@ namespace Flowing
         public void GetProjectionMatrix()
         {
             this.getFrustumPerspective();
-            this.projectionMatrix= Matrix4.CreatePerspectiveFieldOfView((float)fovy, (float)this.aspectRatio, 0.01f, 100000f);
+            //this.projectionMatrix= Matrix4.CreatePerspectiveFieldOfView((float)fovy, (float)this.aspectRatio, 0.01f, 10000.0f);
 
-            //this.projectionMatrix=Matrix4.CreatePerspectiveOffCenter(this.frustumLeft, this.frustumRight, this.frustumBottom, this.frustumTop, this.frustumNear, this.frustumFar);
-            //this.projectionMatrix = Matrix4.CreatePerspectiveOffCenter(this.frustumLeft*2, this.frustumRight-this.frustumLeft, this.frustumBottom*2, this.frustumTop-this.frustumBottom, this.frustumNear, this.frustumFar);
+            this.projectionMatrix=Matrix4.CreatePerspectiveOffCenter(this.frustumLeft, this.frustumRight, this.frustumBottom, this.frustumTop, this.frustumNear, this.frustumFar);
+            //this.projectionMatrix = Matrix4.CreatePerspectiveOffCenter(this.frustumLeft, this.frustumRight-this.frustumLeft, this.frustumBottom, this.frustumTop-this.frustumBottom, this.frustumNear, this.frustumFar);
 
         }
 
@@ -524,7 +525,7 @@ namespace Flowing
             {
 
                 GL.LoadMatrix(ref this.projectionMatrix);
-                //GL.Frustum(this.frustumLeft, this.frustumRight,this.frustumBottom, this.frustumTop, (float)this.frustumNear, (float)this.frustumFar);
+                //GL.Frustum(this.frustumLeft, this.frustumRight, this.frustumBottom, this.frustumTop, (float)this.frustumNear, (float)this.frustumFar);
             }
             else
             {

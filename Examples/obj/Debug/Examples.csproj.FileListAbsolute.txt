@@ -72,3 +72,4 @@ E:\13-study\C#\fl\Flowing\Examples\obj\Debug\Examples.csproj.CoreCompileInputs.c
 E:\13-study\C#\fl\Flowing\Examples\obj\Debug\Examples.csproj.CopyComplete
 E:\13-study\C#\fl\Flowing\Examples\obj\Debug\Examples.exe
 E:\13-study\C#\fl\Flowing\Examples\obj\Debug\Examples.pdb
+E:\13-study\C#\fl\Flowing\Examples\bin\Debug\ICSharpCode.SharpZipLib.dll

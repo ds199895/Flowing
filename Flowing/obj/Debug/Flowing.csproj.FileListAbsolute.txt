@@ -70,4 +70,3 @@ E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.csproj.CoreCompileInputs.cac
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.csproj.CopyComplete
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.dll
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.pdb
-E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache

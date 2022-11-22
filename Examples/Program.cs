@@ -144,10 +144,10 @@ namespace Flowing
 
 
             //PopStyle();
-            Fill(0);
+            Fill(250, 250, 240);
             Stroke(255, 0, 0);
-            sphere(50);
-            //Cube(50,50,50);
+            //sphere(5000);
+            Cube(5000,5000,5000);
 
         }
 

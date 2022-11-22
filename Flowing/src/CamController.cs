@@ -233,7 +233,9 @@ namespace Flowing
                 if (this.CurrentView.perspective)
                 {
 
-                    dis = diagonalLength2 / 0.9D / this.CurrentView.AspectRatio;
+                    //dis = diagonalLength2 / 0.9D / this.CurrentView.AspectRatio;
+                    dis = Math.Max(this.CurrentView.near * diagonalLength2 / (2 * this.window.Height), this.CurrentView.near * diagonalLength3 / (2 * this.window.Width));
+
                     normal = new Vector3((float)-lw, (float)-lh, (float)ld).Normalized();
                     this.CurrentView.Position = cen + (float)dis * normal;
                     this.CurrentView.target = cen;

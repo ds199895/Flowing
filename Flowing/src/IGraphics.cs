@@ -1140,12 +1140,12 @@ namespace Flowing
 
                     if (smooth)
                     {
-                        //GL.Enable(EnableCap.PointSmooth);
-                        //GL.Enable(EnableCap.LineSmooth);
-                        //GL.Enable(EnableCap.PolygonSmooth);
+                        GL.Enable(EnableCap.PointSmooth);
+                        GL.Enable(EnableCap.LineSmooth);
+                        GL.Enable(EnableCap.PolygonSmooth);
 
-                        //GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
-                        //GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
+                        GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
+                        GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
 
                     }
 
@@ -1200,7 +1200,7 @@ namespace Flowing
 
                         
                     }
-
+                    GL.Disable(EnableCap.PolygonOffsetLine);
                     GL.Disable(EnableCap.Blend);
 
                     this.vertices = new float[512][];
@@ -1209,6 +1209,7 @@ namespace Flowing
                     this.cutIndices.Clear();
                 }
             }
+            //GL.Disable(EnableCap.DepthTest);
         }
         private void DrawPolygonTrianglesFill(float[][] vecs, List<int> indices)
         {
@@ -1228,10 +1229,11 @@ namespace Flowing
                     GL.End();
                 }
                 GL.Disable(EnableCap.PolygonOffsetFill);
-            }else{
+            }
+            else{
                 //绘制内部网格线
-                GL.Enable(EnableCap.PolygonOffsetLine);
-                GL.PolygonOffset(-2.0f, -2.0f);
+                //GL.Enable(EnableCap.PolygonOffsetLine);
+                //GL.PolygonOffset(-2.0f, -2.0f);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
                 GL.Color4(Color.FromArgb(strokeColor));
                 GL.LineWidth(strokeWeight);
@@ -1244,7 +1246,7 @@ namespace Flowing
                     GL.Vertex3(triangles[i][2].X, triangles[i][2].Y, triangles[i][2].Z);
                     GL.End();
                 }
-                GL.Disable(EnableCap.PolygonOffsetLine);
+                //GL.Disable(EnableCap.PolygonOffsetLine);
             }
             
 
