@@ -39,7 +39,7 @@ namespace Flowing
             Print("Hello, this is the first example of Flowing! Nice to meet you~");
             cam = new CamController(this,100);
             cam.FixZaxisRotation = true;
-            font = createFont("微软雅黑", 24);
+            font = CreateFont("微软雅黑", 24);
             TextFont(font);
 
 
@@ -147,7 +147,7 @@ namespace Flowing
             Fill(250, 250, 240);
             Stroke(255, 0, 0);
             //sphere(5000);
-            Cube(5000,5000,5000);
+            Cube(50,50,50);
 
         }
 

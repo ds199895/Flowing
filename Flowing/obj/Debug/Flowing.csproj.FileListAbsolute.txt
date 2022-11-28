@@ -47,7 +47,6 @@ E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.csproj.CoreCompileInputs.cache
 E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.csproj.CopyComplete
 E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.dll
 E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.pdb
-E:\10-study\C#\Flowing\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache
 E:\10-study\C#\Flowing\Flowing\bin\Debug\LibTessDotNet.dll
 E:\10-study\C#\Flowing\Flowing\bin\Debug\LibTessDotNet.Double.dll
 E:\10-study\C#\Flowing\Flowing\bin\Debug\Microsoft.Solver.Foundation.dll

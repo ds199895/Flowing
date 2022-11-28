@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Flowing
 {
-    public class IApp:IGraphics
+    public class IApp:IConstants
     {
         [DllImport("User32.dll", EntryPoint = "FindWindow")]
         private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -27,6 +27,12 @@ namespace Flowing
 
         [DllImport("User32.dll", EntryPoint = "ShowWindow")]   //
         private static extern bool ShowWindow(IntPtr hWnd, int type);
+        public IGraphics g;
+        public GameWindow window { get { return this.g.window; }set { this.g.window = value; } }
+        public int samples { get { return this.g.samples; } set { this.g.samples = value; } }
+        public int width { get { return this.g.width; } set { this.g.width = value; } }
+        public int height { get { return this.g.height; } set { this.g.height = value; } }
+        public bool wireFrame { get { return this.g.wireFrame; } set { this.g.wireFrame = value; } }
         public bool is2D = true;
         public int FrameRate=30;
         public string key;
@@ -55,6 +61,10 @@ namespace Flowing
 
             return type;
         }
+        public void init()
+        {
+            this.g = new IGraphics();
+        }
 
         public static void main()
         {
@@ -73,8 +83,8 @@ namespace Flowing
             {
                 throw new Exception("err: ", var26);
             }
-            
-            app.InitialStyleSettings();
+            app.init();
+            app.g.InitialStyleSettings();
             app.window = _window;
             app.window.Title = type.ToString();
             app.HandleWindowEvents();
@@ -175,7 +185,7 @@ namespace Flowing
             }
 
             this.Draw();
-            this.textFont.Dispose();
+            this.g.textFont.Dispose();
             if (this.window.Exists)
             {
                 this.window.SwapBuffers();
@@ -196,8 +206,8 @@ namespace Flowing
             this.PushStyle();
             this.PushMatrix();
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.ClearColor(Color.FromArgb(this.backgroundColor));
-
+            GL.ClearColor(Color.FromArgb(this.g.backgroundColor));
+            
             this.PopMatrix();
             this.PopStyle();
         }
@@ -289,8 +299,369 @@ namespace Flowing
         {
 
         }
+        public void PushStyle(bool Continue=false)
+        {
+            this.g.PushStyle(Continue);
+        }
 
-        public float Sin(float angle)
+        public void PopStyle()
+        {
+            this.g.PopStyle();
+        }
+        public void PushMatrix()
+        {
+            this.g.PushMatrix();
+        }
+
+        public void PopMatrix()
+        {
+            this.g.PopMatrix();
+        }
+
+        public void Background(int rgb, float alpha)
+        {
+            this.g.Background(rgb,alpha);
+        }
+
+        public void Background(float gray)
+        {
+            this.g.Background(gray);
+      
+        }
+
+        public void Background(float gray, float alpha)
+        {
+            this.g.Background(gray,alpha);
+
+        }
+
+        public void Background(float v1, float v2, float v3)
+        {
+            this.g.Background(v1,v2,v3);
+        }
+
+        public void Background(float v1, float v2, float v3, float alpha)
+        {
+            this.g.Background(v1,v2,v3, alpha);
+        }
+
+        public void Smooth()
+        {
+            this.g.Smooth();
+        }
+
+        public void Smooth(int level)
+        {
+            this.g.Smooth(level);
+        }
+
+        public void NoSmooth()
+        {
+            this.g.NoSmooth();
+        }
+        public void StrokeWeight(float weight)
+        {
+            this.g.StrokeWeight(weight);
+        }
+        public void StrokeJoin(int join)
+        {
+            this.g.StrokeJoin(join);
+        }
+
+        public void StrokeCap(int cap)
+        {
+            this.g.StrokeCap(cap);
+        }
+
+
+        public void NoStroke()
+        {
+            this.g.NoStroke();
+        }
+
+        public void Stroke(int rgb)
+        {
+            this.g.Stroke(rgb);
+        }
+
+        public void Stroke(int rgb, float alpha)
+        {
+            this.g.Stroke(rgb,alpha);
+        }
+
+        public void Stroke(float gray)
+        {
+            this.g.Stroke(gray);
+        }
+
+        public void Stroke(float gray, float alpha)
+        {
+            this.g.Stroke(gray, alpha);
+        }
+
+        public void Stroke(float v1, float v2, float v3)
+        {
+            this.g.Stroke(v1,v2,v3);
+        }
+
+        public void Stroke(float v1, float v2, float v3, float alpha)
+        {
+            this.g.Stroke(v1, v2, v3,alpha);
+        }
+
+        public void NoFill()
+        {
+            this.g.NoFill();
+        }
+
+        public void Fill(int rgb)
+        {
+            this.g.Fill(rgb);
+        }
+
+        public void Fill(int rgb, float alpha)
+        {
+            this.g.Fill(rgb,alpha);
+        }
+
+        public void Fill(float gray)
+        {
+            this.g.Fill(gray);
+        }
+
+        public void Fill(float gray, float alpha)
+        {
+            this.g.Fill(gray,alpha);
+        }
+
+        public void Fill(float v1, float v2, float v3)
+        {
+            this.g.Fill(v1,v2,v3);
+        }
+
+        public void Fill(float v1, float v2, float v3, float alpha)
+        {
+            this.g.Fill(v1, v2, v3,alpha);
+        }
+
+        public void NoTint()
+        {
+            this.g.NoTint();
+        }
+        public void Tint(int rgb)
+        {
+            this.g.Tint(rgb);
+        }
+
+        public void Tint(int rgb, float alpha)
+        {
+            this.g.Tint(rgb,alpha); 
+        }
+
+        public void Tint(float gray)
+        {
+
+            this.g.Tint(gray);
+        }
+
+        public void Tint(float gray, float alpha)
+        {
+            this.g.Tint(gray, alpha);
+        }
+
+        public void Tint(float v1, float v2, float v3)
+        {
+            this.g.Tint(v1,v2,v3);
+        }
+
+        public void Tint(float v1, float v2, float v3, float alpha)
+        {
+            this.g.Tint(v1,v2,v3,alpha);
+        }
+
+        public void Ambient(int rgb)
+        {
+            this.g.Ambient(rgb);
+        }
+
+        public void Ambient(float gray)
+        {
+            this.g.Ambient(gray);
+        }
+
+        public void Ambient(float v1, float v2, float v3)
+        {
+            this.g.Ambient(v1,v2,v3);
+        }
+
+        public void Specular(int rgb)
+        {
+            this.g.Specular(rgb);
+        }
+
+        public void Specular(float gray)
+        {
+            this.g.Specular(gray);
+        }
+
+        public void Specular(float v1, float v2, float v3)
+        {
+            this.g.Specular(v1,v2,v3);
+        }
+
+        public void Shininess(float shine)
+        {
+            this.g.Shininess(shine);
+        }
+
+        public void Emissive(int rgb)
+       {
+            this.g.Emissive(rgb);
+        }
+
+        public void Emissive(float gray)
+        {
+            this.g.Emissive(gray);
+        }
+
+        public void Emissive(float v1, float v2, float v3)
+        {
+            this.g.Emissive(v1,v2,v3);
+        }
+
+        public void TextAlign(int alignX)
+        {
+            this.g.TextAlign(alignX);
+        }
+
+        public void TextAlign(int alignX, int alignY)
+        {
+            this.g.TextAlign(alignX,alignY);
+        }
+
+
+        public void ColorMode(int mode)
+        {
+            this.g.ColorMode(mode);
+        }
+
+        public void ColorMode(int mode, float max)
+        {
+            this.g.ColorMode(mode,max);
+        }
+
+        public void ColorMode(int mode, float max1, float max2, float max3)
+        {
+            this.g.ColorMode(mode, max1, max2, max3); 
+        }
+
+        public void ColorMode(int mode, float max1, float max2, float max3, float maxA)
+        {
+            this.g.ColorMode(mode, max1, max2, max3, maxA);
+        }
+
+        public void Translate(params float[] p)
+        {
+            this.g.Translate(p);
+        }
+        public void Rotate(float angle)
+        {
+            this.g.Rotate(angle);
+        }
+
+        public void RotateX(float angle)
+        {
+            this.g.RotateX(angle);
+
+        }
+        public void RotateY(float angle)
+        {
+            this.g.RotateY(angle);
+        }
+        public void RotateZ(float angle)
+        {
+            this.g.RotateZ(angle);
+
+        }
+
+        public void Rotate(double angle, float x, float y, float z)
+        {
+            this.g.Rotate(angle,x,y,z);
+        }
+
+        public void Scale(float s)
+        {
+            this.g.Scale(s);
+
+        }
+        public void scale(float x, float y)
+        {
+            this.g.Scale(x,y);
+        }
+
+        public void scale(float x, float y, float z)
+        {
+            this.g.Scale(x,y,z);
+        }
+        public void TextFont(Font which)
+        {
+            this.g.TextFont(which);
+        }
+
+        public void TextFont(Font which, float size)
+        {
+
+            this.g.TextFont(which, size);
+        }
+        public void TextSize(float size)
+        {
+            this.g.TextSize(size);
+        }
+        public Font CreateFont(String name, float size)
+        {
+            return this.g.CreateFont(name, size);
+        }
+
+
+        public void Vertex(params float[] p)
+        {
+            this.g.Vertex(p);
+        }
+        public void BeginShape(bool hole = false)
+        {
+            this.g.BeginShape(hole);
+        }
+        private int LastIndex = 0;
+
+        public void BeginShape(PrimitiveType p)
+        {
+            this.g.BeginShape(p);
+        }
+
+
+        public void EndShape(IGraphics.EndMode endMode = IGraphics.EndMode.Close)
+        {
+            this.g.EndShape(endMode);
+        }
+
+        public void Line(float x1, float y1, float z1, float x2, float y2, float z2)
+        {
+            this.g.Line(x1, y1, z1, x2, y2, z2) ;
+        }
+
+        public void Cube(float length, float width, float height)
+        {
+            this.g.Cube(length, width, height);
+        }
+        public void Sphere(float r)
+        {
+            this.g.Sphere(r);
+        }
+        public void Text(string str, float x, float y, float z)
+        {
+            this.g.Text(str, x, y, z);
+        }
+            public float Sin(float angle)
         {
             return (float)Math.Sin((double)angle);
         }
@@ -412,6 +783,11 @@ namespace Flowing
         public float radians(float degrees)
         {
             return degrees * DEG_TO_RAD;
+        }
+
+        public static void Print(Object o)
+        {
+           IGraphics.Print(o);
         }
 
         public float random(float low,float high)

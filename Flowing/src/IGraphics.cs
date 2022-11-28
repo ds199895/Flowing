@@ -300,7 +300,7 @@ namespace Flowing
 
 
             this.textSize = 12.0F;
-            this.textFont = createDefaultFont(textSize);
+            this.textFont = CreateDefaultFont(textSize);
             this.textLeading = 14.0F;
             this.textAlign = 37;
             this.textMode = 4;
@@ -377,14 +377,14 @@ namespace Flowing
         }
         public void defaultFontOrDeath(String method, float size)
         {
-            this.textFont = this.createDefaultFont(size);
+            this.textFont = this.CreateDefaultFont(size);
         }
-        public Font createDefaultFont(float size)
+        public Font CreateDefaultFont(float size)
         {
-            return this.createFont("Lucida Sans", size);
+            return this.CreateFont("Lucida Sans", size);
         }
 
-        public Font createFont(String name, float size)
+        public Font CreateFont(String name, float size)
         {
             return new Font(name, size);
         }
@@ -464,9 +464,9 @@ namespace Flowing
             this.StrokeCap(s.strokeCap);
             this.StrokeJoin(s.strokeJoin);
             this.ColorMode(1, 1.0F);
-            this.ambient(s.ambientR, s.ambientG, s.ambientB);
-            this.emissive(s.emissiveR, s.emissiveG, s.emissiveB);
-            this.specular(s.specularR, s.specularG, s.specularB);
+            this.Ambient(s.ambientR, s.ambientG, s.ambientB);
+            this.Emissive(s.emissiveR, s.emissiveG, s.emissiveB);
+            this.Specular(s.specularR, s.specularG, s.specularB);
             this.Shininess(s.shininess);
             this.ColorMode(s.colorMode, s.colorModeX, s.colorModeY, s.colorModeZ, s.colorModeA);
             if (s.textFont != null)
@@ -621,7 +621,7 @@ namespace Flowing
         public void Background(int rgb)
         {
 
-            this.colorCalc(rgb);
+            this.ColorCalc(rgb);
             this.backgroundFromCalc();
         }
         public static void Print(Object o)
@@ -632,13 +632,13 @@ namespace Flowing
 
         public void Background(int rgb, float alpha)
         {
-            this.colorCalc(rgb, alpha);
+            this.ColorCalc(rgb, alpha);
             this.backgroundFromCalc();
         }
 
         public void Background(float gray)
         {
-            this.colorCalc(gray);
+            this.ColorCalc(gray);
             this.backgroundFromCalc();
         }
 
@@ -650,7 +650,7 @@ namespace Flowing
             }
             else
             {
-                this.colorCalc(gray, alpha);
+                this.ColorCalc(gray, alpha);
                 this.backgroundFromCalc();
             }
 
@@ -658,13 +658,13 @@ namespace Flowing
 
         public void Background(float v1, float v2, float v3)
         {
-            this.colorCalc(v1, v2, v3);
+            this.ColorCalc(v1, v2, v3);
             this.backgroundFromCalc();
         }
 
         public void Background(float v1, float v2, float v3, float alpha)
         {
-            this.colorCalc(v1, v2, v3, alpha);
+            this.ColorCalc(v1, v2, v3, alpha);
             this.backgroundFromCalc();
         }
         public void backgroundFromCalc()
@@ -739,37 +739,37 @@ namespace Flowing
 
         public void Stroke(int rgb)
         {
-            this.colorCalc(rgb);
+            this.ColorCalc(rgb);
             this.strokeFromCalc();
         }
 
         public void Stroke(int rgb, float alpha)
         {
-            this.colorCalc(rgb, alpha);
+            this.ColorCalc(rgb, alpha);
             this.strokeFromCalc();
         }
 
         public void Stroke(float gray)
         {
-            this.colorCalc(gray);
+            this.ColorCalc(gray);
             this.strokeFromCalc();
         }
 
         public void Stroke(float gray, float alpha)
         {
-            this.colorCalc(gray, alpha);
+            this.ColorCalc(gray, alpha);
             this.strokeFromCalc();
         }
 
         public void Stroke(float v1, float v2, float v3)
         {
-            this.colorCalc(v1, v2, v3);
+            this.ColorCalc(v1, v2, v3);
             this.strokeFromCalc();
         }
 
         public void Stroke(float v1, float v2, float v3, float alpha)
         {
-            this.colorCalc(v1, v2, v3, alpha);
+            this.ColorCalc(v1, v2, v3, alpha);
             this.strokeFromCalc();
         }
 
@@ -780,37 +780,37 @@ namespace Flowing
 
         public void Fill(int rgb)
         {
-            this.colorCalc(rgb);
+            this.ColorCalc(rgb);
             this.fillFromCalc();
         }
 
         public void Fill(int rgb, float alpha)
         {
-            this.colorCalc(rgb, alpha);
+            this.ColorCalc(rgb, alpha);
             this.fillFromCalc();
         }
 
         public void Fill(float gray)
         {
-            this.colorCalc(gray);
+            this.ColorCalc(gray);
             this.fillFromCalc();
         }
 
         public void Fill(float gray, float alpha)
         {
-            this.colorCalc(gray, alpha);
+            this.ColorCalc(gray, alpha);
             this.fillFromCalc();
         }
 
         public void Fill(float v1, float v2, float v3)
         {
-            this.colorCalc(v1, v2, v3);
+            this.ColorCalc(v1, v2, v3);
             this.fillFromCalc();
         }
 
         public void Fill(float v1, float v2, float v3, float alpha)
         {
-            this.colorCalc(v1, v2, v3, alpha);
+            this.ColorCalc(v1, v2, v3, alpha);
             this.fillFromCalc();
         }
         public void fillFromCalc()
@@ -847,37 +847,37 @@ namespace Flowing
         }
         public void Tint(int rgb)
         {
-            this.colorCalc(rgb);
+            this.ColorCalc(rgb);
             this.tintFromCalc();
         }
 
         public void Tint(int rgb, float alpha)
         {
-            this.colorCalc(rgb, alpha);
+            this.ColorCalc(rgb, alpha);
             this.tintFromCalc();
         }
 
         public void Tint(float gray)
         {
-            this.colorCalc(gray);
+            this.ColorCalc(gray);
             this.tintFromCalc();
         }
 
         public void Tint(float gray, float alpha)
         {
-            this.colorCalc(gray, alpha);
+            this.ColorCalc(gray, alpha);
             this.tintFromCalc();
         }
 
         public void Tint(float v1, float v2, float v3)
         {
-            this.colorCalc(v1, v2, v3);
+            this.ColorCalc(v1, v2, v3);
             this.tintFromCalc();
         }
 
         public void Tint(float v1, float v2, float v3, float alpha)
         {
-            this.colorCalc(v1, v2, v3, alpha);
+            this.ColorCalc(v1, v2, v3, alpha);
             this.tintFromCalc();
         }
 
@@ -895,25 +895,25 @@ namespace Flowing
             this.tintColor = this.calcColor;
             this.tintAlpha = this.calcAlpha;
         }
-        public void ambient(int rgb)
+        public void Ambient(int rgb)
         {
-            this.colorCalc(rgb);
-            this.ambientFromCalc();
+            this.ColorCalc(rgb);
+            this.AmbientFromCalc();
         }
 
-        public void ambient(float gray)
+        public void Ambient(float gray)
         {
-            this.colorCalc(gray);
-            this.ambientFromCalc();
+            this.ColorCalc(gray);
+            this.AmbientFromCalc();
         }
 
-        public void ambient(float v1, float v2, float v3)
+        public void Ambient(float v1, float v2, float v3)
         {
-            this.colorCalc(v1, v2, v3);
-            this.ambientFromCalc();
+            this.ColorCalc(v1, v2, v3);
+            this.AmbientFromCalc();
         }
 
-        public void ambientFromCalc()
+        public void AmbientFromCalc()
         {
             this.ambientColor = this.calcColor;
             this.ambientR = this.calcR;
@@ -922,25 +922,25 @@ namespace Flowing
             this.setAmbient = true;
         }
 
-        public void specular(int rgb)
+        public void Specular(int rgb)
         {
-            this.colorCalc(rgb);
-            this.specularFromCalc();
+            this.ColorCalc(rgb);
+            this.SpecularFromCalc();
         }
 
-        public void specular(float gray)
+        public void Specular(float gray)
         {
-            this.colorCalc(gray);
-            this.specularFromCalc();
+            this.ColorCalc(gray);
+            this.SpecularFromCalc();
         }
 
-        public void specular(float v1, float v2, float v3)
+        public void Specular(float v1, float v2, float v3)
         {
-            this.colorCalc(v1, v2, v3);
-            this.specularFromCalc();
+            this.ColorCalc(v1, v2, v3);
+            this.SpecularFromCalc();
         }
 
-        public void specularFromCalc()
+        public void SpecularFromCalc()
         {
             this.specularColor = this.calcColor;
             this.specularR = this.calcR;
@@ -953,25 +953,25 @@ namespace Flowing
             this.shininess = shine;
         }
 
-        public void emissive(int rgb)
+        public void Emissive(int rgb)
         {
-            this.colorCalc(rgb);
-            this.emissiveFromCalc();
+            this.ColorCalc(rgb);
+            this.EmissiveFromCalc();
         }
 
-        public void emissive(float gray)
+        public void Emissive(float gray)
         {
-            this.colorCalc(gray);
-            this.emissiveFromCalc();
+            this.ColorCalc(gray);
+            this.EmissiveFromCalc();
         }
 
-        public void emissive(float v1, float v2, float v3)
+        public void Emissive(float v1, float v2, float v3)
         {
-            this.colorCalc(v1, v2, v3);
-            this.emissiveFromCalc();
+            this.ColorCalc(v1, v2, v3);
+            this.EmissiveFromCalc();
         }
 
-        public void emissiveFromCalc()
+        public void EmissiveFromCalc()
         {
             this.emissiveColor = this.calcColor;
             this.emissiveR = this.calcR;
@@ -1140,12 +1140,12 @@ namespace Flowing
 
                     if (smooth)
                     {
-                        GL.Enable(EnableCap.PointSmooth);
-                        GL.Enable(EnableCap.LineSmooth);
-                        GL.Enable(EnableCap.PolygonSmooth);
+                        //GL.Enable(EnableCap.PointSmooth);
+                        //GL.Enable(EnableCap.LineSmooth);
+                        //GL.Enable(EnableCap.PolygonSmooth);
 
-                        GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
-                        GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
+                        //GL.Hint(HintTarget.PointSmoothHint, HintMode.Nicest);
+                        //GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
 
                     }
 
@@ -1232,8 +1232,8 @@ namespace Flowing
             }
             else{
                 //绘制内部网格线
-                //GL.Enable(EnableCap.PolygonOffsetLine);
-                //GL.PolygonOffset(-2.0f, -2.0f);
+                GL.Enable(EnableCap.PolygonOffsetLine);
+                GL.PolygonOffset(-2.0f, -2.0f);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
                 GL.Color4(Color.FromArgb(strokeColor));
                 GL.LineWidth(strokeWeight);
@@ -1246,7 +1246,7 @@ namespace Flowing
                     GL.Vertex3(triangles[i][2].X, triangles[i][2].Y, triangles[i][2].Z);
                     GL.End();
                 }
-                //GL.Disable(EnableCap.PolygonOffsetLine);
+                GL.Disable(EnableCap.PolygonOffsetLine);
             }
             
 
@@ -1687,7 +1687,7 @@ namespace Flowing
         }
 
 
-        public void sphere(float r)
+        public void Sphere(float r)
         {
             if (this.sphereDetailU < 3 || this.sphereDetailV < 2)
             {
@@ -1822,37 +1822,37 @@ namespace Flowing
             this.TextRenderer.Dispose();
         }
 
-        public void colorCalc(int rgb)
+        public void ColorCalc(int rgb)
         {
             if ((rgb & -16777216) == 0 && (float)rgb <= this.colorModeX)
             {
-                this.colorCalc((float)rgb);
+                this.ColorCalc((float)rgb);
             }
             else
             {
-                this.colorCalcARGB(rgb, this.colorModeA);
+                this.ColorCalcARGB(rgb, this.colorModeA);
             }
 
         }
 
-        public void colorCalc(int rgb, float alpha)
+        public void ColorCalc(int rgb, float alpha)
         {
             if ((rgb & -16777216) == 0 && (float)rgb <= this.colorModeX)
             {
-                this.colorCalc((float)rgb, alpha);
+                this.ColorCalc((float)rgb, alpha);
             }
             else
             {
-                this.colorCalcARGB(rgb, alpha);
+                this.ColorCalcARGB(rgb, alpha);
             }
 
         }
 
-        public void colorCalc(float gray)
+        public void ColorCalc(float gray)
         {
-            this.colorCalc(gray, this.colorModeA);
+            this.ColorCalc(gray, this.colorModeA);
         }
-        public void colorCalc(float gray, float alpha)
+        public void ColorCalc(float gray, float alpha)
         {
             if (gray > this.colorModeX)
             {
@@ -1885,12 +1885,12 @@ namespace Flowing
             this.calcColor = this.calcAi << 24 | this.calcRi << 16 | this.calcGi << 8 | this.calcBi;
             this.calcAlpha = this.calcAi != 255;
         }
-        public void colorCalc(float x, float y, float z)
+        public void ColorCalc(float x, float y, float z)
         {
-            this.colorCalc(x, y, z, this.colorModeA);
+            this.ColorCalc(x, y, z, this.colorModeA);
         }
 
-        public void colorCalc(float x, float y, float z, float a)
+        public void ColorCalc(float x, float y, float z, float a)
         {
             if (x > this.colorModeX)
             {
@@ -2013,7 +2013,7 @@ namespace Flowing
             this.calcColor = this.calcAi << 24 | this.calcRi << 16 | this.calcGi << 8 | this.calcBi;
             this.calcAlpha = this.calcAi != 255;
         }
-        public void colorCalcARGB(int argb, float alpha)
+        public void ColorCalcARGB(int argb, float alpha)
         {
             if (alpha == this.colorModeA)
             {
@@ -2063,17 +2063,17 @@ namespace Flowing
 
         }
 
-        public void scale(float s)
+        public void Scale(float s)
         {
             GL.Scale(new Vector3d(s, s, s));
 
         }
-        public void scale(float x, float y)
+        public void Scale(float x, float y)
         {
             GL.Scale(new Vector3d(x, y, 1));
         }
 
-        public void scale(float x, float y, float z)
+        public void Scale(float x, float y, float z)
         {
             GL.Scale(new Vector3d(x, y, z));
         }

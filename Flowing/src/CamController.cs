@@ -371,7 +371,7 @@ namespace Flowing
         private void DrawGrid(IApp app, float len, float num)
         {
             
-            float weight =1F;
+            float weight =1.0F;
             int gray = 100;
             len *= 2.0F;
             float step = len / num;
@@ -381,7 +381,7 @@ namespace Flowing
             for (int i = 0; (float)i <= num; ++i)
             {
                 app.PushStyle(false);
-                app.Stroke(129,134,140);
+                app.Stroke(129,134,140,200);
                 app.StrokeWeight(weight);
                 app.Line(start, (float)i * step + start, 0.0F, len + start, (float)i * step + start, 0.0F);
                 app.Line((float)i * step + start, start, 0.0F, (float)i * step + start, len + start, 0.0F);
@@ -389,9 +389,9 @@ namespace Flowing
                 app.PopStyle();
 
                 app.PushStyle(false);
-                app.Stroke(147,153,160);
+                app.Stroke(147,153,160,100);
                 float step2 = step / 5.0F;
-                app.StrokeWeight(weight/4);
+                app.StrokeWeight(weight/6);
                 if (i != num)
                 {
                     for (int j = 1; j < 5; j++)
