@@ -648,7 +648,10 @@ namespace Flowing
         {
             this.g.Line(x1, y1, z1, x2, y2, z2) ;
         }
-
+        public void Cube(float l)
+        {
+            this.g.Cube(l, l, l);
+        }
         public void Cube(float length, float width, float height)
         {
             this.g.Cube(length, width, height);
@@ -656,6 +659,10 @@ namespace Flowing
         public void Sphere(float r)
         {
             this.g.Sphere(r);
+        }
+        public void Sphere(float r,int detail)
+        {
+            this.g.Sphere(r,detail);
         }
         public void Text(string str, float x, float y, float z)
         {

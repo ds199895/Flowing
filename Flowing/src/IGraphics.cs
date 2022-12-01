@@ -1767,7 +1767,85 @@ namespace Flowing
 
         }
 
+        public void Sphere(float r,int detail)
+        {
+            if (this.sphereDetailU < 3 || this.sphereDetailV < 2)
+            {
+                this.sphereDetail(detail);
+            }
+            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            //GL.Color4(Color.FromArgb(fillColor));
+            this.BeginShape(PrimitiveType.TriangleStrip);
+            //GL.Begin(PrimitiveType.TriangleStrip);
+            int v1;
+            for (v1 = 0; v1 < this.sphereDetailU; ++v1)
+            {
+                //GL.Normal3(0.0F, 1.0F, 0.0F);
+                this.Vertex(0.0F, r, 0.0F);
 
+                //GL.Normal3(this.sphereX[v1], this.sphereY[v1], this.sphereZ[v1]);
+                this.Vertex(r * this.sphereX[v1], r * this.sphereY[v1], r * this.sphereZ[v1]);
+
+            }
+
+
+            //GL.Normal3(0.0F, r, 0.0F);
+            this.Vertex(0.0F, r, 0.0F);
+
+            //GL.Normal3(this.sphereX[0], this.sphereY[0], this.sphereZ[0]);
+            this.Vertex(r * this.sphereX[0], r * this.sphereY[0], r * this.sphereZ[0]);
+            this.EndShape();
+
+            int voff = 0;
+
+            int v2;
+            int i;
+            for (i = 2; i < this.sphereDetailV; ++i)
+            {
+                int v11 = voff;
+                v1 = voff;
+                voff += this.sphereDetailU;
+                v2 = voff;
+                //GL.Begin(PrimitiveType.TriangleStrip);
+                this.BeginShape(PrimitiveType.TriangleStrip);
+                for (int j = 0; j < this.sphereDetailU; ++j)
+                {
+
+                    //GL.Normal3(this.sphereX[v1], this.sphereY[v1], this.sphereZ[v1]);
+                    this.Vertex(r * this.sphereX[v1], r * this.sphereY[v1], r * this.sphereZ[v1++]);
+                    //GL.Normal3(this.sphereX[v2], this.sphereY[v2], this.sphereZ[v2]);
+                    this.Vertex(r * this.sphereX[v2], r * this.sphereY[v2], r * this.sphereZ[v2++]);
+                }
+
+                //GL.Normal3(this.sphereX[v11], this.sphereY[v11], this.sphereZ[v11]);
+                this.Vertex(r * this.sphereX[v11], r * this.sphereY[v11], r * this.sphereZ[v11]);
+                //GL.Normal3(this.sphereX[voff], this.sphereY[voff], this.sphereZ[voff]);
+                this.Vertex(r * this.sphereX[voff], r * this.sphereY[voff], r * this.sphereZ[voff]);
+                //GL.End();
+                this.EndShape();
+            }
+
+            this.BeginShape(PrimitiveType.TriangleStrip);
+            //GL.Begin(PrimitiveType.TriangleStrip);
+            for (i = 0; i < this.sphereDetailU; ++i)
+            {
+                v2 = voff + i;
+                //GL.Normal3(this.sphereX[v2], this.sphereY[v2], this.sphereZ[v2]);
+                this.Vertex(r * this.sphereX[v2], r * this.sphereY[v2], r * this.sphereZ[v2]);
+                //GL.Normal3(0.0F, -1.0F, 0.0F);
+                this.Vertex(0.0F, -r, 0.0F);
+            }
+
+            //GL.Normal3(this.sphereX[voff], this.sphereY[voff], this.sphereZ[voff]);
+            this.Vertex(r * this.sphereX[voff], r * this.sphereY[voff], r * this.sphereZ[voff]);
+            //GL.Normal3(0.0F, 1.0F, 0.0F);
+            this.Vertex(0.0F, -r, 0.0F);
+            this.EndShape();
+            //this.edge(true);
+            //Console.WriteLine("___________");
+
+
+        }
         public void Line(float x1, float y1, float z1, float x2, float y2, float z2)
         {
             this.NoFill();
