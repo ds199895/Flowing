@@ -70,3 +70,7 @@ E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.csproj.CopyComplete
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.dll
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.pdb
 E:\13-study\C#\fl\Flowing\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\LibTessDotNet.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\LibTessDotNet.Double.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\bin\Debug\Microsoft.Solver.Foundation.dll
+E:\13-study\C#\Flowing\Flowing\Flowing\obj\Debug\Flowing.csproj.AssemblyReference.cache

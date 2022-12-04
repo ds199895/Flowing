@@ -1041,7 +1041,7 @@ namespace Flowing
             {
                 float[][] temp = new float[this.vertexCount << 1][];
                 Array.Copy(this.vertices, 0, temp, 0, this.vertexCount);
-                Print(this.vertices.Length);
+                //Print(this.vertices.Length);
                 this.vertices = temp;
             }
 

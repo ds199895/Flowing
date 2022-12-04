@@ -73,3 +73,13 @@ E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GyresMesh.dll.config
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\NetTopologySuite.xml
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GeoAPI.pdb
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GeoAPI.xml
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GyresMesh.dll
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\LibTessDotNet.dll
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\ICSharpCode.SharpZipLib.dll
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\NetTopologySuite.dll
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GeoAPI.dll
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GyresMesh.pdb
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GyresMesh.dll.config
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\NetTopologySuite.xml
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GeoAPI.pdb
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GeoAPI.xml
