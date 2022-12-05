@@ -34,7 +34,7 @@ namespace Flowing
         public int height { get { return this.g.height; } set { this.g.height = value; } }
         public bool wireFrame { get { return this.g.wireFrame; } set { this.g.wireFrame = value; } }
         public bool is2D = true;
-        public int FrameRate=30;
+        public int FrameRate=60;
         public string key;
         private bool smoothReseted = false;
         public int keyCode;

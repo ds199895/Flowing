@@ -29,9 +29,9 @@ namespace Flowing
         public Camera CurrentView;
 
         //Init Some Operation Factors
-        public double RotateDeltaFactor =0.003D;
+        public const double RotateDeltaFactor =0.003D;
         public const double panDeltaFactor = 0.002D;
-        public double zoomDeltaFactor = 0.1D;
+        public const double zoomDeltaFactor = 0.3D;
         private Vector2 mouseLastPosition;
 
         private float lastZoomData = 0;
