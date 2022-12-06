@@ -14,22 +14,6 @@ C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Examples\obj\
 C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Examples\obj\Debug\Examples.csproj.CopyComplete
 C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Examples\obj\Debug\Examples.exe
 C:\Users\Administrator\Downloads\Flowing-master (1)\Flowing-master\Examples\obj\Debug\Examples.pdb
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Examples.exe.config
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Examples.exe
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Examples.pdb
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Flowing.dll
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\OpenTK.dll
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Lucene.Net.dll
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Flowing.pdb
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\OpenTK.pdb
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\OpenTK.xml
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Lucene.Net.pdb
-E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Lucene.Net.xml
-E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.csproj.AssemblyReference.cache
-E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.csproj.CoreCompileInputs.cache
-E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.csproj.CopyComplete
-E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.exe
-E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.pdb
 E:\10-study\C#\Flowing\Examples\bin\Debug\Examples.exe.config
 E:\10-study\C#\Flowing\Examples\bin\Debug\Examples.exe
 E:\10-study\C#\Flowing\Examples\bin\Debug\Examples.pdb
@@ -73,13 +57,29 @@ E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GyresMesh.dll.config
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\NetTopologySuite.xml
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GeoAPI.pdb
 E:\13-study\C#\fl\Flowing\Examples\bin\Debug\GeoAPI.xml
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Examples.exe.config
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Examples.exe
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Examples.pdb
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Flowing.dll
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GyresMesh.dll
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\OpenTK.dll
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Lucene.Net.dll
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\LibTessDotNet.dll
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\ICSharpCode.SharpZipLib.dll
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\NetTopologySuite.dll
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GeoAPI.dll
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Flowing.pdb
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GyresMesh.pdb
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GyresMesh.dll.config
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\OpenTK.pdb
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\OpenTK.xml
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Lucene.Net.pdb
+E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\Lucene.Net.xml
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\NetTopologySuite.xml
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GeoAPI.pdb
 E:\13-study\C#\Flowing\Flowing\Examples\bin\Debug\GeoAPI.xml
+E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.csproj.AssemblyReference.cache
+E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.csproj.CoreCompileInputs.cache
+E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.csproj.CopyComplete
+E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.exe
+E:\13-study\C#\Flowing\Flowing\Examples\obj\Debug\Examples.pdb

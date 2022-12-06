@@ -1170,8 +1170,6 @@ namespace Flowing
                         }
                         
                     }
-
-
                     if (stroke)
                     {
                         GL.Enable(EnableCap.PolygonOffsetLine);
@@ -1184,7 +1182,7 @@ namespace Flowing
                         if (this.shape != (int)PrimitiveType.Polygon)
                         {
                             GL.Begin((PrimitiveType)this.shape);
-                            for (int i = 0; i <this.vertexCount; i++)
+                            for (int i = 0; i < this.vertexCount; i++)
                             {
                                 GL.Vertex3(vertices[i][0], vertices[i][1], vertices[i][2]);
                             }
@@ -1196,10 +1194,9 @@ namespace Flowing
                         {
                             DrawPolygonTrianglesStroke(vertices, cutIndices);
                         }
-
-
-                        
                     }
+
+
                     GL.Disable(EnableCap.PolygonOffsetLine);
                     GL.Disable(EnableCap.Blend);
 
@@ -1882,7 +1879,7 @@ namespace Flowing
             GL.PushMatrix();
             GL.BindTexture(TextureTarget.Texture2D, TextRenderer.Texture);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
 
 
             GL.Color4(1.0f, 1.0f, 1.0f, 0.1f);
