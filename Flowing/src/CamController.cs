@@ -152,7 +152,10 @@ namespace Flowing
             {
                 this.CurrentView.SetPerspective(!this.CurrentView.perspective);
             }
-
+            if (this.app.key == "Space")
+            {
+                this.sys = !this.sys;
+            }
 
 
         }
@@ -182,11 +185,7 @@ namespace Flowing
 
         private void Mouse_Down(object sender, OpenTK.Input.MouseButtonEventArgs e)
         {
-
-            
             mouseLastPosition = new Vector2(e.X, e.Y);
-
-
         }
 
         private void Mouse_Up(object sender, OpenTK.Input.MouseButtonEventArgs e)
@@ -352,20 +351,24 @@ namespace Flowing
         {
             CurrentView = this.cams[6];
         }
-
+        bool sys = true;
         //Draw Grid and System
         public void DrawSystem(IApp app, float len)
         {
-            app.PushStyle();
-            this.DrawGrid(app, len, 20.0F);
-            app.StrokeWeight(2.5F);
-            app.Stroke(180, 50, 50);
-            app.Line(0.0F, 0.0F, 0.0F, len, 0.0F, 0.0F);
-            app.Stroke(50, 180, 50);
-            app.Line(0.0F, 0.0F, 0.0F, 0.0F, len, 0.0F);
-            app.Stroke(50, 50, 180);
-            app.Line(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, len);
-            app.PopStyle();
+            if (sys)
+            {
+                app.PushStyle();
+                this.DrawGrid(app, len, 20.0F);
+                app.StrokeWeight(2.5F);
+                app.Stroke(180, 50, 50);
+                app.Line(0.0F, 0.0F, 0.0F, len, 0.0F, 0.0F);
+                app.Stroke(50, 180, 50);
+                app.Line(0.0F, 0.0F, 0.0F, 0.0F, len, 0.0F);
+                app.Stroke(50, 50, 180);
+                app.Line(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, len);
+                app.PopStyle();
+            }
+
         }
 
         private void DrawGrid(IApp app, float len, float num)

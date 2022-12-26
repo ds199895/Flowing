@@ -1,5 +1,4 @@
-﻿using Lucene.Net.Support;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
@@ -44,7 +43,7 @@ namespace Flowing
         private static IntPtr ParenthWnd = new IntPtr(0);
         private static IntPtr et = new IntPtr(0);
         public static GraphicsMode mode=new GraphicsMode(32, 24, 8,2);
-        public HashMap<int, GameWindow> wins = new HashMap<int, GameWindow>();
+        public Dictionary<int, GameWindow> wins = new Dictionary<int, GameWindow>();
         int bakeWidth;
         int bakeHeight;
 
@@ -830,7 +829,10 @@ namespace Flowing
                 return 0.0F;
             }
         }
-
+        public static float map(float value, float start1, float stop1, float start2, float stop2)
+        {
+            return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+        }
         public static int constrain(int amt, int low, int high)
         {
             return amt < low ? low : (amt > high ? high : amt);

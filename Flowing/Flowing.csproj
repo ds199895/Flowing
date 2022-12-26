@@ -32,17 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="LibTessDotNet, Version=1.1.15.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LibTessDotNet.1.1.15\lib\netstandard2.0\LibTessDotNet.dll</HintPath>
     </Reference>
     <Reference Include="LibTessDotNet.Double, Version=1.1.15.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LibTessDotNet.1.1.15\lib\netstandard2.0\LibTessDotNet.Double.dll</HintPath>
-    </Reference>
-    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Solver.Foundation, Version=3.0.2.10889, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
