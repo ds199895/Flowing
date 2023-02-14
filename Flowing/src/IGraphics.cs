@@ -8,6 +8,7 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using Flowing.Triangulation;
 using OpenTK.Graphics;
+using LibTessDotNet;
 
 namespace Flowing
 {

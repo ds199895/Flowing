@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flowing</RootNamespace>
     <AssemblyName>Flowing</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -32,12 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LibTessDotNet, Version=1.1.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LibTessDotNet.1.1.15\lib\netstandard2.0\LibTessDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="LibTessDotNet.Double, Version=1.1.15.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LibTessDotNet.1.1.15\lib\netstandard2.0\LibTessDotNet.Double.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Solver.Foundation, Version=3.0.2.10889, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>src\Triangulation\third_party\Microsoft.Solver.Foundation.dll</HintPath>
@@ -57,6 +51,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\CamController.cs" />
@@ -75,6 +70,14 @@
     <Compile Include="src\Triangulation\EarClipping.cs" />
     <Compile Include="src\Triangulation\Misc.cs" />
     <Compile Include="src\Triangulation\Vector3m.cs" />
+    <Compile Include="src\LibTessDotNet\Dict.cs" />
+    <Compile Include="src\LibTessDotNet\Geom.cs" />
+    <Compile Include="src\LibTessDotNet\Mesh.cs" />
+    <Compile Include="src\LibTessDotNet\MeshUtils.cs" />
+    <Compile Include="src\LibTessDotNet\PriorityHeap.cs" />
+    <Compile Include="src\LibTessDotNet\PriorityQueue.cs" />
+    <Compile Include="src\LibTessDotNet\Sweep.cs" />
+    <Compile Include="src\LibTessDotNet\Tess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenTK.dll.config" />
@@ -82,6 +85,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\Triangulation\third_party\Microsoft.Solver.Foundation.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\LibTessDotNet\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

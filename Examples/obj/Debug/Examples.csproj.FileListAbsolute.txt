@@ -19,12 +19,9 @@ E:\10-study\C#\Flowing\Examples\bin\Debug\Examples.exe
 E:\10-study\C#\Flowing\Examples\bin\Debug\Examples.pdb
 E:\10-study\C#\Flowing\Examples\bin\Debug\Flowing.dll
 E:\10-study\C#\Flowing\Examples\bin\Debug\OpenTK.dll
-E:\10-study\C#\Flowing\Examples\bin\Debug\Lucene.Net.dll
 E:\10-study\C#\Flowing\Examples\bin\Debug\Flowing.pdb
 E:\10-study\C#\Flowing\Examples\bin\Debug\OpenTK.pdb
 E:\10-study\C#\Flowing\Examples\bin\Debug\OpenTK.xml
-E:\10-study\C#\Flowing\Examples\bin\Debug\Lucene.Net.pdb
-E:\10-study\C#\Flowing\Examples\bin\Debug\Lucene.Net.xml
 E:\10-study\C#\Flowing\Examples\obj\Debug\Examples.csproj.AssemblyReference.cache
 E:\10-study\C#\Flowing\Examples\obj\Debug\Examples.csproj.CoreCompileInputs.cache
 E:\10-study\C#\Flowing\Examples\obj\Debug\Examples.csproj.CopyComplete

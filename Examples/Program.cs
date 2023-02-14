@@ -94,14 +94,14 @@ namespace Flowing
             ////GL.Vertex3(200, 500, 400);
             ////GL.End();
 
-            //BeginShape();
+            BeginShape();
 
             ////测试任意图形
-            ////Vertex(200, 350, 350);
-            ////Vertex(150, 350, 350);
-            ////Vertex(200, 500, 400);
-            ////Vertex(200, 500, 500);
-            ////Vertex(400, 350, 350);
+            Vertex(200, 350, 350);
+            Vertex(150, 350, 350);
+            Vertex(200, 500, 400);
+            Vertex(200, 500, 500);
+            Vertex(400, 350, 350);
 
             ////测试自相交图形
             ////Vertex(200, 100, 0);
@@ -133,7 +133,7 @@ namespace Flowing
             //Vertex(200, 100, 0);
             //EndShape();
 
-            //EndShape();
+            EndShape();
 
             //PushStyle();
             //Fill(255, 0, 0);
@@ -147,7 +147,7 @@ namespace Flowing
             Fill(250, 250, 240);
             Stroke(255, 0, 0);
             //sphere(5000);
-            Cube(50,50,50);
+            //Cube(50,50,50);
 
         }
 
